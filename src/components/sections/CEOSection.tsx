@@ -101,7 +101,7 @@ export function CEOSection() {
             {/* CEO Image */}
             <img
               src={ceoImage}
-              alt="Ishimwe J. Claude"
+              alt="Ishimwe J. Claude — CEO & Founder of IshConnect (Ishconnlab), a leading software development and AI innovation studio based in Kigali, Rwanda"
               loading="lazy"
               className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
             />

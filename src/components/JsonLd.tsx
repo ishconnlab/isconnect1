@@ -1,5 +1,11 @@
 import { Helmet } from "react-helmet-async";
-import { SITE_NAME, SITE_URL } from "@/lib/seo";
+import {
+  SITE_NAME,
+  SITE_ALTERNATE_NAME,
+  SITE_ALTERNATE_NAMES,
+  SITE_LEGAL_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 import type { Program } from "@/lib/programs";
 
 function SchemaScript({ schema }: { schema: Record<string, unknown> }) {
@@ -14,26 +20,62 @@ export function OrganizationJsonLd() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${SITE_URL}#organization`,
     name: SITE_NAME,
+    alternateName: SITE_ALTERNATE_NAMES,
+    legalName: SITE_LEGAL_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/og-image.png`,
     description:
-      "IshConnect delivers world-class software solutions, technology education, and digital transformation services designed for the future of Africa.",
+      "IshConnect (Ishconnlab) delivers world-class software solutions, AI training, technology education, and digital transformation services designed for the future of Africa. Home of DevQueens.",
     foundingDate: "2024",
+    founders: [
+      {
+        "@type": "Person",
+        name: "Ishimwe J. Claude",
+      },
+    ],
     address: {
       "@type": "PostalAddress",
+      streetAddress: "KG 11 Ave",
       addressLocality: "Kigali",
       addressCountry: "RW",
     },
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "customer service",
-      url: `${SITE_URL}/contact`,
-    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: "ishconnlab@gmail.com",
+        telephone: "+250787377750",
+        url: `${SITE_URL}/contact`,
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        url: `${SITE_URL}/contact`,
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "enrollment",
+        url: `${SITE_URL}/academy`,
+      },
+    ],
     sameAs: [
       "https://twitter.com/IshConnectRW",
       "https://linkedin.com/company/ishconnect",
       "https://github.com/ishconnect",
+      "https://www.ishconnect.rw",
+    ],
+    knowsAbout: [
+      "Software Development",
+      "Web Development",
+      "AI and Machine Learning",
+      "Cybersecurity",
+      "Cloud Computing",
+      "Mobile App Development",
+      "UI/UX Design",
+      "Technology Training",
+      "Digital Transformation",
     ],
   };
 
@@ -44,10 +86,16 @@ export function WebSiteJsonLd() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${SITE_URL}#website`,
     name: SITE_NAME,
+    alternateName: SITE_ALTERNATE_NAMES,
     url: SITE_URL,
     description:
-      "Software solutions, technology education and digital transformation for the future of Africa.",
+      "Software solutions, AI training, technology education and digital transformation for the future of Africa by IshConnect (Ishconnlab).",
+    publisher: {
+      "@id": `${SITE_URL}#organization`,
+    },
+    inLanguage: "en-RW",
     potentialAction: {
       "@type": "SearchAction",
       target: {
@@ -65,6 +113,7 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; url: string
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    "@id": `${SITE_URL}${items[items.length - 1]?.url || "/"}#breadcrumb`,
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -83,16 +132,17 @@ export function CourseJsonLd({ program }: { program: Program }) {
     name: program.title,
     description: program.summary,
     provider: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      sameAs: SITE_URL,
+      "@id": `${SITE_URL}#organization`,
     },
     timeRequired: program.duration,
     offers: {
       "@type": "Offer",
       category: "Paid",
+      availability: "http://schema.org/InStock",
+      url: `${SITE_URL}/academy#${program.slug}`,
     },
     teaches: program.tags.join(", "),
+    educationalCredentialAwarded: "Certificate of Completion",
   };
 
   return <SchemaScript schema={schema} />;
@@ -105,13 +155,83 @@ export function ServiceJsonLd({ name, description }: { name: string; description
     name,
     description,
     provider: {
-      "@type": "Organization",
-      name: SITE_NAME,
+      "@id": `${SITE_URL}#organization`,
     },
-    areaServed: {
-      "@type": "Country",
-      name: "RW",
+    areaServed: [
+      {
+        "@type": "Country",
+        name: "RW",
+      },
+      {
+        "@type": "Continent",
+        name: "Africa",
+      },
+    ],
+    serviceType: name,
+    audience: {
+      "@type": "BusinessAudience",
+      geographicArea: {
+        "@type": "AdministrativeArea",
+        name: "Rwanda",
+      },
     },
+  };
+
+  return <SchemaScript schema={schema} />;
+}
+
+export function FaqJsonLd({ questions }: { questions: { question: string; answer: string }[] }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${SITE_URL}#faq`,
+    mainEntity: questions.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: q.answer,
+      },
+    })),
+  };
+
+  return <SchemaScript schema={schema} />;
+}
+
+export function LocalBusinessJsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "LocalBusiness"],
+    "@id": `${SITE_URL}#localbusiness`,
+    name: SITE_NAME,
+    alternateName: SITE_ALTERNATE_NAMES,
+    legalName: SITE_LEGAL_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/og-image.png`,
+    image: `${SITE_URL}/og-image.png`,
+    description:
+      "IshConnect is a Kigali-based technology studio specializing in software development, AI training, and tech education in Rwanda.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Kigali",
+      addressCountry: "RW",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: -1.9441,
+      longitude: 30.0619,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "08:00",
+        closes: "17:00",
+      },
+    ],
+    telephone: "+250787377750",
+    email: "ishconnlab@gmail.com",
+    areaServed: ["RW", "Africa"],
   };
 
   return <SchemaScript schema={schema} />;

@@ -33,6 +33,11 @@ export function Hero() {
             Next Generation of{" "}
             <span className="relative inline-block">
               <span className="text-primary">Digital Innovation</span>
+              <span className="sr-only">
+                {" "}
+                — software development, AI, and technology innovation by IshConnect (Ishconnlab) in
+                Kigali, Rwanda
+              </span>
               <svg
                 className="absolute -bottom-2 left-0 h-2 w-full text-primary/40"
                 viewBox="0 0 200 8"
@@ -55,8 +60,11 @@ export function Hero() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty"
           >
-            IshConnect delivers world-class software solutions, technology education, and digital
-            transformation services designed for the future of Africa.
+            <strong>IshConnect</strong> (operated by <strong>ISHCONNLAB</strong>) is a leading
+            software development, AI, and web development studio in <strong>Kigali, Rwanda</strong>.
+            We deliver world-class software solutions, AI training, technology education, and
+            digital transformation services designed for the future of Africa. Home of{" "}
+            <strong>DevQueens</strong>.
           </motion.p>
 
           <motion.div

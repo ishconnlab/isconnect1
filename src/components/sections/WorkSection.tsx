@@ -124,7 +124,7 @@ function ProjectRow({ p, reverse }: { p: Project; reverse: boolean }) {
             <div className="relative mt-3 h-[calc(100%-28px)] overflow-hidden rounded-2xl border border-soft-border/60 bg-muted">
               <img
                 src={p.image}
-                alt={p.title}
+                alt={`${p.title} — ${p.category} project built by IshConnect (Ishconnlab), a software development and AI studio in Kigali, Rwanda`}
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

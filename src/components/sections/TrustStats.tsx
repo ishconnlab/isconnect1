@@ -31,7 +31,14 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
 
 export function TrustStats() {
   return (
-    <section className="border-y border-soft-border/60 bg-surface-elevated">
+    <section
+      className="border-y border-soft-border/60 bg-surface-elevated"
+      aria-label="IshConnect impact statistics"
+    >
+      <h2 className="sr-only">
+        IshConnect by the numbers — students empowered, projects delivered, programs launched, and
+        client satisfaction in Kigali, Rwanda
+      </h2>
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-10 px-6 py-16 sm:py-20 md:grid-cols-4">
         {STATS.map((s, i) => (
           <motion.div

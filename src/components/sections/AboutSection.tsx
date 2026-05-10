@@ -46,9 +46,13 @@ export function AboutSection() {
       <div className="mt-24">
         <div className="mb-10">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">Journey</p>
-          <h3 className="mt-2 text-3xl font-semibold tracking-tight">Our growth tree</h3>
+          <h3 className="mt-2 text-3xl font-semibold tracking-tight">
+            Our growth tree — IshConnect timeline
+          </h3>
           <p className="mt-3 max-w-2xl text-sm text-gray-600">
-            A structured evolution map showing how IshConnect grew step by step.
+            A structured evolution map showing how <strong>IshConnect (Ishconnlab)</strong> grew
+            from a passion-driven technology initiative in Kigali, Rwanda into a leading software
+            development and AI innovation studio.
           </p>
         </div>
 

@@ -1,5 +1,14 @@
 import { Helmet } from "react-helmet-async";
-import { type SEOProps, buildMeta, SITE_NAME, TWITTER_HANDLE, SITE_LANG } from "@/lib/seo";
+import {
+  type SEOProps,
+  buildMeta,
+  SITE_NAME,
+  SITE_ALTERNATE_NAMES,
+  SITE_LEGAL_NAME,
+  TWITTER_HANDLE,
+  SITE_LANG,
+  SITE_REGION,
+} from "@/lib/seo";
 
 export function SEOHead(props: SEOProps) {
   const meta = buildMeta(props);
@@ -21,6 +30,17 @@ export function SEOHead(props: SEOProps) {
       <link rel="canonical" href={meta.canonical} />
 
       {meta.keywords && <meta name="keywords" content={meta.keywords.join(", ")} />}
+
+      {/* Brand association meta */}
+      <meta name="application-name" content={SITE_NAME} />
+      <meta name="author" content={`${SITE_NAME}, ${SITE_LEGAL_NAME}`} />
+      <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
+
+      {/* Geo / Local SEO */}
+      <meta name="geo.region" content={`${SITE_REGION}`} />
+      <meta name="geo.placename" content="Kigali" />
+      <meta name="geo.position" content="-1.9441;30.0619" />
+      <meta name="ICBM" content="-1.9441, 30.0619" />
 
       <meta name="theme-color" content={meta.themeColor} />
       <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -44,6 +64,10 @@ export function SEOHead(props: SEOProps) {
       )}
       {meta.modifiedTime && <meta property="article:modified_time" content={meta.modifiedTime} />}
 
+      {/* Facebook / OpenGraph additional */}
+      <meta property="og:see_also" content="https://twitter.com/IshConnectRW" />
+      <meta property="og:see_also" content="https://linkedin.com/company/ishconnect" />
+
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={TWITTER_HANDLE} />
       <meta name="twitter:creator" content={TWITTER_HANDLE} />
@@ -52,6 +76,18 @@ export function SEOHead(props: SEOProps) {
       <meta name="twitter:image" content={meta.ogImage} />
       <meta name="twitter:image:alt" content={meta.ogImageAlt} />
       <meta name="twitter:domain" content={new URL(meta.canonical).hostname} />
+
+      {/* JSON-LD brand alternates for Google */}
+      <script type="application/ld+json">{`
+        {
+          "@context": "https://schema.org",
+          "@type": "Brand",
+          "@id": "${meta.canonical}#brand",
+          "name": "${SITE_NAME}",
+          "alternateName": ${JSON.stringify(SITE_ALTERNATE_NAMES)},
+          "url": "${meta.canonical}"
+        }
+      `}</script>
     </Helmet>
   );
 }

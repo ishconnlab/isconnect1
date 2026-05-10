@@ -139,8 +139,9 @@ export const Footer = memo(function Footer() {
           <Logo />
 
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            We design, build, and ship world-class digital products that move Africa's innovation
-            economy forward.
+            <strong>IshConnect (Ishconnlab)</strong> is a Kigali-based technology studio
+            specializing in <strong>software development, AI solutions, web development,</strong>{" "}
+            and <strong>tech education</strong> in Rwanda. Home of <strong>DevQueens</strong>.
           </p>
 
           {/* Legal */}
@@ -152,7 +153,28 @@ export const Footer = memo(function Footer() {
             <p className="mt-1 text-sm font-medium text-foreground">IshConnect by ISHCONNLAB</p>
 
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              Registered in Rwanda · Technology & Innovation Company
+              Registered in Rwanda · Technology & Innovation Company — providing{" "}
+              <Link
+                to="/solutions"
+                className="underline decoration-dotted underline-offset-2 hover:text-[#F97316]"
+              >
+                software development
+              </Link>
+              ,{" "}
+              <Link
+                to="/academy"
+                className="underline decoration-dotted underline-offset-2 hover:text-[#F97316]"
+              >
+                tech training
+              </Link>
+              , and{" "}
+              <Link
+                to="/work"
+                className="underline decoration-dotted underline-offset-2 hover:text-[#F97316]"
+              >
+                digital innovation
+              </Link>{" "}
+              across Africa.
             </p>
           </div>
 
@@ -214,14 +236,40 @@ export const Footer = memo(function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 px-6 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
           <div>
             <p>
-              © {new Date().getFullYear()} IshConnect. Operated by{" "}
-              <span className="font-semibold text-foreground">ISHCONNLAB</span>.
+              © {new Date().getFullYear()}{" "}
+              <Link to="/" className="hover:text-[#F97316]">
+                IshConnect
+              </Link>
+              . Operated by <span className="font-semibold text-foreground">ISHCONNLAB</span>.
             </p>
 
-            <p className="mt-1">Registered in Rwanda · All rights reserved.</p>
+            <p className="mt-1">
+              <Link to="/" className="hover:text-[#F97316]">
+                IshConnect
+              </Link>{" "}
+              —{" "}
+              <Link to="/solutions" className="hover:text-[#F97316]">
+                Software Development
+              </Link>
+              {" · "}
+              <Link to="/solutions" className="hover:text-[#F97316]">
+                AI Solutions
+              </Link>
+              {" · "}
+              <Link to="/academy" className="hover:text-[#F97316]">
+                Tech Training Rwanda
+              </Link>
+              {" · "}
+              <Link to="/about" className="hover:text-[#F97316]">
+                DevQueens
+              </Link>
+            </p>
           </div>
 
-          <p>Kigali · Rwanda · Worldwide</p>
+          <div className="text-right text-xs">
+            <p>Kigali · Rwanda · Worldwide</p>
+            <p className="mt-1 text-muted-foreground/50">Web Development · AI · Innovation</p>
+          </div>
         </div>
       </div>
     </footer>

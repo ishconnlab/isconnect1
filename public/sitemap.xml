@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.ishconnect.rw/</loc>
     <lastmod>2026-05-10</lastmod>
@@ -8,8 +9,8 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.ishconnect.rw/og-image.png</image:loc>
-      <image:title>IshConnect — Software Development &amp; Innovation Studio, Kigali</image:title>
-      <image:caption>IshConnect leading African software development studio in Kigali, Rwanda</image:caption>
+      <image:title>IshConnect &amp; Ishconnlab — Software Development &amp; AI Innovation Studio, Kigali Rwanda</image:title>
+      <image:caption>IshConnect (Ishconnlab) leading software development, AI training, and innovation studio in Kigali, Rwanda</image:caption>
     </image:image>
   </url>
   <url>

@@ -2,8 +2,7 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SEOHead } from "@/components/SEOHead";
-import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
-import { PAGE_SEO } from "@/lib/seo";
+import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from "@/components/JsonLd";
 import { RootLayout } from "@/routes/__root";
 import { Loader2 } from "lucide-react";
 
@@ -14,8 +13,6 @@ const Contact = lazy(() => import("@/routes/contact").then((m) => ({ default: m.
 const Solutions = lazy(() => import("@/routes/solutions").then((m) => ({ default: m.Solutions })));
 const Work = lazy(() => import("@/routes/work").then((m) => ({ default: m.Work })));
 const Privacy = lazy(() => import("@/routes/privacy").then((m) => ({ default: m.Privacy })));
-
-const defaults = PAGE_SEO.home;
 
 function LoadingFallback() {
   return (
@@ -29,8 +26,8 @@ function NotFound() {
   return (
     <>
       <SEOHead
-        title="Page Not Found · IshConnect"
-        description="The page you're looking for doesn't exist or has been moved. Return to IshConnect home."
+        title="Page Not Found · IshConnect & Ishconnlab"
+        description="The page you're looking for doesn't exist or has been moved. Return to IshConnect (Ishconnlab) — Kigali's leading software development and AI innovation studio."
         canonical="https://www.ishconnect.rw/404"
         noindex
       />
@@ -58,9 +55,9 @@ function NotFound() {
 export function App() {
   return (
     <ErrorBoundary>
-      <SEOHead {...defaults} />
       <OrganizationJsonLd />
       <WebSiteJsonLd />
+      <LocalBusinessJsonLd />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route element={<RootLayout />}>

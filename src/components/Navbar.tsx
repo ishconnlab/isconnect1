@@ -38,16 +38,18 @@ export const Navbar = memo(function Navbar() {
         className={`flex w-full max-w-6xl items-center justify-between gap-4 rounded-full border border-soft-border/60 px-3 py-2 transition-all duration-300 sm:px-4 ${
           scrolled ? "glass-nav shadow-soft" : "bg-background/40 backdrop-blur-md"
         }`}
+        aria-label="Main navigation"
       >
         <Logo />
 
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-1 lg:flex" role="list">
           {NAV.map((item) => {
             const active = pathname === item.to;
             return (
               <li key={item.to}>
                 <Link
                   to={item.to}
+                  aria-current={active ? "page" : undefined}
                   className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     active ? "text-primary" : "text-foreground/70 hover:text-foreground"
                   }`}
