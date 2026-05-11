@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/solutions", label: "Solutions" },
+  { to: "/solutions", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/academy", label: "Academy" },
   { to: "/about", label: "About" },

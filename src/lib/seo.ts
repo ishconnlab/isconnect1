@@ -15,7 +15,7 @@ export const SITE_URL = "https://www.ishconnect.rw";
 export const SITE_DOMAIN = "ishconnect.rw";
 export const DEFAULT_OG_IMAGE = "/og-image.png";
 export const DEFAULT_OG_IMAGE_ALT =
-  "IshConnect & Ishconnlab — Leading Software Development & Innovation Studio in Kigali, Rwanda";
+  "IshConnect – Software Development & AI Solutions in Kigali, Rwanda";
 export const TWITTER_HANDLE = "@IshConnectRW";
 export const SITE_LOCALE = "en_US";
 export const SITE_LANG = "en";
@@ -107,40 +107,24 @@ export function buildMeta(props: SEOProps) {
 
 export const PAGE_SEO: Record<string, PageSEOConfig> = {
   home: {
-    title: "IshConnect | Ishconnlab — Software Development & AI Innovation Studio, Kigali Rwanda",
+    title: "IshConnect – Custom Software Development & AI Solutions in Rwanda",
     description:
-      "IshConnect (Ishconnlab) is Kigali's leading technology studio for software development, AI training, web development, and tech innovation in Rwanda. We build digital products and empower African tech talent through education and digital transformation.",
-    ogTitle: "IshConnect & Ishconnlab — Software Development & AI Innovation Studio, Kigali Rwanda",
+      "IshConnect (ISHCONNLAB) is a Kigali-based technology company delivering custom software, AI solutions, web and mobile app development, cloud infrastructure, cybersecurity, and tech training across Rwanda and Africa.",
+    ogTitle: "IshConnect – Custom Software Development & AI Solutions in Rwanda",
     ogDescription:
-      "Kigali's leading technology studio for software development, AI training, web development, and tech innovation in Rwanda. Digital products, tech education, and digital transformation by IshConnect (Ishconnlab).",
+      "Custom software, AI, web and mobile development, cloud, cybersecurity, and tech training by IshConnect (ISHCONNLAB) in Kigali, Rwanda.",
     canonical: SITE_URL,
     ogType: "website",
     keywords: [
       "IshConnect",
-      "Ish Connect",
-      "Ishconnlab",
-      "Ishconn",
-      "Ishconnect Lab",
-      "DevQueens",
-      "Dev Queens",
-      "IshConnect Rwanda",
-      "AI Rwanda",
-      "web development Rwanda",
-      "React developer Rwanda",
-      "tech innovation Kigali",
-      "software development Kigali",
-      "AI training Rwanda",
-      "coding school Rwanda",
-      "programming Rwanda",
+      "ISHCONNLAB",
       "software development Rwanda",
-      "tech company Rwanda",
-      "digital transformation Rwanda",
-      "innovation hub Rwanda",
-      "Kigali software development",
-      "African tech studio",
-      "custom software development",
-      "IT services Rwanda",
-      "software agency Kigali",
+      "web development Kigali",
+      "AI solutions Rwanda",
+      "mobile app development Rwanda",
+      "tech training Rwanda",
+      "cybersecurity Rwanda",
+      "cloud solutions Rwanda",
     ],
     breadcrumbs: [{ name: "Home", url: "/" }],
   },
@@ -326,6 +310,141 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     breadcrumbs: [
       { name: "Home", url: "/" },
       { name: "Work", url: "/work" },
+    ],
+  },
+  softwareDevelopment: {
+    title: "Software Development Rwanda | Custom Software Company Kigali | IshConnect",
+    description:
+      "IshConnect offers custom software development in Kigali, Rwanda. We build scalable web apps, enterprise platforms, and SaaS products for African and global businesses.",
+    canonical: `${SITE_URL}/software-development-rwanda`,
+    ogType: "website",
+    keywords: [
+      "software development Rwanda",
+      "custom software company Kigali",
+      "software development services Rwanda",
+      "enterprise software Rwanda",
+      "SaaS development Africa",
+      "software engineering Kigali",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Software Development Rwanda", url: "/software-development-rwanda" },
+    ],
+  },
+  webDevelopment: {
+    title: "Web Development Kigali | Website Design Company Rwanda | IshConnect",
+    description:
+      "Professional web development in Kigali, Rwanda. IshConnect builds modern websites, web applications, and e-commerce platforms for businesses across East Africa.",
+    canonical: `${SITE_URL}/web-development-kigali`,
+    ogType: "website",
+    keywords: [
+      "web development Kigali",
+      "website design Rwanda",
+      "web development services Rwanda",
+      "e-commerce development Kigali",
+      "web application development Africa",
+      "frontend development Rwanda",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Web Development Kigali", url: "/web-development-kigali" },
+    ],
+  },
+  mobileApps: {
+    title: "Mobile App Development Rwanda | iOS & Android Developer Kigali | IshConnect",
+    description:
+      "Mobile app development in Rwanda by IshConnect. We build iOS and Android apps using React Native and Flutter for startups and enterprises in Kigali and across Africa.",
+    canonical: `${SITE_URL}/mobile-app-development-rwanda`,
+    ogType: "website",
+    keywords: [
+      "mobile app development Rwanda",
+      "iOS developer Kigali",
+      "Android developer Rwanda",
+      "React Native development Africa",
+      "Flutter developer Kigali",
+      "mobile app company Rwanda",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Mobile App Development Rwanda", url: "/mobile-app-development-rwanda" },
+    ],
+  },
+  aiSolutions: {
+    title: "AI Solutions Rwanda | Machine Learning Company Kigali | IshConnect",
+    description:
+      "AI and machine learning solutions in Rwanda. IshConnect delivers intelligent automation, predictive analytics, NLP, and computer vision systems for African businesses.",
+    canonical: `${SITE_URL}/ai-solutions-rwanda`,
+    ogType: "website",
+    keywords: [
+      "AI solutions Rwanda",
+      "machine learning company Kigali",
+      "artificial intelligence Rwanda",
+      "AI consulting Africa",
+      "predictive analytics Rwanda",
+      "NLP solutions Kigali",
+      "computer vision Africa",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "AI Solutions Rwanda", url: "/ai-solutions-rwanda" },
+    ],
+  },
+  cybersecurity: {
+    title: "Cybersecurity Services Rwanda | Security Company Kigali | IshConnect",
+    description:
+      "Cybersecurity services in Rwanda by IshConnect. We offer penetration testing, security audits, threat monitoring, and compliance solutions for businesses in Kigali and East Africa.",
+    canonical: `${SITE_URL}/cybersecurity-rwanda`,
+    ogType: "website",
+    keywords: [
+      "cybersecurity Rwanda",
+      "cybersecurity services Kigali",
+      "penetration testing Rwanda",
+      "security audit Kigali",
+      "threat monitoring Africa",
+      "IT security company Rwanda",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Cybersecurity Rwanda", url: "/cybersecurity-rwanda" },
+    ],
+  },
+  cloudServices: {
+    title: "Cloud Services Rwanda | Cloud Solutions Kigali | IshConnect",
+    description:
+      "Cloud infrastructure and DevOps services in Rwanda. IshConnect provides cloud migration, serverless architecture, CI/CD pipelines, and managed cloud solutions in Kigali.",
+    canonical: `${SITE_URL}/cloud-services-rwanda`,
+    ogType: "website",
+    keywords: [
+      "cloud services Rwanda",
+      "cloud solutions Kigali",
+      "cloud migration Africa",
+      "DevOps services Rwanda",
+      "serverless architecture Kigali",
+      "cloud consulting Rwanda",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Cloud Services Rwanda", url: "/cloud-services-rwanda" },
+    ],
+  },
+  techTraining: {
+    title: "Tech Training Rwanda | Coding Bootcamp Kigali | IshConnect Academy",
+    description:
+      "Tech training and coding bootcamps in Rwanda by IshConnect Academy. Learn full stack development, AI, cybersecurity, cloud computing, and UI/UX design in Kigali.",
+    canonical: `${SITE_URL}/tech-training-rwanda`,
+    ogType: "website",
+    keywords: [
+      "tech training Rwanda",
+      "coding bootcamp Kigali",
+      "programming courses Rwanda",
+      "IT training Kigali",
+      "software engineering course Rwanda",
+      "tech academy Rwanda",
+      "learn coding Kigali",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Tech Training Rwanda", url: "/tech-training-rwanda" },
     ],
   },
 };

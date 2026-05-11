@@ -17,6 +17,27 @@ const ProjectCaseStudy = lazy(() =>
   import("@/routes/project").then((m) => ({ default: m.ProjectCaseStudy })),
 );
 const Privacy = lazy(() => import("@/routes/privacy").then((m) => ({ default: m.Privacy })));
+const SoftwareDevelopment = lazy(() =>
+  import("@/routes/services/software-development").then((m) => ({ default: m.SoftwareDevelopment })),
+);
+const WebDevelopment = lazy(() =>
+  import("@/routes/services/web-development").then((m) => ({ default: m.WebDevelopment })),
+);
+const MobileApps = lazy(() =>
+  import("@/routes/services/mobile-apps").then((m) => ({ default: m.MobileApps })),
+);
+const AiSolutions = lazy(() =>
+  import("@/routes/services/ai-solutions").then((m) => ({ default: m.AiSolutions })),
+);
+const Cybersecurity = lazy(() =>
+  import("@/routes/services/cybersecurity").then((m) => ({ default: m.Cybersecurity })),
+);
+const CloudServices = lazy(() =>
+  import("@/routes/services/cloud").then((m) => ({ default: m.CloudServices })),
+);
+const TechTraining = lazy(() =>
+  import("@/routes/services/tech-training").then((m) => ({ default: m.TechTraining })),
+);
 
 function LoadingFallback() {
   return (
@@ -60,6 +81,27 @@ function AnimatedRoutes() {
           } />
           <Route path="work/:slug" element={
             <motion.div {...pageTransition}><ProjectCaseStudy /></motion.div>
+          } />
+          <Route path="software-development-rwanda" element={
+            <motion.div {...pageTransition}><SoftwareDevelopment /></motion.div>
+          } />
+          <Route path="web-development-kigali" element={
+            <motion.div {...pageTransition}><WebDevelopment /></motion.div>
+          } />
+          <Route path="mobile-app-development-rwanda" element={
+            <motion.div {...pageTransition}><MobileApps /></motion.div>
+          } />
+          <Route path="ai-solutions-rwanda" element={
+            <motion.div {...pageTransition}><AiSolutions /></motion.div>
+          } />
+          <Route path="cybersecurity-rwanda" element={
+            <motion.div {...pageTransition}><Cybersecurity /></motion.div>
+          } />
+          <Route path="cloud-services-rwanda" element={
+            <motion.div {...pageTransition}><CloudServices /></motion.div>
+          } />
+          <Route path="tech-training-rwanda" element={
+            <motion.div {...pageTransition}><TechTraining /></motion.div>
           } />
           <Route path="privacy" element={
             <motion.div {...pageTransition}><Privacy /></motion.div>

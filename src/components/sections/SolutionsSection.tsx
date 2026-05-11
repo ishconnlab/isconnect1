@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
   Smartphone,
@@ -15,31 +16,37 @@ const SOLUTIONS = [
     icon: LayoutDashboard,
     title: "Digital Platforms",
     desc: "Web apps, dashboards & SaaS that scale from day one.",
+    href: "/software-development-rwanda",
   },
   {
     icon: Smartphone,
     title: "Mobile Applications",
     desc: "Native-quality iOS & Android with React Native and Flutter.",
+    href: "/mobile-app-development-rwanda",
   },
   {
     icon: Cloud,
     title: "Cloud Infrastructure",
     desc: "Serverless, global edge, and resilient cloud architecture.",
+    href: "/cloud-services-rwanda",
   },
   {
     icon: ShieldCheck,
     title: "Cybersecurity",
     desc: "Threat modelling, audits, and zero-trust implementation.",
+    href: "/cybersecurity-rwanda",
   },
   {
     icon: Server,
     title: "Backend Engineering",
     desc: "APIs, data pipelines, and high-performance services.",
+    href: "/software-development-rwanda",
   },
   {
     icon: Palette,
     title: "UI / UX Design",
     desc: "Research-led product design with measurable outcomes.",
+    href: "/solutions",
   },
 ];
 
@@ -72,9 +79,13 @@ export function SolutionsSection() {
             </span>
             <h3 className="mt-5 font-display text-lg font-semibold tracking-tight">{s.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-            <div className="mt-5 inline-flex items-center gap-1 text-xs font-medium text-foreground/70 transition-colors group-hover:text-primary">
-              Learn more <ArrowUpRight className="h-3.5 w-3.5" />
-            </div>
+            <Link
+              to={s.href}
+              className="mt-5 inline-flex items-center gap-1 text-xs font-medium text-foreground/70 transition-colors group-hover:text-primary"
+            >
+              Learn more about {s.title.toLowerCase()}{" "}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           </motion.article>
         ))}
       </div>
