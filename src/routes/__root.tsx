@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ChatBot } from "@/components/chatbot/ChatBot";
+import { InstallBanner } from "@/components/InstallBanner";
 
 export function RootLayout() {
   const { pathname } = useLocation();
@@ -27,6 +28,7 @@ export function RootLayout() {
       <Footer />
       <Toaster richColors position="top-right" />
       <ChatBot />
+      <InstallBanner />
     </div>
   );
 }

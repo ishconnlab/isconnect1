@@ -180,6 +180,20 @@
       0 24px 64px rgb(31 41 55 / 0.08);
   }
 
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .animate-slide-up {
+    animation: slide-up 0.35s ease-out;
+  }
+
   .pb-safe-or-2 {
     padding-bottom: env(safe-area-inset-bottom, 0.5rem);
   }
