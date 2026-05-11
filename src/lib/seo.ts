@@ -81,6 +81,7 @@ export function resolveOgImage(image?: string | ImageObject): {
 
 export function buildMeta(props: SEOProps) {
   const ogImage = resolveOgImage(props.ogImage);
+  const canonical = resolveUrl(props.canonical);
 
   return {
     title: props.title,
@@ -91,9 +92,9 @@ export function buildMeta(props: SEOProps) {
     ogImageAlt: props.ogImageAlt || ogImage.alt,
     ogImageWidth: ogImage.width,
     ogImageHeight: ogImage.height,
-    ogUrl: props.canonical,
+    ogUrl: canonical,
     ogType: props.ogType || "website",
-    canonical: props.canonical,
+    canonical,
     noindex: props.noindex || false,
     nofollow: props.nofollow || false,
     publishedTime: props.publishedTime,

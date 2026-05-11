@@ -75,7 +75,9 @@ export function SEOHead(props: SEOProps) {
       <meta name="twitter:description" content={meta.ogDescription} />
       <meta name="twitter:image" content={meta.ogImage} />
       <meta name="twitter:image:alt" content={meta.ogImageAlt} />
-      <meta name="twitter:domain" content={new URL(meta.canonical).hostname} />
+      <meta name="twitter:domain" content={(() => {
+        try { return new URL(meta.canonical).hostname; } catch { return "ishconnect.rw"; }
+      })()} />
 
       {/* JSON-LD brand alternates for Google */}
       <script type="application/ld+json">{`

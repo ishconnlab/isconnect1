@@ -1,12 +1,7 @@
 import { Helmet } from "react-helmet-async";
-import {
-  SITE_NAME,
-  SITE_ALTERNATE_NAME,
-  SITE_ALTERNATE_NAMES,
-  SITE_LEGAL_NAME,
-  SITE_URL,
-} from "@/lib/seo";
+import { SITE_NAME, SITE_ALTERNATE_NAMES, SITE_LEGAL_NAME, SITE_URL } from "@/lib/seo";
 import type { Program } from "@/lib/programs";
+import type { Project } from "@/lib/projects";
 
 function SchemaScript({ schema }: { schema: Record<string, unknown> }) {
   return (
@@ -232,6 +227,54 @@ export function LocalBusinessJsonLd() {
     telephone: "+250787377750",
     email: "ishconnlab@gmail.com",
     areaServed: ["RW", "Africa"],
+  };
+
+  return <SchemaScript schema={schema} />;
+}
+
+export function CreativeWorkJsonLd({ project }: { project: Project }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${SITE_URL}/work/${project.slug}#creativework`,
+    name: project.title,
+    description: project.description,
+    abstract: project.heroSummary,
+    keywords: project.seoKeywords.join(", "),
+    author: {
+      "@id": `${SITE_URL}#organization`,
+    },
+    provider: {
+      "@id": `${SITE_URL}#organization`,
+    },
+    dateCreated: "2024",
+    datePublished: "2024",
+    educationalUse: "Case Study",
+    teaches: project.tech.join(", "),
+    about: {
+      "@type": "Thing",
+      name: project.category,
+    },
+  };
+
+  return <SchemaScript schema={schema} />;
+}
+
+export function ProjectJsonLd({ project }: { project: Project }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Project",
+    "@id": `${SITE_URL}/work/${project.slug}#project`,
+    name: project.title,
+    description: project.description,
+    url: `${SITE_URL}/work/${project.slug}`,
+    image: project.image,
+    provider: {
+      "@id": `${SITE_URL}#organization`,
+    },
+    category: project.category,
+    keywords: project.seoKeywords.join(", "),
+    status: "Completed",
   };
 
   return <SchemaScript schema={schema} />;

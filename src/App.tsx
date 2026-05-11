@@ -1,9 +1,10 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { SEOHead } from "@/components/SEOHead";
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from "@/components/JsonLd";
 import { RootLayout } from "@/routes/__root";
+import { NotFound } from "@/routes/not-found";
 import { Loader2 } from "lucide-react";
 
 const Home = lazy(() => import("@/routes/index").then((m) => ({ default: m.Home })));
@@ -12,6 +13,9 @@ const Academy = lazy(() => import("@/routes/academy").then((m) => ({ default: m.
 const Contact = lazy(() => import("@/routes/contact").then((m) => ({ default: m.Contact })));
 const Solutions = lazy(() => import("@/routes/solutions").then((m) => ({ default: m.Solutions })));
 const Work = lazy(() => import("@/routes/work").then((m) => ({ default: m.Work })));
+const ProjectCaseStudy = lazy(() =>
+  import("@/routes/project").then((m) => ({ default: m.ProjectCaseStudy })),
+);
 const Privacy = lazy(() => import("@/routes/privacy").then((m) => ({ default: m.Privacy })));
 
 function LoadingFallback() {
@@ -22,33 +26,50 @@ function LoadingFallback() {
   );
 }
 
-function NotFound() {
+const pageTransition = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -12 },
+  transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+};
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
   return (
-    <>
-      <SEOHead
-        title="Page Not Found · IshConnect & Ishconnlab"
-        description="The page you're looking for doesn't exist or has been moved. Return to IshConnect (Ishconnlab) — Kigali's leading software development and AI innovation studio."
-        canonical="https://www.ishconnect.rw/404"
-        noindex
-      />
-      <div className="flex min-h-screen items-center justify-center bg-background px-4">
-        <div className="max-w-md text-center">
-          <h1 className="text-7xl font-bold text-foreground">404</h1>
-          <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            The page you're looking for doesn't exist or has been moved.
-          </p>
-          <div className="mt-6">
-            <a
-              href="/"
-              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Go home
-            </a>
-          </div>
-        </div>
-      </div>
-    </>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route element={<RootLayout />}>
+          <Route index element={
+            <motion.div {...pageTransition}><Home /></motion.div>
+          } />
+          <Route path="about" element={
+            <motion.div {...pageTransition}><About /></motion.div>
+          } />
+          <Route path="academy" element={
+            <motion.div {...pageTransition}><Academy /></motion.div>
+          } />
+          <Route path="contact" element={
+            <motion.div {...pageTransition}><Contact /></motion.div>
+          } />
+          <Route path="solutions" element={
+            <motion.div {...pageTransition}><Solutions /></motion.div>
+          } />
+          <Route path="work" element={
+            <motion.div {...pageTransition}><Work /></motion.div>
+          } />
+          <Route path="work/:slug" element={
+            <motion.div {...pageTransition}><ProjectCaseStudy /></motion.div>
+          } />
+          <Route path="privacy" element={
+            <motion.div {...pageTransition}><Privacy /></motion.div>
+          } />
+          <Route path="*" element={
+            <motion.div {...pageTransition}><NotFound /></motion.div>
+          } />
+        </Route>
+      </Routes>
+    </AnimatePresence>
   );
 }
 
@@ -59,18 +80,7 @@ export function App() {
       <WebSiteJsonLd />
       <LocalBusinessJsonLd />
       <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route element={<RootLayout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="academy" element={<Academy />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="solutions" element={<Solutions />} />
-            <Route path="work" element={<Work />} />
-            <Route path="privacy" element={<Privacy />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+        <AnimatedRoutes />
       </Suspense>
     </ErrorBoundary>
   );
