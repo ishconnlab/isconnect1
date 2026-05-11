@@ -21,12 +21,10 @@ export function InstallBanner() {
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
-  const handleInstall = async () => {
+  const handleInstall = () => {
     if (!deferredPrompt) return;
-    (deferredPrompt as Event & { prompt: () => Promise<void> }).prompt();
-    const result = await (deferredPrompt as Event & { userChoice: Promise<{ outcome: string }> }).userChoice;
-    if (result.outcome === "accepted") setDeferredPrompt(null);
     setVisible(false);
+    (deferredPrompt as Event & { prompt: () => Promise<void> }).prompt();
   };
 
   const handleDismiss = () => {
