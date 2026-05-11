@@ -44,8 +44,9 @@ export function SectionHeading({
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5 }}
+          style={{ willChange: "transform" }}
         >
           <Eyebrow>{eyebrow}</Eyebrow>
         </motion.div>
@@ -53,8 +54,9 @@ export function SectionHeading({
       <motion.h2
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+        style={{ willChange: "transform" }}
         className="mt-4 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl"
       >
         {title}
@@ -63,8 +65,9 @@ export function SectionHeading({
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
+          style={{ willChange: "transform" }}
           className="mt-5 text-lg leading-relaxed text-muted-foreground text-pretty"
         >
           {description}

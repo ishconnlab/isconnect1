@@ -19,8 +19,17 @@ export const Navbar = memo(function Navbar() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    setScrolled(window.scrollY > 12);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 12);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -35,8 +44,11 @@ export const Navbar = memo(function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{ willChange: "transform" }}
         className={`flex w-full max-w-6xl items-center justify-between gap-4 rounded-full border border-soft-border/60 px-3 py-2 transition-all duration-300 sm:px-4 ${
-          scrolled ? "glass-nav shadow-soft" : "bg-background/40 backdrop-blur-md"
+          scrolled
+            ? "glass-nav shadow-soft"
+            : "bg-background/60 lg:bg-background/40 lg:backdrop-blur-md"
         }`}
         aria-label="Main navigation"
       >
@@ -59,6 +71,7 @@ export const Navbar = memo(function Navbar() {
                       layoutId="nav-pill"
                       className="absolute inset-0 -z-10 rounded-full bg-primary/10"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      style={{ willChange: "transform" }}
                     />
                   )}
                   {item.label}
@@ -93,6 +106,7 @@ export const Navbar = memo(function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
+            style={{ willChange: "transform" }}
             className="absolute inset-x-3 top-[68px] rounded-3xl border border-soft-border/60 bg-surface p-4 shadow-elevated lg:hidden"
           >
             <ul className="flex flex-col">

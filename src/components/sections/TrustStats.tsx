@@ -8,7 +8,7 @@ const STATS = [
   { value: 98, suffix: "%", label: "Client Satisfaction" },
 ];
 
-function Counter({ to, suffix }: { to: number; suffix: string }) {
+function Counter({ to, suffix, delay = 0 }: { to: number; suffix: string; delay?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const mv = useMotionValue(0);
@@ -16,10 +16,14 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
 
   useEffect(() => {
     if (inView) {
-      const controls = animate(mv, to, { duration: 1.6, ease: [0.16, 1, 0.3, 1] });
+      const controls = animate(mv, to, {
+        duration: 1.2,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
+      });
       return controls.stop;
     }
-  }, [inView, mv, to]);
+  }, [inView, mv, to, delay]);
 
   return (
     <span ref={ref} className="tabular-nums">
@@ -47,10 +51,11 @@ export function TrustStats() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            style={{ willChange: "transform" }}
             className="text-center"
           >
             <p className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">
-              <Counter to={s.value} suffix={s.suffix} />
+              <Counter to={s.value} suffix={s.suffix} delay={i * 0.12} />
             </p>
             <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
           </motion.div>

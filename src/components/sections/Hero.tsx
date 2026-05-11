@@ -122,6 +122,7 @@ function HeroVisual() {
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+      style={{ willChange: "transform" }}
       className="relative mx-auto aspect-[4/5] w-full max-w-md"
     >
       {/* Big card */}
@@ -187,9 +188,12 @@ function HeroVisual() {
 
       {/* Floating chips */}
       <motion.div
-        animate={{ y: [0, -8, 0] }}
+        initial={{ y: 0 }}
+        whileInView={{ y: [0, -8, 0] }}
+        viewport={{ margin: "-100px" }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-4 top-10 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-surface px-3 py-2 shadow-soft"
+        style={{ willChange: "transform" }}
+        className="absolute -left-4 top-10 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-surface px-3 py-2 shadow-soft motion-reduce:animate-none"
       >
         <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
           <Activity className="h-3.5 w-3.5" />
@@ -201,9 +205,12 @@ function HeroVisual() {
       </motion.div>
 
       <motion.div
-        animate={{ y: [0, 10, 0] }}
+        initial={{ y: 0 }}
+        whileInView={{ y: [0, 10, 0] }}
+        viewport={{ margin: "-100px" }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-4 top-40 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-surface px-3 py-2 shadow-soft"
+        style={{ willChange: "transform" }}
+        className="absolute -right-4 top-40 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-surface px-3 py-2 shadow-soft motion-reduce:animate-none"
       >
         <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-secondary/15 text-primary-hover">
           <Zap className="h-3.5 w-3.5" />
@@ -215,9 +222,12 @@ function HeroVisual() {
       </motion.div>
 
       <motion.div
-        animate={{ y: [0, -6, 0] }}
+        initial={{ y: 0 }}
+        whileInView={{ y: [0, -6, 0] }}
+        viewport={{ margin: "-100px" }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        className="absolute -bottom-2 left-6 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-foreground px-3 py-2 text-background shadow-elevated"
+        style={{ willChange: "transform" }}
+        className="absolute -bottom-2 left-6 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-foreground px-3 py-2 text-background shadow-elevated motion-reduce:animate-none"
       >
         <Globe className="h-3.5 w-3.5 text-primary" />
         <p className="text-xs font-medium">Made in Kigali · Shipped worldwide</p>
