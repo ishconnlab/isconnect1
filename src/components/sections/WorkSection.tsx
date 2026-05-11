@@ -44,7 +44,7 @@ function ProjectRow({ p, reverse }: { p: Project; reverse: boolean }) {
       <div className="lg:col-span-7">
         <Link
           to={`/work/${p.slug}`}
-          className={`group relative aspect-[16/10] overflow-hidden rounded-3xl border border-soft-border/70 bg-gradient-to-br ${p.accent} shadow-elevated block`}
+          className={`group relative aspect-16/10 overflow-hidden rounded-3xl border border-soft-border/70 bg-linear-to-br ${p.accent} shadow-elevated block`}
         >
           {/* Browser mockup */}
           <div className="absolute inset-3 rounded-2xl bg-surface/95 p-3 shadow-soft sm:inset-4 sm:p-4">
@@ -69,7 +69,7 @@ function ProjectRow({ p, reverse }: { p: Project; reverse: boolean }) {
               />
 
               {/* overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-background/20 via-transparent to-transparent" />
             </div>
           </div>
         </Link>

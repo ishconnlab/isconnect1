@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { usePageTracking } from "@/hooks/usePageTracking";
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from "@/components/JsonLd";
 import { RootLayout } from "@/routes/__root";
 import { NotFound } from "@/routes/not-found";
@@ -18,7 +19,9 @@ const ProjectCaseStudy = lazy(() =>
 );
 const Privacy = lazy(() => import("@/routes/privacy").then((m) => ({ default: m.Privacy })));
 const SoftwareDevelopment = lazy(() =>
-  import("@/routes/services/software-development").then((m) => ({ default: m.SoftwareDevelopment })),
+  import("@/routes/services/software-development").then((m) => ({
+    default: m.SoftwareDevelopment,
+  })),
 );
 const WebDevelopment = lazy(() =>
   import("@/routes/services/web-development").then((m) => ({ default: m.WebDevelopment })),
@@ -56,59 +59,140 @@ const pageTransition = {
 
 function AnimatedRoutes() {
   const location = useLocation();
+  usePageTracking();
 
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<RootLayout />}>
-          <Route index element={
-            <motion.div {...pageTransition}><Home /></motion.div>
-          } />
-          <Route path="about" element={
-            <motion.div {...pageTransition}><About /></motion.div>
-          } />
-          <Route path="academy" element={
-            <motion.div {...pageTransition}><Academy /></motion.div>
-          } />
-          <Route path="contact" element={
-            <motion.div {...pageTransition}><Contact /></motion.div>
-          } />
-          <Route path="solutions" element={
-            <motion.div {...pageTransition}><Solutions /></motion.div>
-          } />
-          <Route path="work" element={
-            <motion.div {...pageTransition}><Work /></motion.div>
-          } />
-          <Route path="work/:slug" element={
-            <motion.div {...pageTransition}><ProjectCaseStudy /></motion.div>
-          } />
-          <Route path="software-development-rwanda" element={
-            <motion.div {...pageTransition}><SoftwareDevelopment /></motion.div>
-          } />
-          <Route path="web-development-kigali" element={
-            <motion.div {...pageTransition}><WebDevelopment /></motion.div>
-          } />
-          <Route path="mobile-app-development-rwanda" element={
-            <motion.div {...pageTransition}><MobileApps /></motion.div>
-          } />
-          <Route path="ai-solutions-rwanda" element={
-            <motion.div {...pageTransition}><AiSolutions /></motion.div>
-          } />
-          <Route path="cybersecurity-rwanda" element={
-            <motion.div {...pageTransition}><Cybersecurity /></motion.div>
-          } />
-          <Route path="cloud-services-rwanda" element={
-            <motion.div {...pageTransition}><CloudServices /></motion.div>
-          } />
-          <Route path="tech-training-rwanda" element={
-            <motion.div {...pageTransition}><TechTraining /></motion.div>
-          } />
-          <Route path="privacy" element={
-            <motion.div {...pageTransition}><Privacy /></motion.div>
-          } />
-          <Route path="*" element={
-            <motion.div {...pageTransition}><NotFound /></motion.div>
-          } />
+          <Route
+            index
+            element={
+              <motion.div {...pageTransition}>
+                <Home />
+              </motion.div>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <motion.div {...pageTransition}>
+                <About />
+              </motion.div>
+            }
+          />
+          <Route
+            path="academy"
+            element={
+              <motion.div {...pageTransition}>
+                <Academy />
+              </motion.div>
+            }
+          />
+          <Route
+            path="contact"
+            element={
+              <motion.div {...pageTransition}>
+                <Contact />
+              </motion.div>
+            }
+          />
+          <Route
+            path="solutions"
+            element={
+              <motion.div {...pageTransition}>
+                <Solutions />
+              </motion.div>
+            }
+          />
+          <Route
+            path="work"
+            element={
+              <motion.div {...pageTransition}>
+                <Work />
+              </motion.div>
+            }
+          />
+          <Route
+            path="work/:slug"
+            element={
+              <motion.div {...pageTransition}>
+                <ProjectCaseStudy />
+              </motion.div>
+            }
+          />
+          <Route
+            path="software-development-rwanda"
+            element={
+              <motion.div {...pageTransition}>
+                <SoftwareDevelopment />
+              </motion.div>
+            }
+          />
+          <Route
+            path="web-development-kigali"
+            element={
+              <motion.div {...pageTransition}>
+                <WebDevelopment />
+              </motion.div>
+            }
+          />
+          <Route
+            path="mobile-app-development-rwanda"
+            element={
+              <motion.div {...pageTransition}>
+                <MobileApps />
+              </motion.div>
+            }
+          />
+          <Route
+            path="ai-solutions-rwanda"
+            element={
+              <motion.div {...pageTransition}>
+                <AiSolutions />
+              </motion.div>
+            }
+          />
+          <Route
+            path="cybersecurity-rwanda"
+            element={
+              <motion.div {...pageTransition}>
+                <Cybersecurity />
+              </motion.div>
+            }
+          />
+          <Route
+            path="cloud-services-rwanda"
+            element={
+              <motion.div {...pageTransition}>
+                <CloudServices />
+              </motion.div>
+            }
+          />
+          <Route
+            path="tech-training-rwanda"
+            element={
+              <motion.div {...pageTransition}>
+                <TechTraining />
+              </motion.div>
+            }
+          />
+          <Route
+            path="privacy"
+            element={
+              <motion.div {...pageTransition}>
+                <Privacy />
+              </motion.div>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <motion.div {...pageTransition}>
+                <NotFound />
+              </motion.div>
+            }
+          />
         </Route>
       </Routes>
     </AnimatePresence>

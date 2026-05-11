@@ -222,6 +222,8 @@ import emailjs from "@emailjs/browser";
 
 import { Section, SectionHeading } from "../Section";
 
+emailjs.init("I3579akFPAYK4y_LS");
+
 const schema = z.object({
   name: z.string().trim().min(2).max(80),
   email: z.string().trim().email().max(120),
@@ -245,8 +247,8 @@ export function ContactSection() {
   const onSubmit = async (v: Values) => {
     try {
       await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        "service_emew7q6",
+        "template_flzt17z",
         {
           name: v.name,
           email: v.email,
@@ -255,7 +257,6 @@ export function ContactSection() {
           message: v.message,
           time: new Date().toLocaleString(),
         },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
       );
 
       toast.success("Message sent", {
@@ -453,7 +454,7 @@ function ContactCard({
   href?: string;
 }) {
   const inner = (
-    <div className="flex items-center gap-3 rounded-3xl border border-orange-100 bg-white p-5 shadow-soft transition-all duration-300 hover:border-[#F97316]/40 hover:translate-y-[-2px]">
+    <div className="flex items-center gap-3 rounded-3xl border border-orange-100 bg-white p-5 shadow-soft transition-all duration-300 hover:border-[#F97316]/40 hover:-translate-y-0.5">
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-100 text-[#F97316]">
         {icon}
       </span>
