@@ -79,6 +79,10 @@ export function SEOHead(props: SEOProps) {
         try { return new URL(meta.canonical).hostname; } catch { return "ishconnect.rw"; }
       })()} />
 
+      {/* Hreflang */}
+      <link rel="alternate" href={meta.canonical} hrefLang={SITE_LANG} />
+      <link rel="alternate" href={meta.canonical} hrefLang="x-default" />
+
       {/* JSON-LD brand alternates for Google */}
       <script type="application/ld+json">{`
         {

@@ -99,6 +99,44 @@ export function WebSiteJsonLd() {
       },
       "query-input": "required name=search_term_string",
     },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Technology Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Software Development",
+            url: `${SITE_URL}/software-development-rwanda`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Web Development",
+            url: `${SITE_URL}/web-development-kigali`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Mobile App Development",
+            url: `${SITE_URL}/mobile-app-development-rwanda`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "AI Solutions",
+            url: `${SITE_URL}/ai-solutions-rwanda`,
+          },
+        },
+      ],
+    },
   };
 
   return <SchemaScript schema={schema} />;
@@ -170,6 +208,17 @@ export function ServiceJsonLd({ name, description }: { name: string; description
         name: "Rwanda",
       },
     },
+    offers: {
+      "@type": "Offer",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "USD",
+        price: "Custom",
+        description: "Custom pricing based on project scope — free consultation available",
+      },
+      availability: "http://schema.org/InStock",
+    },
+    category: "Technology Services",
   };
 
   return <SchemaScript schema={schema} />;
@@ -255,6 +304,25 @@ export function CreativeWorkJsonLd({ project }: { project: Project }) {
       "@type": "Thing",
       name: project.category,
     },
+  };
+
+  return <SchemaScript schema={schema} />;
+}
+
+export function ItemListJsonLd({ items }: { items: { name: string; url: string }[] }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": `${SITE_URL}/work#itemlist`,
+    name: "IshConnect Portfolio",
+    description: "Case studies and projects by IshConnect (Ishconnlab) in Kigali, Rwanda",
+    numberOfItems: items.length,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      url: `${SITE_URL}${item.url}`,
+    })),
   };
 
   return <SchemaScript schema={schema} />;
