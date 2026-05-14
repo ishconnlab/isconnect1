@@ -13,8 +13,8 @@ window.addEventListener("unhandledrejection", (event) => {
     event.reason?.message?.includes("Loading chunk")
   ) {
     event.preventDefault();
-    if (!sessionStorage.getItem("opencode_chunk_reload")) {
-      sessionStorage.setItem("opencode_chunk_reload", "true");
+    if (!sessionStorage.getItem("ishconnect_chunk_reload")) {
+      sessionStorage.setItem("ishconnect_chunk_reload", "true");
       window.location.reload();
     }
   }

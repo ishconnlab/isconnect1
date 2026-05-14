@@ -102,9 +102,13 @@ export function AboutSection() {
   );
 }
 
-/* CARD COMPONENT (TREE NODE) */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function CardContent({ t }: any) {
+interface TimelineItem {
+  year: string;
+  title: string;
+  text: string;
+}
+
+function CardContent({ t }: { t: TimelineItem }) {
   return (
     <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition relative">
       {/* connector branch line */}

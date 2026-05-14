@@ -11,7 +11,7 @@ export default defineConfig({
     tsconfigPaths(),
     VitePWA({
       registerType: "autoUpdate",
-      devOptions: { enabled: true },
+      devOptions: { enabled: false },
       manifest: false,
       includeAssets: [
         "favicon.svg",
@@ -33,7 +33,6 @@ export default defineConfig({
         ],
       },
     }),
-
   ],
   build: {
     rollupOptions: {
@@ -56,5 +55,7 @@ export default defineConfig({
     minify: "esbuild",
     cssMinify: true,
     cssCodeSplit: false,
+    chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 4096,
   },
 });

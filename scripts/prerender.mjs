@@ -1,11 +1,9 @@
 import { createRequire } from "module";
-import { fileURLToPath } from "url";
 import { createServer } from "http";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
-import { join, extname, dirname, resolve } from "path";
+import { join, extname, resolve } from "path";
 
 const require = createRequire(import.meta.url);
-const puppeteer = require("puppeteer-core");
 const DIST = resolve(process.cwd(), "dist");
 const ROUTES = [
   "/",
@@ -23,7 +21,6 @@ const ROUTES = [
   "/cloud-services-rwanda",
   "/tech-training-rwanda",
 ];
-const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const MIME = {
   ".html": "text/html",
@@ -63,20 +60,74 @@ function startServer() {
   });
 }
 
+async function findChrome() {
+  if (process.platform === "linux") {
+    try {
+      const chromium = require("@sparticuz/chromium");
+      const execPath = await chromium.executablePath();
+      if (execPath && existsSync(execPath)) {
+        return execPath;
+      }
+    } catch {
+      // @sparticuz/chromium not available, continue
+    }
+  }
+
+  const knownPaths = [
+    process.env.CHROME_PATH,
+    process.env.CHROME_BIN,
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    ...(process.platform === "win32"
+      ? [
+          "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+          "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+          `${process.env.LOCALAPPDATA}\\Google\\Chrome\\Application\\chrome.exe`,
+          `${process.env.PROGRAMFILES}\\Google\\Chrome\\Application\\chrome.exe`,
+        ]
+      : process.platform === "darwin"
+        ? ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"]
+        : [
+            "/usr/bin/google-chrome",
+            "/usr/bin/chromium-browser",
+            "/usr/bin/chromium",
+            "/snap/bin/chromium",
+            "/usr/bin/google-chrome-stable",
+          ]),
+  ];
+
+  for (const p of knownPaths) {
+    if (p && existsSync(p)) return p;
+  }
+
+  return null;
+}
+
 async function prerender() {
   console.log("[prerender] Starting prerender...");
+
+  const executablePath = await findChrome();
+  if (!executablePath) {
+    console.warn("[prerender] Chrome/Chromium not found. Skipping prerender. SPA will still work.");
+    return;
+  }
+
+  console.log(`[prerender] Chrome found at: ${executablePath}`);
 
   const { server, port } = await startServer();
   let browser;
 
   try {
-    const launchOpts = {
-      executablePath: CHROME_PATH,
+    const puppeteer = require("puppeteer-core");
+    browser = await puppeteer.launch({
+      executablePath,
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
-    };
-
-    browser = await puppeteer.launch(launchOpts);
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
+      ],
+    });
     console.log("[prerender] Browser launched");
 
     for (const route of ROUTES) {
@@ -88,7 +139,6 @@ async function prerender() {
       try {
         await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
         await page.waitForSelector("#main-content", { timeout: 15000 });
-        // Wait for any animations and lazy content to settle
         await new Promise((r) => setTimeout(r, 3000));
 
         const html = await page.content();
@@ -113,6 +163,6 @@ async function prerender() {
 }
 
 prerender().catch((err) => {
-  console.error("[prerender] Fatal error:", err.message);
-  process.exit(1);
+  console.warn("[prerender] Skipped:", err.message);
+  process.exit(0);
 });

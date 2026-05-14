@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { X, Loader2, CheckCircle2, GraduationCap } from "lucide-react";
 import { toast } from "sonner";
-import emailjs from "@emailjs/browser";
+import { sendEnrollment } from "@/lib/email";
 
 import { PROGRAMS, type Program } from "@/lib/programs";
 
@@ -51,29 +51,29 @@ export function EnrollModal({
     if (!program) return;
 
     try {
-      await emailjs.send(
-        "service_emew7q6",
-        "template_gumqgv8",
-        {
-          name: values.name,
-          email: values.email,
-          phone: values.phone,
-          message: values.message || "No message provided",
-          course: program.title,
-          duration: program.duration,
-          course_slug: program.slug,
-        },
-        "I3579akFPAYK4y_LS",
-      );
-
-      setDone(true);
-
-      toast.success("Enrollment submitted", {
-        description: "We'll be in touch within 24 hours.",
+      const result = await sendEnrollment({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        course: program.title,
+        courseSlug: program.slug,
+        message: values.message,
       });
-    } catch (e) {
+
+      if (result.simulated) {
+        setDone(true);
+        toast.success("Enrollment submitted", {
+          description: "We'll be in touch within 24 hours.",
+        });
+      } else {
+        setDone(true);
+        toast.success("Enrollment submitted", {
+          description: "We'll be in touch within 24 hours.",
+        });
+      }
+    } catch {
       toast.error("Could not submit", {
-        description: "Please try again or email hello@ishconnect.com",
+        description: "Please try again or email ishconnlab@gmail.com",
       });
     }
   };

@@ -19,7 +19,20 @@ import emailjs from "@emailjs/browser";
  * maps a course slug to its template id.
  */
 
-const env = import.meta.env as Record<string, string | undefined>;
+interface ImportMetaEnv {
+  VITE_EMAILJS_PUBLIC_KEY?: string;
+  VITE_EMAILJS_SERVICE_ID?: string;
+  VITE_EMAILJS_TEMPLATE_CONTACT?: string;
+  VITE_EMAILJS_TEMPLATE_FULLSTACK?: string;
+  VITE_EMAILJS_TEMPLATE_PYTHON?: string;
+  VITE_EMAILJS_TEMPLATE_CYBERSECURITY?: string;
+  VITE_EMAILJS_TEMPLATE_MOBILE?: string;
+  VITE_EMAILJS_TEMPLATE_CLOUD?: string;
+  VITE_EMAILJS_TEMPLATE_UIUX?: string;
+  VITE_EMAILJS_TEMPLATE_DEFAULT?: string;
+}
+
+const env = import.meta.env as ImportMetaEnv;
 
 export const EMAILJS_PUBLIC_KEY = env.VITE_EMAILJS_PUBLIC_KEY ?? "";
 export const EMAILJS_SERVICE_ID = env.VITE_EMAILJS_SERVICE_ID ?? "";

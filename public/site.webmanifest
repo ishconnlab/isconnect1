@@ -4,8 +4,8 @@
   "description": "Building Africa's Next Generation of Digital Innovation",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#FFF7ED",
+  "theme_color": "#F97316",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
