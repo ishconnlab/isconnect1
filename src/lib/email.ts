@@ -89,7 +89,6 @@ export async function sendEnrollment(payload: EnrollPayload) {
   if (!EMAILJS_SERVICE_ID || !template) {
     // Dev fallback: no EmailJS configured yet — simulate success so UX stays smooth.
     await new Promise((r) => setTimeout(r, 700));
-    // eslint-disable-next-line no-console
     console.warn("[EmailJS] Not configured. Simulated send:", { template, payload });
     return { ok: true, simulated: true as const };
   }
@@ -110,7 +109,6 @@ export async function sendContact(payload: ContactPayload) {
   ensureInit();
   if (!EMAILJS_SERVICE_ID || !CONTACT_TEMPLATE) {
     await new Promise((r) => setTimeout(r, 700));
-    // eslint-disable-next-line no-console
     console.warn("[EmailJS] Not configured. Simulated send:", payload);
     return { ok: true, simulated: true as const };
   }

@@ -1,5 +1,4 @@
 export const SITE_NAME = "IshConnect";
-export const SITE_ALTERNATE_NAME = "IshConnect Lab";
 export const SITE_ALTERNATE_NAMES = [
   "IshConnect",
   "Ish Connect",
