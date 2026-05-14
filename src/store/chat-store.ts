@@ -29,7 +29,7 @@ function generateId(): string {
 
 export const useChatStore = create<ChatState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       messages: [],
       isOpen: false,
       isTyping: false,

@@ -38,25 +38,14 @@ const stagger = {
   },
 };
 
-function DetailLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
-      {icon}
-      {label}
-    </span>
-  );
-}
-
 function SectionBlock({
   icon,
   title,
   children,
-  delay = 0,
 }: {
   icon?: React.ReactNode;
   title: string;
   children: React.ReactNode;
-  delay?: number;
 }) {
   return (
     <motion.div
@@ -143,8 +132,6 @@ function FeatureList({ items }: { items: string[] }) {
 export function ProjectCaseStudy() {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
-
-  console.debug(`[ProjectCaseStudy] slug="${slug}" matched=`, project?.slug ?? "NOT FOUND");
 
   if (!project) {
     return (

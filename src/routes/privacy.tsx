@@ -183,8 +183,7 @@ function useActiveSection(sectionIds: readonly string[]): string {
     });
 
     return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sectionIds]);
 
   return activeId;
 }
@@ -331,7 +330,7 @@ export function Privacy() {
                     On this page
                   </h2>
                   <ul className="space-y-1">
-                    {SECTIONS.map((section, i) => (
+                    {SECTIONS.map((section) => (
                       <li key={section.id}>
                         <a
                           href={`#${section.id}`}
