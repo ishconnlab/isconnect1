@@ -52,7 +52,10 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-all hover:bg-primary-hover disabled:opacity-40 disabled:cursor-not-allowed max-sm:h-11 max-sm:w-11 active:scale-95 md:h-11 md:w-11 lg:h-12 lg:w-12 xl:h-13 xl:w-13"
           aria-label="Send message"
         >
-          <ArrowUp className="h-4.5 w-4.5 max-sm:h-5 max-sm:w-5 md:h-5 md:w-5 lg:h-5.5 lg:w-5.5 xl:h-6 xl:w-6" strokeWidth={2.5} />
+          <ArrowUp
+            className="h-4.5 w-4.5 max-sm:h-5 max-sm:w-5 md:h-5 md:w-5 lg:h-5.5 lg:w-5.5 xl:h-6 xl:w-6"
+            strokeWidth={2.5}
+          />
         </motion.button>
       </div>
     </div>

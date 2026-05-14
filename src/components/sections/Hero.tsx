@@ -60,8 +60,8 @@ export function Hero() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty"
           >
-            <strong>IshConnect</strong> (operated by <strong>ISHCONNLAB</strong>) helps startups
-            and enterprises build scalable web apps, mobile applications, AI systems, and digital
+            <strong>IshConnect</strong> (operated by <strong>ISHCONNLAB</strong>) helps startups and
+            enterprises build scalable web apps, mobile applications, AI systems, and digital
             platforms from <strong>Kigali, Rwanda</strong>. We also offer tech training through
             IshConnect Academy and run <strong>DevQueens</strong>, an initiative empowering women in
             African tech.

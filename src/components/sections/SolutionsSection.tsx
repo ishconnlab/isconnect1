@@ -83,8 +83,7 @@ export function SolutionsSection() {
               to={s.href}
               className="mt-5 inline-flex items-center gap-1 text-xs font-medium text-foreground/70 transition-colors group-hover:text-primary"
             >
-              Learn more about {s.title.toLowerCase()}{" "}
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              Learn more about {s.title.toLowerCase()} <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </motion.article>
         ))}

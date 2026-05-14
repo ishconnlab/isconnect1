@@ -75,9 +75,16 @@ export function SEOHead(props: SEOProps) {
       <meta name="twitter:description" content={meta.ogDescription} />
       <meta name="twitter:image" content={meta.ogImage} />
       <meta name="twitter:image:alt" content={meta.ogImageAlt} />
-      <meta name="twitter:domain" content={(() => {
-        try { return new URL(meta.canonical).hostname; } catch { return "ishconnect.rw"; }
-      })()} />
+      <meta
+        name="twitter:domain"
+        content={(() => {
+          try {
+            return new URL(meta.canonical).hostname;
+          } catch {
+            return "ishconnect.rw";
+          }
+        })()}
+      />
 
       {/* Hreflang */}
       <link rel="alternate" href={meta.canonical} hrefLang={SITE_LANG} />

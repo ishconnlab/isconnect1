@@ -15,11 +15,7 @@ import {
 } from "lucide-react";
 
 import { SEOHead } from "@/components/SEOHead";
-import {
-  BreadcrumbJsonLd,
-  CreativeWorkJsonLd,
-  ProjectJsonLd,
-} from "@/components/JsonLd";
+import { BreadcrumbJsonLd, CreativeWorkJsonLd, ProjectJsonLd } from "@/components/JsonLd";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { getProjectBySlug } from "@/lib/projects";
 

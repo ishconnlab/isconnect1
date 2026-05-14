@@ -38,7 +38,8 @@ export function InstallBanner() {
     <div className="fixed bottom-0 left-0 right-0 z-50 animate-slide-up border-t border-orange-100 bg-white p-4 shadow-2xl">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
         <p className="text-sm font-medium text-gray-900">
-          Install <span className="font-semibold text-[#F97316]">IshConnect</span> for a faster experience
+          Install <span className="font-semibold text-[#F97316]">IshConnect</span> for a faster
+          experience
         </p>
         <div className="flex items-center gap-2">
           <button

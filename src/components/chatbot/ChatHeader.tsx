@@ -34,7 +34,10 @@ export function ChatHeader({ onClose }: ChatHeaderProps) {
         className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground/60 transition-colors hover:bg-muted hover:text-foreground max-sm:h-10 max-sm:w-10 md:h-9 md:w-9 lg:h-10 lg:w-10"
         aria-label="Close chat"
       >
-        <X className="h-4 w-4 max-sm:h-4.5 max-sm:w-4.5 md:h-[18px] md:w-[18px] lg:h-5 lg:w-5" strokeWidth={2} />
+        <X
+          className="h-4 w-4 max-sm:h-4.5 max-sm:w-4.5 md:h-[18px] md:w-[18px] lg:h-5 lg:w-5"
+          strokeWidth={2}
+        />
       </motion.button>
     </div>
   );
