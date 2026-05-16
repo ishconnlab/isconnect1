@@ -1,24 +1,5 @@
 import emailjs from "@emailjs/browser";
 
-/**
- * EmailJS configuration via Vite env vars.
- * Set the following in `.env` (or via Lovable secrets exposed as VITE_*):
- *
- *   VITE_EMAILJS_PUBLIC_KEY
- *   VITE_EMAILJS_SERVICE_ID
- *   VITE_EMAILJS_TEMPLATE_CONTACT
- *   VITE_EMAILJS_TEMPLATE_FULLSTACK
- *   VITE_EMAILJS_TEMPLATE_PYTHON
- *   VITE_EMAILJS_TEMPLATE_CYBERSECURITY
- *   VITE_EMAILJS_TEMPLATE_MOBILE
- *   VITE_EMAILJS_TEMPLATE_CLOUD
- *   VITE_EMAILJS_TEMPLATE_UIUX
- *   VITE_EMAILJS_TEMPLATE_DEFAULT (fallback)
- *
- * Each course can have its OWN EmailJS template — the resolver below
- * maps a course slug to its template id.
- */
-
 interface ImportMetaEnv {
   VITE_EMAILJS_PUBLIC_KEY?: string;
   VITE_EMAILJS_SERVICE_ID?: string;
@@ -58,18 +39,43 @@ const DEFAULT_TEMPLATE = env.VITE_EMAILJS_TEMPLATE_DEFAULT;
 const CONTACT_TEMPLATE = env.VITE_EMAILJS_TEMPLATE_CONTACT;
 
 let initialised = false;
-function ensureInit() {
-  if (!initialised && EMAILJS_PUBLIC_KEY) {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    initialised = true;
+function ensureInit(): string {
+  const missing: string[] = [];
+  if (!EMAILJS_PUBLIC_KEY) missing.push("VITE_EMAILJS_PUBLIC_KEY");
+  if (!EMAILJS_SERVICE_ID) missing.push("VITE_EMAILJS_SERVICE_ID");
+
+  if (!initialised) {
+    if (EMAILJS_PUBLIC_KEY) {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      initialised = true;
+    }
   }
+
+  if (missing.length > 0) {
+    const msg = `EmailJS not configured. Set ${missing.join(", ")} in your .env file or Vercel environment variables.`;
+    throw new Error(msg);
+  }
+
+  return EMAILJS_SERVICE_ID;
+}
+
+function getTemplate(slug?: CourseSlug): string {
+  if (slug) {
+    const t = COURSE_TEMPLATES[slug] ?? DEFAULT_TEMPLATE;
+    if (t) return t;
+  }
+  if (CONTACT_TEMPLATE) return CONTACT_TEMPLATE;
+  if (DEFAULT_TEMPLATE) return DEFAULT_TEMPLATE;
+  throw new Error(
+    "EmailJS template not configured. Set VITE_EMAILJS_TEMPLATE_CONTACT or VITE_EMAILJS_TEMPLATE_DEFAULT.",
+  );
 }
 
 export interface EnrollPayload {
   name: string;
   email: string;
   phone: string;
-  course: string; // human-readable course name
+  course: string;
   courseSlug: CourseSlug;
   message?: string;
 }
@@ -83,17 +89,10 @@ export interface ContactPayload {
 }
 
 export async function sendEnrollment(payload: EnrollPayload) {
-  ensureInit();
-  const template = COURSE_TEMPLATES[payload.courseSlug] ?? DEFAULT_TEMPLATE;
+  const serviceId = ensureInit();
+  const template = getTemplate(payload.courseSlug);
 
-  if (!EMAILJS_SERVICE_ID || !template) {
-    // Dev fallback: no EmailJS configured yet — simulate success so UX stays smooth.
-    await new Promise((r) => setTimeout(r, 700));
-    console.warn("[EmailJS] Not configured. Simulated send:", { template, payload });
-    return { ok: true, simulated: true as const };
-  }
-
-  await emailjs.send(EMAILJS_SERVICE_ID, template, {
+  await emailjs.send(serviceId, template, {
     name: payload.name,
     email: payload.email,
     phone: payload.phone,
@@ -102,17 +101,13 @@ export async function sendEnrollment(payload: EnrollPayload) {
     message: payload.message ?? "",
     submitted_at: new Date().toISOString(),
   });
-  return { ok: true as const };
 }
 
 export async function sendContact(payload: ContactPayload) {
-  ensureInit();
-  if (!EMAILJS_SERVICE_ID || !CONTACT_TEMPLATE) {
-    await new Promise((r) => setTimeout(r, 700));
-    console.warn("[EmailJS] Not configured. Simulated send:", payload);
-    return { ok: true, simulated: true as const };
-  }
-  await emailjs.send(EMAILJS_SERVICE_ID, CONTACT_TEMPLATE, {
+  const serviceId = ensureInit();
+  const template = getTemplate();
+
+  await emailjs.send(serviceId, template, {
     name: payload.name,
     email: payload.email,
     phone: payload.phone ?? "",
@@ -120,5 +115,4 @@ export async function sendContact(payload: ContactPayload) {
     message: payload.message,
     submitted_at: new Date().toISOString(),
   });
-  return { ok: true as const };
 }

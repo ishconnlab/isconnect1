@@ -51,7 +51,7 @@ export function EnrollModal({
     if (!program) return;
 
     try {
-      const result = await sendEnrollment({
+      await sendEnrollment({
         name: values.name,
         email: values.email,
         phone: values.phone,
@@ -60,17 +60,10 @@ export function EnrollModal({
         message: values.message,
       });
 
-      if (result.simulated) {
-        setDone(true);
-        toast.success("Enrollment submitted", {
-          description: "We'll be in touch within 24 hours.",
-        });
-      } else {
-        setDone(true);
-        toast.success("Enrollment submitted", {
-          description: "We'll be in touch within 24 hours.",
-        });
-      }
+      setDone(true);
+      toast.success("Enrollment submitted", {
+        description: "We'll be in touch within 24 hours.",
+      });
     } catch {
       toast.error("Could not submit", {
         description: "Please try again or email ishconnlab@gmail.com",
