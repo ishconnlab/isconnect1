@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { sendContact } from "@/lib/email";
 
@@ -73,27 +73,6 @@ export function ContactSection() {
               title="Studio"
               value="KG 11 Ave, Kigali, Rwanda"
             />
-
-            <a
-              href="https://wa.me/250787377750"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-between gap-4 rounded-3xl border border-orange-200 bg-[#F97316] p-5 text-white transition-all duration-300 hover:scale-[1.02]"
-            >
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 text-white">
-                  <MessageCircle className="h-4 w-4" />
-                </span>
-
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-white/70">WhatsApp</p>
-
-                  <p className="text-sm font-medium">Chat with our team now</p>
-                </div>
-              </div>
-
-              <Send className="h-4 w-4" />
-            </a>
           </div>
         </div>
 

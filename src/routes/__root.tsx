@@ -27,7 +27,6 @@ export function RootLayout() {
       <Footer />
       <Toaster richColors position="top-right" />
       <ChatBot />
-
       <InstallBanner />
     </div>
   );
