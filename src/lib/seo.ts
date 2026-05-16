@@ -106,19 +106,29 @@ export function buildMeta(props: SEOProps) {
 
 export const PAGE_SEO: Record<string, PageSEOConfig> = {
   home: {
-    title: "IshConnect – Custom Software Development & AI Solutions in Rwanda",
+    title:
+      "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
     description:
-      "IshConnect (ISHCONNLAB) is a Kigali-based technology company delivering custom software, AI solutions, web and mobile app development, cloud infrastructure, cybersecurity, and tech training across Rwanda and Africa.",
-    ogTitle: "IshConnect – Custom Software Development & AI Solutions in Rwanda",
+      "IshConnect is a top software development company in Rwanda and AI company in Kigali. We build web apps, mobile apps, AI systems, and offer coding bootcamps through IshConnect Academy. Trusted tech partner across Africa.",
+    ogTitle:
+      "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
     ogDescription:
-      "Custom software, AI, web and mobile development, cloud, cybersecurity, and tech training by IshConnect (ISHCONNLAB) in Kigali, Rwanda.",
+      "Top software development company Rwanda and AI company Kigali. IshConnect (ISHCONNLAB) delivers custom software, AI solutions, web development, and tech training across Africa.",
     canonical: SITE_URL,
     ogType: "website",
     keywords: [
+      "software development company Rwanda",
+      "AI company Rwanda",
+      "web development company Kigali",
       "IshConnect",
       "ISHCONNLAB",
-      "software development Rwanda",
-      "web development Kigali",
+      "IT company Rwanda",
+      "tech company Kigali Rwanda",
+      "software development company Africa",
+      "AI development company Africa",
+      "coding academy Rwanda",
+      "programming training Kigali",
+      "tech bootcamp Rwanda",
       "AI solutions Rwanda",
       "mobile app development Rwanda",
       "tech training Rwanda",
@@ -128,30 +138,26 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     breadcrumbs: [{ name: "Home", url: "/" }],
   },
   about: {
-    title: "About IshConnect & Ishconnlab — Kigali Tech Studio | Software Innovation Rwanda",
+    title:
+      "About IshConnect — Software Development & AI Company in Kigali, Rwanda",
     description:
-      "Learn about IshConnect (Ishconnlab), Kigali's technology studio driving innovation through software engineering, AI, tech education, and digital transformation in Rwanda. Home of DevQueens.",
+      "IshConnect (ISHCONNLAB) is a leading software development and AI company in Kigali, Rwanda. We build digital products, train developers, and empower women in tech through DevQueens. Founded 2024.",
     canonical: `${SITE_URL}/about`,
     ogType: "website",
     keywords: [
-      "IshConnect",
-      "Ishconnlab",
-      "Ish Connect",
       "about IshConnect",
-      "about Ishconnlab",
+      "software development company Rwanda",
+      "AI company Kigali",
+      "Ishconnlab",
       "Kigali software company",
       "Rwanda tech startup",
       "African technology studio",
       "DevQueens Kigali",
       "software development team",
       "technology company Kigali",
-      "African innovation studio",
-      "digital transformation team",
       "IT company Rwanda",
       "Rwanda software engineers",
-      "African tech leadership",
       "tech innovation Kigali",
-      "software development Rwanda",
     ],
     breadcrumbs: [
       { name: "Home", url: "/" },

@@ -29,10 +29,10 @@ export function Hero() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
             className="mt-6 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-6xl md:text-7xl"
           >
-            Building Africa's <br className="hidden sm:block" />
-            Next Generation of{" "}
+            Software Development <br className="hidden sm:block" />
+            Company in{" "}
             <span className="relative inline-block">
-              <span className="text-primary">Digital Innovation</span>
+              <span className="text-primary">Rwanda & Africa</span>
               <span className="sr-only">
                 {" "}
                 — software development, AI, and technology innovation by IshConnect (Ishconnlab) in

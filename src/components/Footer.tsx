@@ -18,16 +18,19 @@ export const Footer = memo(function Footer() {
     {
       title: "Solutions",
       links: [
-        { label: "Digital Platforms", to: "/solutions" as const },
-        { label: "Mobile Apps", to: "/solutions" as const },
-        { label: "Cloud", to: "/solutions" as const },
-        { label: "Cybersecurity", to: "/solutions" as const },
+        { label: "Software Development", to: "/software-development-rwanda" as const },
+        { label: "Web Development", to: "/web-development-kigali" as const },
+        { label: "Mobile Apps", to: "/mobile-app-development-rwanda" as const },
+        { label: "AI Solutions", to: "/ai-solutions-rwanda" as const },
+        { label: "Cloud", to: "/cloud-services-rwanda" as const },
+        { label: "Cybersecurity", to: "/cybersecurity-rwanda" as const },
       ],
     },
     {
       title: "Academy",
       links: [
         { label: "Programs", to: "/academy" as const },
+        { label: "Tech Training", to: "/tech-training-rwanda" as const },
         { label: "DevQueens", to: "/academy" as const },
         { label: "Enroll", to: "/academy" as const },
       ],
@@ -83,16 +86,42 @@ export const Footer = memo(function Footer() {
 
           {/* Socials */}
           <div className="mt-6 flex items-center gap-2">
-            {[Twitter, Linkedin, Github, Instagram].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
-                aria-label="Social link"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:border-[#F97316] hover:text-[#F97316]"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
+            <a
+              href="https://twitter.com/IshConnectRW"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Twitter / X"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+            >
+              <Twitter className="h-4 w-4" />
+            </a>
+            <a
+              href="https://linkedin.com/company/ishconnect"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="https://github.com/ishconnect"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.instagram.com/ishconnect.rw/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
           </div>
         </div>
 

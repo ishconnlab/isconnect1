@@ -1,94 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.ishconnect.rw/</loc>
-    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://www.ishconnect.rw/og-image.png</image:loc>
-      <image:title>IshConnect &amp; Ishconnlab — Software Development &amp; AI Innovation Studio, Kigali Rwanda</image:title>
-      <image:caption>IshConnect (Ishconnlab) leading software development, AI training, and innovation studio in Kigali, Rwanda</image:caption>
-    </image:image>
   </url>
   <url>
-    <loc>https://www.ishconnect.rw/solutions</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.ishconnect.rw/work</loc>
-    <lastmod>2026-05-10</lastmod>
+    <loc>https://www.ishconnect.rw/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/academy</loc>
-    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.ishconnect.rw/about</loc>
-    <lastmod>2026-05-10</lastmod>
+    <loc>https://www.ishconnect.rw/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ishconnect.rw/contact</loc>
-    <lastmod>2026-05-10</lastmod>
+    <loc>https://www.ishconnect.rw/solutions</loc>
     <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ishconnect.rw/work</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/software-development-rwanda</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/web-development-kigali</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/mobile-app-development-rwanda</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/ai-solutions-rwanda</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/cybersecurity-rwanda</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/cloud-services-rwanda</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.ishconnect.rw/tech-training-rwanda</loc>
-    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ishconnect.rw/privacy</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
   </url>
 </urlset>

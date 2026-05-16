@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ChatBot } from "@/components/chatbot/ChatBot";
 import { InstallBanner } from "@/components/InstallBanner";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export function RootLayout() {
   const { pathname } = useLocation();
@@ -28,6 +29,7 @@ export function RootLayout() {
       <Footer />
       <Toaster richColors position="top-right" />
       <ChatBot />
+      <WhatsAppButton />
       <InstallBanner />
     </div>
   );
