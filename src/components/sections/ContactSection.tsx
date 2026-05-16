@@ -31,7 +31,8 @@ export function ContactSection() {
       await sendContact(v);
       toast.success("Message sent", { description: "We'll respond within one business day." });
       reset();
-    } catch {
+    } catch (e) {
+      console.error("EmailJS error:", e);
       toast.error("Could not send", { description: "Please try again." });
     }
   };

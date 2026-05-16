@@ -64,7 +64,8 @@ export function EnrollModal({
       toast.success("Enrollment submitted", {
         description: "We'll be in touch within 24 hours.",
       });
-    } catch {
+    } catch (e) {
+      console.error("EmailJS enrollment error:", e);
       toast.error("Could not submit", {
         description: "Please try again or email ishconnlab@gmail.com",
       });
