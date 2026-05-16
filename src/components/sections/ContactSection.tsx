@@ -31,10 +31,11 @@ export function ContactSection() {
       await sendContact(v);
       toast.success("Message sent", { description: "We'll respond within one business day." });
       reset();
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
+    } catch (e: unknown) {
+      const err = e as Record<string, unknown>;
+      const msg = err?.text ?? err?.message ?? JSON.stringify(err);
       console.error("EmailJS error:", msg);
-      toast.error("Could not send", { description: msg });
+      toast.error("Email failed", { description: String(msg) });
     }
   };
 

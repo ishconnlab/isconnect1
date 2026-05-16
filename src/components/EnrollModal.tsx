@@ -64,10 +64,11 @@ export function EnrollModal({
       toast.success("Enrollment submitted", {
         description: "We'll be in touch within 24 hours.",
       });
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
+    } catch (e: unknown) {
+      const err = e as Record<string, unknown>;
+      const msg = err?.text ?? err?.message ?? JSON.stringify(err);
       console.error("EmailJS enrollment error:", msg);
-      toast.error("Could not submit", { description: msg });
+      toast.error("Enrollment failed", { description: String(msg) });
     }
   };
 
