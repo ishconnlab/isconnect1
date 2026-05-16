@@ -32,8 +32,9 @@ export function ContactSection() {
       toast.success("Message sent", { description: "We'll respond within one business day." });
       reset();
     } catch (e) {
-      console.error("EmailJS error:", e);
-      toast.error("Could not send", { description: "Please try again." });
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error("EmailJS error:", msg);
+      toast.error("Could not send", { description: msg });
     }
   };
 
