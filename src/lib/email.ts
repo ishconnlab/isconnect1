@@ -1,22 +1,9 @@
 import emailjs from "@emailjs/browser";
 
-interface ImportMetaEnv {
-  VITE_EMAILJS_PUBLIC_KEY?: string;
-  VITE_EMAILJS_SERVICE_ID?: string;
-  VITE_EMAILJS_TEMPLATE_CONTACT?: string;
-  VITE_EMAILJS_TEMPLATE_FULLSTACK?: string;
-  VITE_EMAILJS_TEMPLATE_PYTHON?: string;
-  VITE_EMAILJS_TEMPLATE_CYBERSECURITY?: string;
-  VITE_EMAILJS_TEMPLATE_MOBILE?: string;
-  VITE_EMAILJS_TEMPLATE_CLOUD?: string;
-  VITE_EMAILJS_TEMPLATE_UIUX?: string;
-  VITE_EMAILJS_TEMPLATE_DEFAULT?: string;
-}
-
-const env = import.meta.env as ImportMetaEnv;
-
-export const EMAILJS_PUBLIC_KEY = env.VITE_EMAILJS_PUBLIC_KEY ?? "";
-export const EMAILJS_SERVICE_ID = env.VITE_EMAILJS_SERVICE_ID ?? "";
+const EMAILJS_PUBLIC_KEY = "I3579akFPAYK4y_LS";
+const EMAILJS_SERVICE_ID = "service_u3tt999";
+const TEMPLATE_CONTACT = "template_flzt17z";
+const TEMPLATE_DEFAULT = "template_gumqgv8";
 
 export type CourseSlug =
   | "full-stack"
@@ -26,49 +13,26 @@ export type CourseSlug =
   | "cloud-devops"
   | "ui-ux";
 
-export const COURSE_TEMPLATES: Record<CourseSlug, string | undefined> = {
-  "full-stack": env.VITE_EMAILJS_TEMPLATE_FULLSTACK,
-  python: env.VITE_EMAILJS_TEMPLATE_PYTHON,
-  cybersecurity: env.VITE_EMAILJS_TEMPLATE_CYBERSECURITY,
-  mobile: env.VITE_EMAILJS_TEMPLATE_MOBILE,
-  "cloud-devops": env.VITE_EMAILJS_TEMPLATE_CLOUD,
-  "ui-ux": env.VITE_EMAILJS_TEMPLATE_UIUX,
+const COURSE_TEMPLATES: Record<CourseSlug, string> = {
+  "full-stack": TEMPLATE_DEFAULT,
+  python: TEMPLATE_DEFAULT,
+  cybersecurity: TEMPLATE_DEFAULT,
+  mobile: TEMPLATE_DEFAULT,
+  "cloud-devops": TEMPLATE_DEFAULT,
+  "ui-ux": TEMPLATE_DEFAULT,
 };
 
-const DEFAULT_TEMPLATE = env.VITE_EMAILJS_TEMPLATE_DEFAULT;
-const CONTACT_TEMPLATE = env.VITE_EMAILJS_TEMPLATE_CONTACT;
-
 let initialised = false;
-function ensureInit(): string {
-  const missing: string[] = [];
-  if (!EMAILJS_PUBLIC_KEY) missing.push("VITE_EMAILJS_PUBLIC_KEY");
-  if (!EMAILJS_SERVICE_ID) missing.push("VITE_EMAILJS_SERVICE_ID");
-
+function ensureInit() {
   if (!initialised) {
-    if (EMAILJS_PUBLIC_KEY) {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-      initialised = true;
-    }
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    initialised = true;
   }
-
-  if (missing.length > 0) {
-    const msg = `EmailJS not configured. Set ${missing.join(", ")} in your .env file or Vercel environment variables.`;
-    throw new Error(msg);
-  }
-
-  return EMAILJS_SERVICE_ID;
 }
 
 function getTemplate(slug?: CourseSlug): string {
-  if (slug) {
-    const t = COURSE_TEMPLATES[slug] ?? DEFAULT_TEMPLATE;
-    if (t) return t;
-  }
-  if (CONTACT_TEMPLATE) return CONTACT_TEMPLATE;
-  if (DEFAULT_TEMPLATE) return DEFAULT_TEMPLATE;
-  throw new Error(
-    "EmailJS template not configured. Set VITE_EMAILJS_TEMPLATE_CONTACT or VITE_EMAILJS_TEMPLATE_DEFAULT.",
-  );
+  if (slug) return COURSE_TEMPLATES[slug];
+  return TEMPLATE_CONTACT;
 }
 
 export interface EnrollPayload {
@@ -89,10 +53,9 @@ export interface ContactPayload {
 }
 
 export async function sendEnrollment(payload: EnrollPayload) {
-  const serviceId = ensureInit();
-  const template = getTemplate(payload.courseSlug);
+  ensureInit();
 
-  await emailjs.send(serviceId, template, {
+  await emailjs.send(EMAILJS_SERVICE_ID, getTemplate(payload.courseSlug), {
     name: payload.name,
     email: payload.email,
     phone: payload.phone,
@@ -104,10 +67,9 @@ export async function sendEnrollment(payload: EnrollPayload) {
 }
 
 export async function sendContact(payload: ContactPayload) {
-  const serviceId = ensureInit();
-  const template = getTemplate();
+  ensureInit();
 
-  await emailjs.send(serviceId, template, {
+  await emailjs.send(EMAILJS_SERVICE_ID, getTemplate(), {
     name: payload.name,
     email: payload.email,
     phone: payload.phone ?? "",
