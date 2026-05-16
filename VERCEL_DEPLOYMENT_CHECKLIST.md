@@ -6,18 +6,18 @@ Go to: **Vercel Dashboard → Project → Settings → Environment Variables**
 
 Add **ALL** of the following (one by one):
 
-| Variable | Value |
-|---|---|
-| `VITE_EMAILJS_PUBLIC_KEY` | From EmailJS Dashboard → Account → API Keys |
-| `VITE_EMAILJS_SERVICE_ID` | From EmailJS Dashboard → Email Services → your service |
-| `VITE_EMAILJS_TEMPLATE_CONTACT` | Template ID for contact form submissions |
-| `VITE_EMAILJS_TEMPLATE_FULLSTACK` | Template ID for full-stack enrollment |
-| `VITE_EMAILJS_TEMPLATE_PYTHON` | Template ID for python enrollment |
-| `VITE_EMAILJS_TEMPLATE_CYBERSECURITY` | Template ID for cybersecurity enrollment |
-| `VITE_EMAILJS_TEMPLATE_MOBILE` | Template ID for mobile enrollment |
-| `VITE_EMAILJS_TEMPLATE_CLOUD` | Template ID for cloud/devops enrollment |
-| `VITE_EMAILJS_TEMPLATE_UIUX` | Template ID for UI/UX enrollment |
-| `VITE_EMAILJS_TEMPLATE_DEFAULT` | Fallback template (used for any missing course template) |
+| Variable                              | Value                                                    |
+| ------------------------------------- | -------------------------------------------------------- |
+| `VITE_EMAILJS_PUBLIC_KEY`             | From EmailJS Dashboard → Account → API Keys              |
+| `VITE_EMAILJS_SERVICE_ID`             | From EmailJS Dashboard → Email Services → your service   |
+| `VITE_EMAILJS_TEMPLATE_CONTACT`       | Template ID for contact form submissions                 |
+| `VITE_EMAILJS_TEMPLATE_FULLSTACK`     | Template ID for full-stack enrollment                    |
+| `VITE_EMAILJS_TEMPLATE_PYTHON`        | Template ID for python enrollment                        |
+| `VITE_EMAILJS_TEMPLATE_CYBERSECURITY` | Template ID for cybersecurity enrollment                 |
+| `VITE_EMAILJS_TEMPLATE_MOBILE`        | Template ID for mobile enrollment                        |
+| `VITE_EMAILJS_TEMPLATE_CLOUD`         | Template ID for cloud/devops enrollment                  |
+| `VITE_EMAILJS_TEMPLATE_UIUX`          | Template ID for UI/UX enrollment                         |
+| `VITE_EMAILJS_TEMPLATE_DEFAULT`       | Fallback template (used for any missing course template) |
 
 **Important:** Vercel env vars must use `VITE_` prefix. Vite only exposes `VITE_*` vars to the client bundle. Without this prefix, the vars will be `undefined` at runtime.
 
@@ -54,6 +54,7 @@ Or push a new commit to trigger auto-deploy.
 Each template should use these template variables:
 
 **Contact template (`VITE_EMAILJS_TEMPLATE_CONTACT`):**
+
 ```
 {{name}} — sender name
 {{email}} — sender email
@@ -64,6 +65,7 @@ Each template should use these template variables:
 ```
 
 **Course enrollment templates (per course):**
+
 ```
 {{name}} — student name
 {{email}} — student email

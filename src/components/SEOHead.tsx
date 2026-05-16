@@ -65,8 +65,10 @@ export function SEOHead(props: SEOProps) {
       {meta.modifiedTime && <meta property="article:modified_time" content={meta.modifiedTime} />}
 
       {/* Facebook / OpenGraph additional */}
-      <meta property="og:see_also" content="https://twitter.com/IshConnectRW" />
-      <meta property="og:see_also" content="https://linkedin.com/company/ishconnect" />
+      <meta property="og:see_also" content="https://x.com/IConnlab" />
+      <meta property="og:see_also" content="https://www.linkedin.com/in/ishconnlab" />
+      <meta property="og:see_also" content="https://github.com/ishconnlab" />
+      <meta property="og:see_also" content="https://www.instagram.com/ishconnlab" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={TWITTER_HANDLE} />

@@ -106,12 +106,10 @@ export function buildMeta(props: SEOProps) {
 
 export const PAGE_SEO: Record<string, PageSEOConfig> = {
   home: {
-    title:
-      "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
+    title: "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
     description:
       "IshConnect is a top software development company in Rwanda and AI company in Kigali. We build web apps, mobile apps, AI systems, and offer coding bootcamps through IshConnect Academy. Trusted tech partner across Africa.",
-    ogTitle:
-      "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
+    ogTitle: "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
     ogDescription:
       "Top software development company Rwanda and AI company Kigali. IshConnect (ISHCONNLAB) delivers custom software, AI solutions, web development, and tech training across Africa.",
     canonical: SITE_URL,
@@ -138,8 +136,7 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     breadcrumbs: [{ name: "Home", url: "/" }],
   },
   about: {
-    title:
-      "About IshConnect — Software Development & AI Company in Kigali, Rwanda",
+    title: "About IshConnect — Software Development & AI Company in Kigali, Rwanda",
     description:
       "IshConnect (ISHCONNLAB) is a leading software development and AI company in Kigali, Rwanda. We build digital products, train developers, and empower women in tech through DevQueens. Founded 2024.",
     canonical: `${SITE_URL}/about`,

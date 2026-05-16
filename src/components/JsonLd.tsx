@@ -56,9 +56,10 @@ export function OrganizationJsonLd() {
       },
     ],
     sameAs: [
-      "https://twitter.com/IshConnectRW",
-      "https://linkedin.com/company/ishconnect",
-      "https://github.com/ishconnect",
+      "https://x.com/IConnlab",
+      "https://www.linkedin.com/in/ishconnlab",
+      "https://github.com/ishconnlab",
+      "https://www.instagram.com/ishconnlab",
       "https://www.ishconnect.rw",
     ],
     knowsAbout: [

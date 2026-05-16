@@ -87,7 +87,7 @@ export const Footer = memo(function Footer() {
           {/* Socials */}
           <div className="mt-6 flex items-center gap-2">
             <a
-              href="https://twitter.com/IshConnectRW"
+              href="https://x.com/IConnlab"
               target="_blank"
               rel="noreferrer"
               aria-label="Twitter / X"
@@ -96,7 +96,7 @@ export const Footer = memo(function Footer() {
               <Twitter className="h-4 w-4" />
             </a>
             <a
-              href="https://linkedin.com/company/ishconnect"
+              href="https://www.linkedin.com/in/ishconnlab"
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
@@ -105,7 +105,7 @@ export const Footer = memo(function Footer() {
               <Linkedin className="h-4 w-4" />
             </a>
             <a
-              href="https://github.com/ishconnect"
+              href="https://github.com/ishconnlab"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
@@ -114,7 +114,7 @@ export const Footer = memo(function Footer() {
               <Github className="h-4 w-4" />
             </a>
             <a
-              href="https://www.instagram.com/ishconnect.rw/"
+              href="https://www.instagram.com/ishconnlab"
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
