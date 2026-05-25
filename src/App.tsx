@@ -41,6 +41,9 @@ const CloudServices = lazy(() =>
 const TechTraining = lazy(() =>
   import("@/routes/services/tech-training").then((m) => ({ default: m.TechTraining })),
 );
+const Challenges = lazy(() =>
+  import("@/routes/challenges").then((m) => ({ default: m.Challenges })),
+);
 
 function LoadingFallback() {
   return (
@@ -86,6 +89,14 @@ function AnimatedRoutes() {
             element={
               <motion.div {...pageTransition}>
                 <Academy />
+              </motion.div>
+            }
+          />
+          <Route
+            path="challenges"
+            element={
+              <motion.div {...pageTransition}>
+                <Challenges />
               </motion.div>
             }
           />

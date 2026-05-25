@@ -30,6 +30,7 @@ export const Footer = memo(function Footer() {
       title: "Academy",
       links: [
         { label: "Programs", to: "/academy" as const },
+        { label: "Challenges", to: "/challenges" as const },
         { label: "Tech Training", to: "/tech-training-rwanda" as const },
         { label: "DevQueens", to: "/academy" as const },
         { label: "Enroll", to: "/academy" as const },

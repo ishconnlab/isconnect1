@@ -449,4 +449,30 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
       { name: "Tech Training Rwanda", url: "/tech-training-rwanda" },
     ],
   },
+  challenges: {
+    title: "Coding Challenges & Projects — IshConnect Academy | Build Your Portfolio in Rwanda",
+    description:
+      "Practice real-world coding challenges designed by IshConnect engineers in Kigali. Build your portfolio, earn certificates, and bridge the gap from education to employment with IshConnect Academy.",
+    canonical: `${SITE_URL}/challenges`,
+    ogType: "website",
+    keywords: [
+      "coding challenges Rwanda",
+      "programming projects Kigali",
+      "IshConnect Academy challenges",
+      "build portfolio Rwanda",
+      "developer challenges Africa",
+      "real-world coding projects",
+      "tech skills assessment",
+      "coding portfolio Africa",
+      "software engineering challenges",
+      "AI challenges Rwanda",
+      "web development projects",
+      "full stack challenges",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Academy", url: "/academy" },
+      { name: "Challenges", url: "/challenges" },
+    ],
+  },
 };
