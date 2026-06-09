@@ -1,15 +1,19 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageTracking } from "@/hooks/usePageTracking";
-import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from "@/components/JsonLd";
+import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd, SiteNavigationElementJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
+import { SEOHead } from "@/components/SEOHead";
+import { PAGE_SEO } from "@/lib/seo";
 import { RootLayout } from "@/routes/__root";
 import { NotFound } from "@/routes/not-found";
 import { Loader2 } from "lucide-react";
 
 const Home = lazy(() => import("@/routes/index").then((m) => ({ default: m.Home })));
 const About = lazy(() => import("@/routes/about").then((m) => ({ default: m.About })));
+const Founder = lazy(() => import("@/routes/founder").then((m) => ({ default: m.Founder })));
+const Team = lazy(() => import("@/routes/team").then((m) => ({ default: m.Team })));
 const Academy = lazy(() => import("@/routes/academy").then((m) => ({ default: m.Academy })));
 const Contact = lazy(() => import("@/routes/contact").then((m) => ({ default: m.Contact })));
 const Solutions = lazy(() => import("@/routes/solutions").then((m) => ({ default: m.Solutions })));
@@ -54,11 +58,19 @@ function LoadingFallback() {
 }
 
 const pageTransition = {
-  initial: { opacity: 0, y: 12 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -12 },
-  transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] as const },
 };
+
+function RoutePage({ children }: { children: ReactNode }) {
+  return (
+    <ErrorBoundary>
+      <motion.div {...pageTransition}>{children}</motion.div>
+    </ErrorBoundary>
+  );
+}
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -68,145 +80,73 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<RootLayout />}>
-          <Route
-            index
-            element={
-              <motion.div {...pageTransition}>
-                <Home />
-              </motion.div>
-            }
-          />
-          <Route
-            path="about"
-            element={
-              <motion.div {...pageTransition}>
-                <About />
-              </motion.div>
-            }
-          />
-          <Route
-            path="academy"
-            element={
-              <motion.div {...pageTransition}>
-                <Academy />
-              </motion.div>
-            }
-          />
-          <Route
-            path="challenges"
-            element={
-              <motion.div {...pageTransition}>
-                <Challenges />
-              </motion.div>
-            }
-          />
-          <Route
-            path="contact"
-            element={
-              <motion.div {...pageTransition}>
-                <Contact />
-              </motion.div>
-            }
-          />
-          <Route
-            path="solutions"
-            element={
-              <motion.div {...pageTransition}>
-                <Solutions />
-              </motion.div>
-            }
-          />
-          <Route
-            path="work"
-            element={
-              <motion.div {...pageTransition}>
-                <Work />
-              </motion.div>
-            }
-          />
-          <Route
-            path="work/:slug"
-            element={
-              <motion.div {...pageTransition}>
-                <ProjectCaseStudy />
-              </motion.div>
-            }
-          />
-          <Route
-            path="software-development-rwanda"
-            element={
-              <motion.div {...pageTransition}>
-                <SoftwareDevelopment />
-              </motion.div>
-            }
-          />
-          <Route
-            path="web-development-kigali"
-            element={
-              <motion.div {...pageTransition}>
-                <WebDevelopment />
-              </motion.div>
-            }
-          />
-          <Route
-            path="mobile-app-development-rwanda"
-            element={
-              <motion.div {...pageTransition}>
-                <MobileApps />
-              </motion.div>
-            }
-          />
-          <Route
-            path="ai-solutions-rwanda"
-            element={
-              <motion.div {...pageTransition}>
-                <AiSolutions />
-              </motion.div>
-            }
-          />
-          <Route
-            path="cybersecurity-rwanda"
-            element={
-              <motion.div {...pageTransition}>
-                <Cybersecurity />
-              </motion.div>
-            }
-          />
-          <Route
-            path="cloud-services-rwanda"
-            element={
-              <motion.div {...pageTransition}>
-                <CloudServices />
-              </motion.div>
-            }
-          />
-          <Route
-            path="tech-training-rwanda"
-            element={
-              <motion.div {...pageTransition}>
-                <TechTraining />
-              </motion.div>
-            }
-          />
-          <Route
-            path="privacy"
-            element={
-              <motion.div {...pageTransition}>
-                <Privacy />
-              </motion.div>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <motion.div {...pageTransition}>
-                <NotFound />
-              </motion.div>
-            }
-          />
+          <Route index element={<RoutePage><Home /></RoutePage>} />
+          <Route path="about" element={<RoutePage><About /></RoutePage>} />
+          <Route path="founder" element={<RoutePage><Founder /></RoutePage>} />
+          <Route path="team" element={<RoutePage><Team /></RoutePage>} />
+          <Route path="academy" element={<RoutePage><Academy /></RoutePage>} />
+          <Route path="challenges" element={<RoutePage><Challenges /></RoutePage>} />
+          <Route path="contact" element={<RoutePage><Contact /></RoutePage>} />
+          <Route path="solutions" element={<RoutePage><Solutions /></RoutePage>} />
+          <Route path="work" element={<RoutePage><Work /></RoutePage>} />
+          <Route path="work/:slug" element={<RoutePage><ProjectCaseStudy /></RoutePage>} />
+          <Route path="software-development-rwanda" element={<RoutePage><SoftwareDevelopment /></RoutePage>} />
+          <Route path="web-development-kigali" element={<RoutePage><WebDevelopment /></RoutePage>} />
+          <Route path="mobile-app-development-rwanda" element={<RoutePage><MobileApps /></RoutePage>} />
+          <Route path="ai-solutions-rwanda" element={<RoutePage><AiSolutions /></RoutePage>} />
+          <Route path="cybersecurity-rwanda" element={<RoutePage><Cybersecurity /></RoutePage>} />
+          <Route path="cloud-services-rwanda" element={<RoutePage><CloudServices /></RoutePage>} />
+          <Route path="tech-training-rwanda" element={<RoutePage><TechTraining /></RoutePage>} />
+          <Route path="privacy" element={<RoutePage><Privacy /></RoutePage>} />
+          <Route path="webcare" element={<RoutePage><WebCarePage /></RoutePage>} />
+          <Route path="community" element={<RoutePage><CommunityPage /></RoutePage>} />
+          <Route path="devqueens" element={<RoutePage><DevQueensPage /></RoutePage>} />
+          <Route path="*" element={<RoutePage><NotFound /></RoutePage>} />
         </Route>
       </Routes>
     </AnimatePresence>
+  );
+}
+
+function WebCarePage() {
+  const config = PAGE_SEO.webcare;
+  useEffect(() => {
+    window.location.href = "https://webcare.ishconnect.rw/";
+  }, []);
+  return (
+    <>
+      <SEOHead {...config} />
+      <BreadcrumbJsonLd items={config.breadcrumbs} />
+      <LoadingFallback />
+    </>
+  );
+}
+
+function CommunityPage() {
+  const config = PAGE_SEO.community;
+  useEffect(() => {
+    window.location.href = "https://chat.whatsapp.com/Kg6jU7XWt3JFiMnztbjK1Y?s=cl&p=a&ilr=0";
+  }, []);
+  return (
+    <>
+      <SEOHead {...config} />
+      <BreadcrumbJsonLd items={config.breadcrumbs} />
+      <LoadingFallback />
+    </>
+  );
+}
+
+function DevQueensPage() {
+  const config = PAGE_SEO.devqueens;
+  useEffect(() => {
+    window.location.href = "https://chat.whatsapp.com/BIyl1UovWjzLwcGw6vtcUJ";
+  }, []);
+  return (
+    <>
+      <SEOHead {...config} />
+      <BreadcrumbJsonLd items={config.breadcrumbs} />
+      <LoadingFallback />
+    </>
   );
 }
 
@@ -216,6 +156,7 @@ export function App() {
       <OrganizationJsonLd />
       <WebSiteJsonLd />
       <LocalBusinessJsonLd />
+      <SiteNavigationElementJsonLd />
       <Suspense fallback={<LoadingFallback />}>
         <AnimatedRoutes />
       </Suspense>

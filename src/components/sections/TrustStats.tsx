@@ -1,10 +1,11 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { Reveal } from "../Reveal";
 
 const STATS = [
   { value: 500, suffix: "+", label: "Students Empowered" },
   { value: 50, suffix: "+", label: "Projects Delivered" },
-  { value: 10, suffix: "+", label: "Technology Programs" },
+  { value: 7, suffix: "+", label: "Countries Reached" },
   { value: 98, suffix: "%", label: "Client Satisfaction" },
 ];
 
@@ -40,25 +41,19 @@ export function TrustStats() {
       aria-label="IshConnect impact statistics"
     >
       <h2 className="sr-only">
-        IshConnect by the numbers — students empowered, projects delivered, programs launched, and
-        client satisfaction in Kigali, Rwanda
+        IshConnect by the numbers — students empowered, projects delivered, countries reached, and
+        client satisfaction
       </h2>
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-10 px-6 py-16 sm:py-20 md:grid-cols-4">
         {STATS.map((s, i) => (
-          <motion.div
-            key={s.label}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            style={{ willChange: "transform" }}
-            className="text-center"
-          >
-            <p className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">
-              <Counter to={s.value} suffix={s.suffix} delay={i * 0.12} />
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
-          </motion.div>
+          <Reveal key={s.label} variant="fade-up" delay={i * 80} duration={600}>
+            <div className="text-center">
+              <p className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+                <Counter to={s.value} suffix={s.suffix} delay={i * 0.12} />
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>
+            </div>
+          </Reveal>
         ))}
       </div>
     </section>

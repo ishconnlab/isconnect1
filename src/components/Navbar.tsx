@@ -1,22 +1,34 @@
 import { memo, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 
-const NAV = [
+const PRIMARY_NAV = [
   { to: "/", label: "Home" },
   { to: "/solutions", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/academy", label: "Academy" },
-  { to: "/challenges", label: "Challenges" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
+] as const;
+
+const SECONDARY_NAV = [
+  { to: "/webcare", label: "WebCare" },
+  { to: "/community", label: "Community" },
+  { to: "/founder", label: "Founder" },
+  { to: "/team", label: "Team" },
+  { to: "/challenges", label: "Challenges" },
+] as const;
+
+const EXTERNAL_NAV = [
+  { href: "https://lab.ishconnect.rw", label: "Internship", badge: "LAB" },
 ] as const;
 
 export const Navbar = memo(function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showEcosystem, setShowEcosystem] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -37,6 +49,7 @@ export const Navbar = memo(function Navbar() {
 
   useEffect(() => {
     setOpen(false);
+    setShowEcosystem(false);
   }, [pathname]);
 
   return (
@@ -45,8 +58,7 @@ export const Navbar = memo(function Navbar() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        style={{ willChange: "transform" }}
-        className={`flex w-full max-w-6xl items-center justify-between gap-4 rounded-full border border-soft-border/60 px-3 py-2 transition-all duration-300 sm:px-4 ${
+        className={`flex w-full max-w-6xl items-center justify-between gap-2 rounded-full border border-soft-border/60 px-3 py-2 transition-all duration-300 sm:gap-4 sm:px-4 ${
           scrolled
             ? "glass-nav shadow-soft"
             : "bg-background/60 lg:bg-background/40 lg:backdrop-blur-md"
@@ -55,15 +67,16 @@ export const Navbar = memo(function Navbar() {
       >
         <Logo />
 
-        <ul className="hidden items-center gap-1 lg:flex" role="list">
-          {NAV.map((item) => {
+        {/* Desktop + tablet nav */}
+        <ul className="hidden items-center gap-1 sm:flex" role="list">
+          {PRIMARY_NAV.map((item) => {
             const active = pathname === item.to;
             return (
               <li key={item.to}>
                 <Link
                   to={item.to}
                   aria-current={active ? "page" : undefined}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`relative rounded-full px-2.5 py-2 text-sm font-medium whitespace-nowrap transition-colors sm:px-3.5 ${
                     active ? "text-primary" : "text-foreground/70 hover:text-foreground"
                   }`}
                 >
@@ -72,7 +85,6 @@ export const Navbar = memo(function Navbar() {
                       layoutId="nav-pill"
                       className="absolute inset-0 -z-10 rounded-full bg-primary/10"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      style={{ willChange: "transform" }}
                     />
                   )}
                   {item.label}
@@ -80,6 +92,64 @@ export const Navbar = memo(function Navbar() {
               </li>
             );
           })}
+
+          {/* Ecosystem dropdown */}
+          <li className="relative ml-2 pl-2 border-l border-soft-border/50">
+            <button
+              onClick={() => setShowEcosystem((v) => !v)}
+              onMouseEnter={() => setShowEcosystem(true)}
+              onMouseLeave={() => setShowEcosystem(false)}
+              className="flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+              aria-expanded={showEcosystem}
+              aria-haspopup="true"
+            >
+              More
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${showEcosystem ? "rotate-180" : ""}`} />
+            </button>
+            <AnimatePresence>
+              {showEcosystem && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -4, scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-2 w-48 rounded-2xl border border-soft-border/60 bg-surface p-1.5 shadow-elevated"
+                  onMouseEnter={() => setShowEcosystem(true)}
+                  onMouseLeave={() => setShowEcosystem(false)}
+                >
+                  {SECONDARY_NAV.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className={`block rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                        pathname === item.to
+                          ? "bg-primary/10 text-primary"
+                          : "text-foreground/80 hover:bg-muted"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <div className="mt-1 border-t border-soft-border/30 pt-1">
+                    {EXTERNAL_NAV.map((item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-muted"
+                      >
+                        {item.label}
+                        <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                          {item.badge}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </li>
         </ul>
 
         <div className="flex items-center gap-2">
@@ -93,13 +163,14 @@ export const Navbar = memo(function Navbar() {
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-soft-border/60 bg-surface lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-soft-border/60 bg-surface sm:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </motion.nav>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -107,11 +178,10 @@ export const Navbar = memo(function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            style={{ willChange: "transform" }}
-            className="absolute inset-x-3 top-[68px] rounded-3xl border border-soft-border/60 bg-surface p-4 shadow-elevated lg:hidden"
+            className="absolute inset-x-3 top-[68px] rounded-3xl border border-soft-border/60 bg-surface p-4 shadow-elevated sm:hidden"
           >
             <ul className="flex flex-col">
-              {NAV.map((item) => (
+              {PRIMARY_NAV.map((item) => (
                 <li key={item.to}>
                   <Link
                     to={item.to}
@@ -125,6 +195,38 @@ export const Navbar = memo(function Navbar() {
                   </Link>
                 </li>
               ))}
+              <li className="mt-1 border-t border-soft-border/40 pt-1">
+                <p className="px-4 py-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                  More
+                </p>
+                {SECONDARY_NAV.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`block rounded-2xl px-4 py-3 text-sm ${
+                      pathname === item.to
+                        ? "bg-primary/10 text-primary"
+                        : "text-foreground/60 hover:bg-muted"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                {EXTERNAL_NAV.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-2xl px-4 py-3 text-sm text-foreground/60 hover:bg-muted"
+                  >
+                    {item.label}
+                    <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                      {item.badge}
+                    </span>
+                  </a>
+                ))}
+              </li>
               <li className="mt-2">
                 <Link
                   to="/contact"

@@ -1,26 +1,48 @@
 import { createRequire } from "module";
 import { createServer } from "http";
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "fs";
 import { join, extname, resolve } from "path";
 
 const require = createRequire(import.meta.url);
 const DIST = resolve(process.cwd(), "dist");
-const ROUTES = [
-  "/",
-  "/about",
-  "/academy",
-  "/contact",
-  "/solutions",
-  "/work",
-  "/privacy",
-  "/software-development-rwanda",
-  "/web-development-kigali",
-  "/mobile-app-development-rwanda",
-  "/ai-solutions-rwanda",
-  "/cybersecurity-rwanda",
-  "/cloud-services-rwanda",
-  "/tech-training-rwanda",
-];
+
+function getProjectSlugs() {
+  const assetsDir = resolve(DIST, "assets");
+  if (!existsSync(assetsDir)) return [];
+  try {
+    const files = readdirSync(assetsDir);
+    const projectFile = files.find((f) => f.startsWith("projects-") && f.endsWith(".js"));
+    if (!projectFile) return [];
+    const src = readFileSync(resolve(assetsDir, projectFile), "utf-8");
+    const matches = src.match(/"slug":"([^"]+)"/g);
+    if (!matches) return [];
+    return [...new Set(matches.map((m) => m.slice(8, -1)))];
+  } catch {
+    return [];
+  }
+}
+
+function buildRoutes() {
+  const staticRoutes = [
+    "/",
+    "/about",
+    "/academy",
+    "/contact",
+    "/solutions",
+    "/work",
+    "/challenges",
+    "/privacy",
+    "/software-development-rwanda",
+    "/web-development-kigali",
+    "/mobile-app-development-rwanda",
+    "/ai-solutions-rwanda",
+    "/cybersecurity-rwanda",
+    "/cloud-services-rwanda",
+    "/tech-training-rwanda",
+  ];
+  const projectSlugs = getProjectSlugs();
+  return [...staticRoutes, ...projectSlugs.map((s) => `/work/${s}`)];
+}
 
 const MIME = {
   ".html": "text/html",
@@ -130,7 +152,8 @@ async function prerender() {
     });
     console.log("[prerender] Browser launched");
 
-    for (const route of ROUTES) {
+    const routes = buildRoutes();
+    for (const route of routes) {
       const url = `http://localhost:${port}${route}`;
       console.log(`[prerender] Rendering ${route}...`);
 

@@ -10,7 +10,7 @@ export function NotFound() {
   return (
     <>
       <SEOHead
-        title="Page Not Found · IshConnect & Ishconnlab"
+        title="Page Not Found · IshConnect"
         description="The page you're looking for doesn't exist or has been moved. Return to IshConnect — Kigali's leading software development and AI innovation studio."
         canonical="/404"
         noindex

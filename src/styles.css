@@ -4,6 +4,54 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* reveal animations — lightweight CSS-based scroll reveals */
+.reveal {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-fade-up {
+  transform: translateY(16px);
+}
+.reveal-fade-in {
+  transform: none;
+}
+.reveal-fade-left {
+  transform: translateX(-16px);
+}
+.reveal-fade-right {
+  transform: translateX(16px);
+}
+.reveal-scale-in {
+  transform: scale(0.96);
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Marquee animation for partner logos */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+  width: fit-content;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
 /* IshConnect Design System
  * Premium light UI · African future-tech identity
  * Inspired by Apple · Linear · Stripe
@@ -157,6 +205,14 @@
 
   .marquee-fade {
     mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 
   .scrollbar-thin {

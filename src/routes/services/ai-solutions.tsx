@@ -17,6 +17,11 @@ export function AiSolutions() {
         "Intelligent process automation",
         "AI consulting & strategy",
       ]}
+      faqs={[
+        { question: "Do you build custom AI models or use pre-trained ones?", answer: "Both. We fine-tune pre-trained models for rapid deployment and build custom models from scratch when unique business problems require specialized solutions." },
+        { question: "What AI technologies do you specialize in?", answer: "We work with TensorFlow, PyTorch, Hugging Face, OpenAI APIs, and LangChain for NLP, computer vision, predictive analytics, and intelligent automation." },
+        { question: "How do you handle training data and privacy?", answer: "We follow strict data governance practices. Training data is encrypted, anonymized where possible, and stored on secure infrastructure compliant with relevant regulations." },
+      ]}
     />
   );
 }

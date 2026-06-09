@@ -68,7 +68,7 @@ export function SEOHead(props: SEOProps) {
       <meta property="og:see_also" content="https://x.com/IConnlab" />
       <meta property="og:see_also" content="https://www.linkedin.com/in/ishconnlab" />
       <meta property="og:see_also" content="https://github.com/ishconnlab" />
-      <meta property="og:see_also" content="https://www.instagram.com/ishconnlab" />
+      <meta property="og:see_also" content="https://www.instagram.com/ish.connect" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={TWITTER_HANDLE} />

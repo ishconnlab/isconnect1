@@ -143,50 +143,28 @@ export function EnrollModal({
                 className="space-y-3 px-4 py-4 sm:px-6 sm:py-5"
               >
                 <Field label="Full name" error={errors.name?.message}>
-                  <input
-                    type="text"
-                    autoComplete="name"
-                    {...register("name")}
-                    className="form-input"
-                    placeholder="Jane Mukamana"
-                  />
+                  <input type="text" autoComplete="name" {...register("name")} placeholder="Jane Mukamana"
+                    className="w-full rounded-xl border border-soft-border bg-surface px-3 py-2.5 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-muted-foreground/50 focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-primary)_18%,transparent)] max-sm:px-2.5 max-sm:py-2 max-sm:text-[13px]" />
                 </Field>
 
                 <Field label="Email" error={errors.email?.message}>
-                  <input
-                    type="email"
-                    autoComplete="email"
-                    {...register("email")}
-                    className="form-input"
-                    placeholder="you@example.com"
-                  />
+                  <input type="email" autoComplete="email" {...register("email")} placeholder="you@example.com"
+                    className="w-full rounded-xl border border-soft-border bg-surface px-3 py-2.5 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-muted-foreground/50 focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-primary)_18%,transparent)] max-sm:px-2.5 max-sm:py-2 max-sm:text-[13px]" />
                 </Field>
 
                 <Field label="Phone number" error={errors.phone?.message}>
-                  <input
-                    type="tel"
-                    autoComplete="tel"
-                    {...register("phone")}
-                    className="form-input"
-                    placeholder="+250 78x xxx xxx"
-                  />
+                  <input type="tel" autoComplete="tel" {...register("phone")} placeholder="+250 78x xxx xxx"
+                    className="w-full rounded-xl border border-soft-border bg-surface px-3 py-2.5 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-muted-foreground/50 focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-primary)_18%,transparent)] max-sm:px-2.5 max-sm:py-2 max-sm:text-[13px]" />
                 </Field>
 
                 <Field label="Course selected">
-                  <input
-                    readOnly
-                    value={program.title}
-                    className="form-input bg-muted text-muted-foreground"
-                  />
+                  <input readOnly value={program.title}
+                    className="w-full rounded-xl border border-soft-border bg-muted px-3 py-2.5 text-sm text-muted-foreground outline-none max-sm:px-2.5 max-sm:py-2 max-sm:text-[13px]" />
                 </Field>
 
                 <Field label="Message / inquiry (optional)" error={errors.message?.message}>
-                  <textarea
-                    rows={3}
-                    {...register("message")}
-                    className="form-input resize-none"
-                    placeholder="Tell us about your goals…"
-                  />
+                  <textarea rows={3} {...register("message")} placeholder="Tell us about your goals…"
+                    className="w-full rounded-xl border border-soft-border bg-surface px-3 py-2.5 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-muted-foreground/50 focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-primary)_18%,transparent)] resize-none max-sm:px-2.5 max-sm:py-2 max-sm:text-[13px]" />
                 </Field>
 
                 <button
@@ -212,40 +190,6 @@ export function EnrollModal({
             )}
           </motion.div>
 
-          <style>{`
-            .form-input {
-              width: 100%;
-              border-radius: 0.75rem;
-              border: 1px solid var(--color-soft-border);
-              background-color: var(--color-surface);
-              padding: 0.65rem 0.85rem;
-              font-size: 0.875rem;
-              line-height: 1.25rem;
-              color: var(--color-foreground);
-              outline: none;
-              transition:
-                border-color .2s,
-                box-shadow .2s,
-                background-color .2s;
-            }
-
-            .form-input:focus {
-              border-color: var(--color-primary);
-              box-shadow:
-                0 0 0 3px color-mix(
-                  in oklab,
-                  var(--color-primary) 18%,
-                  transparent
-                );
-            }
-
-            @media (max-width: 640px) {
-              .form-input {
-                padding: 0.6rem 0.75rem;
-                font-size: 0.82rem;
-              }
-            }
-          `}</style>
         </motion.div>
       )}
     </AnimatePresence>

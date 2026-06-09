@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,6 +6,7 @@ import { toast } from "sonner";
 import { sendContact } from "@/lib/email";
 
 import { Section, SectionHeading } from "../Section";
+import { Reveal } from "../Reveal";
 
 const schema = z.object({
   name: z.string().trim().min(2).max(80),
@@ -52,7 +52,7 @@ export function ContactSection() {
       />
 
       <div className="mt-14 grid gap-8 lg:grid-cols-12">
-        <div className="lg:col-span-5">
+        <Reveal variant="fade-left" duration={600} className="lg:col-span-5">
           <div className="space-y-4">
             <ContactCard
               icon={<Mail className="h-4 w-4" />}
@@ -60,112 +60,71 @@ export function ContactSection() {
               value="ishconnlab@gmail.com"
               href="mailto:ishconnlab@gmail.com"
             />
-
             <ContactCard
               icon={<Phone className="h-4 w-4" />}
               title="Phone"
               value="+250 787 377 750"
               href="tel:+250787377750"
             />
-
             <ContactCard
               icon={<MapPin className="h-4 w-4" />}
               title="Studio"
               value="KG 11 Ave, Kigali, Rwanda"
             />
           </div>
-        </div>
+        </Reveal>
 
-        <motion.form
-          onSubmit={handleSubmit(onSubmit)}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-7 space-y-4 rounded-3xl border border-orange-100 bg-[#FFF7ED] p-5 shadow-soft sm:p-8"
-        >
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Full name" error={errors.name?.message}>
-              <input className="contact-input" {...register("name")} placeholder="Jane Mukamana" />
-            </Field>
-
-            <Field label="Email" error={errors.email?.message}>
-              <input
-                type="email"
-                className="contact-input"
-                {...register("email")}
-                placeholder="you@example.com"
-              />
-            </Field>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Phone (optional)" error={errors.phone?.message}>
-              <input
-                className="contact-input"
-                {...register("phone")}
-                placeholder="+250 78x xxx xxx"
-              />
-            </Field>
-
-            <Field label="Subject (optional)">
-              <input
-                className="contact-input"
-                {...register("subject")}
-                placeholder="Project · Partnership · Other"
-              />
-            </Field>
-          </div>
-
-          <Field label="Message" error={errors.message?.message}>
-            <textarea
-              rows={5}
-              className="contact-input resize-none"
-              {...register("message")}
-              placeholder="Tell us what you're building…"
-            />
-          </Field>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#F97316] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.01] hover:bg-[#FB923C] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+        <Reveal variant="fade-right" delay={100} duration={600} className="lg:col-span-7">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 rounded-3xl border border-orange-100 bg-[#FFF7ED] p-5 shadow-soft sm:p-8"
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Sending…
-              </>
-            ) : (
-              <>
-                Send message
-                <Send className="h-4 w-4" />
-              </>
-            )}
-          </button>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Full name" error={errors.name?.message}>
+                <input {...register("name")} placeholder="Jane Mukamana"
+                  className="w-full rounded-2xl border border-orange-200 bg-white px-3.5 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-[#F97316] focus:shadow-[0_0_0_4px_rgba(249,115,22,0.15)] max-sm:px-3 max-sm:py-2.5 max-sm:text-[13px]" />
+              </Field>
+              <Field label="Email" error={errors.email?.message}>
+                <input type="email" {...register("email")} placeholder="you@example.com"
+                  className="w-full rounded-2xl border border-orange-200 bg-white px-3.5 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-[#F97316] focus:shadow-[0_0_0_4px_rgba(249,115,22,0.15)] max-sm:px-3 max-sm:py-2.5 max-sm:text-[13px]" />
+              </Field>
+            </div>
 
-          <style>{`
-            .contact-input {
-              width: 100%;
-              border-radius: 1rem;
-              border: 1px solid #fed7aa;
-              background: #ffffff;
-              padding: 0.78rem 0.95rem;
-              font-size: 0.875rem;
-              color: #1f2937;
-              outline: none;
-              transition: border-color .2s, box-shadow .2s, background-color .2s, transform .2s;
-            }
-            .contact-input:focus {
-              border-color: #F97316;
-              box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
-            }
-            .contact-input::placeholder { color: #9ca3af; }
-            @media (max-width: 640px) {
-              .contact-input { padding: 0.72rem 0.82rem; font-size: 0.82rem; }
-            }
-          `}</style>
-        </motion.form>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Phone (optional)" error={errors.phone?.message}>
+                <input {...register("phone")} placeholder="+250 78x xxx xxx"
+                  className="w-full rounded-2xl border border-orange-200 bg-white px-3.5 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-[#F97316] focus:shadow-[0_0_0_4px_rgba(249,115,22,0.15)] max-sm:px-3 max-sm:py-2.5 max-sm:text-[13px]" />
+              </Field>
+              <Field label="Subject (optional)">
+                <input {...register("subject")} placeholder="Project · Partnership · Other"
+                  className="w-full rounded-2xl border border-orange-200 bg-white px-3.5 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-[#F97316] focus:shadow-[0_0_0_4px_rgba(249,115,22,0.15)] max-sm:px-3 max-sm:py-2.5 max-sm:text-[13px]" />
+              </Field>
+            </div>
+
+            <Field label="Message" error={errors.message?.message}>
+              <textarea rows={5} {...register("message")} placeholder="Tell us what you're building…"
+                className="w-full rounded-2xl border border-orange-200 bg-white px-3.5 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-[#F97316] focus:shadow-[0_0_0_4px_rgba(249,115,22,0.15)] resize-none max-sm:px-3 max-sm:py-2.5 max-sm:text-[13px]" />
+            </Field>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-2xl bg-[#F97316] px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:scale-[1.01] hover:bg-[#FB923C] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending…
+                </>
+              ) : (
+                <>
+                  Send message
+                  <Send className="h-4 w-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </Reveal>
       </div>
     </Section>
   );
@@ -187,10 +146,8 @@ function ContactCard({
       <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-100 text-[#F97316]">
         {icon}
       </span>
-
       <div>
         <p className="text-xs uppercase tracking-wider text-gray-500">{title}</p>
-
         <p className="text-sm font-medium text-gray-900">{value}</p>
       </div>
     </div>
@@ -211,9 +168,7 @@ function Field({
   return (
     <label className="block">
       <span className="mb-1.5 block text-xs font-medium text-gray-700">{label}</span>
-
       {children}
-
       {error && <span className="mt-1 block text-xs text-red-500">{error}</span>}
     </label>
   );

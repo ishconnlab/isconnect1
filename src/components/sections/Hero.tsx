@@ -1,56 +1,84 @@
-import { motion } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Activity, Zap, Globe } from "lucide-react";
+import { ArrowRight, TrendingUp, Users, Globe, Award, Activity } from "lucide-react";
+import { useEffect, useRef } from "react";
+
+const TRUST_STATS = [
+  { value: 500, suffix: "+", label: "Students Empowered", icon: Users },
+  { value: 50, suffix: "+", label: "Projects Delivered", icon: Activity },
+  { value: 7, suffix: "+", label: "Countries Reached", icon: Globe },
+  { value: 98, suffix: "%", label: "Client Satisfaction", icon: Award },
+];
+
+function AnimatedCounter({ to, suffix = "", delay = 0 }: { to: number; suffix?: string; delay?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const mv = useMotionValue(0);
+  const rounded = useTransform(mv, (v) => Math.round(v).toString());
+
+  useEffect(() => {
+    if (inView) {
+      const controls = animate(mv, to, { duration: 1.4, delay, ease: [0.16, 1, 0.3, 1] });
+      return controls.stop;
+    }
+  }, [inView, mv, to, delay]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      <motion.span>{rounded}</motion.span>{suffix}
+    </span>
+  );
+}
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-32 sm:pt-40">
-      {/* soft ambient blobs */}
+    <section className="relative overflow-hidden pb-16 sm:pb-20 pt-28 sm:pt-32">
+      {/* Premium gradient background */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
-        <div className="absolute -right-20 top-40 h-80 w-80 rounded-full bg-secondary/15 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(249,115,22,0.12),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_80%,rgba(249,115,22,0.06),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_20%_90%,rgba(251,146,60,0.04),transparent)]" />
+        <svg className="h-full w-full opacity-[0.02]" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <defs>
+            <pattern id="hero-grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="#F97316" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-grid)" />
+        </svg>
       </div>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 lg:grid-cols-12 lg:gap-10">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-16">
+        {/* Left: Content */}
         <div className="lg:col-span-7">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-soft-border/70 bg-surface px-3 py-1.5 text-xs font-medium text-foreground/80 shadow-soft"
+            className="inline-flex items-center gap-2.5 rounded-full border border-soft-border/70 bg-white/70 px-3.5 py-1.5 text-xs font-medium text-foreground/80 shadow-soft backdrop-blur-sm"
           >
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            African future-tech · est. 2024
+            <span className="flex h-2 w-2 rounded-full bg-primary">
+              <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-primary/75" />
+            </span>
+            African future-tech · est. 2020
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-            className="mt-6 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-6xl md:text-7xl"
+            className="mt-6 font-display text-3xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-4xl md:text-5xl"
           >
-            Software Development <br className="hidden sm:block" />
+            Software Development{" "}
+            <span className="hidden sm:inline" />
             Company in{" "}
             <span className="relative inline-block">
-              <span className="text-primary">Rwanda & Africa</span>
-              <span className="sr-only">
-                {" "}
-                — software development, AI, and technology innovation by IshConnect (Ishconnlab) in
-                Kigali, Rwanda
+              <span className="relative text-primary">
+                Rwanda & Africa
+                <svg className="absolute -bottom-2 left-0 h-2 w-full text-primary/40" viewBox="0 0 200 8" preserveAspectRatio="none" aria-hidden>
+                  <path d="M0 6 Q 50 0 100 4 T 200 4" fill="none" stroke="currentColor" strokeWidth="2" />
+                </svg>
               </span>
-              <svg
-                className="absolute -bottom-2 left-0 h-2 w-full text-primary/40"
-                viewBox="0 0 200 8"
-                preserveAspectRatio="none"
-                aria-hidden
-              >
-                <path
-                  d="M0 6 Q 50 0 100 4 T 200 4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
             </span>
           </motion.h1>
 
@@ -58,13 +86,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty"
+            className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg"
           >
-            <strong>IshConnect</strong> (operated by <strong>ISHCONNLAB</strong>) helps startups and
-            enterprises build scalable web apps, mobile applications, AI systems, and digital
-            platforms from <strong>Kigali, Rwanda</strong>. We also offer tech training through
-            IshConnect Academy and run <strong>DevQueens</strong>, an initiative empowering women in
-            African tech.
+            We build web apps, mobile platforms, and AI systems for startups and enterprises across Africa from Kigali.
           </motion.p>
 
           <motion.div
@@ -75,163 +99,120 @@ export function Hero() {
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background magnetic-btn"
+              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background magnetic-btn min-h-[44px]"
             >
               Start a Project
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
               to="/work"
-              className="inline-flex items-center gap-2 rounded-full border border-soft-border bg-surface px-5 py-3 text-sm font-medium text-foreground hover:border-primary hover:text-primary"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-soft-border bg-white/70 px-6 py-3 text-sm font-medium text-foreground backdrop-blur-sm hover:border-primary hover:text-primary"
             >
               Explore Our Work
             </Link>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="mt-10 flex items-center gap-6 text-xs text-muted-foreground"
-          >
-            <div className="flex -space-x-2">
-              {["#F97316", "#FB923C", "#EA580C", "#1F2937"].map((c, i) => (
-                <span
-                  key={i}
-                  className="h-7 w-7 rounded-full ring-2 ring-background"
-                  style={{ background: c }}
-                />
-              ))}
-            </div>
-            <span>Trusted by founders, students & enterprises across the continent.</span>
-          </motion.div>
         </div>
 
-        {/* Visual */}
+        {/* Right: Premium Dashboard */}
         <div className="lg:col-span-5">
-          <HeroVisual />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          >
+            <HeroDashboard />
+          </motion.div>
         </div>
       </div>
     </section>
   );
 }
 
-function HeroVisual() {
+function HeroDashboard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-      style={{ willChange: "transform" }}
-      className="relative mx-auto aspect-[4/5] w-full max-w-md"
+    <div
+      ref={ref}
+      className="group relative overflow-hidden rounded-2xl border border-soft-border/70 bg-white shadow-premium-desktop transition-shadow duration-500 hover:shadow-glow"
     >
-      {/* Big card */}
-      <div className="absolute inset-0 rounded-[28px] border border-soft-border/70 bg-surface p-5 shadow-elevated">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-            <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            Live · Platform overview
-          </div>
-          <div className="flex gap-1">
-            <span className="h-2 w-2 rounded-full bg-soft-border" />
-            <span className="h-2 w-2 rounded-full bg-soft-border" />
-            <span className="h-2 w-2 rounded-full bg-soft-border" />
-          </div>
+      {/* Glass header */}
+      <div className="flex items-center justify-between border-b border-soft-border/40 bg-white/80 px-5 py-3.5 backdrop-blur-sm">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-2.5 w-2.5 rounded-full bg-primary">
+            <span className="absolute inline-flex h-2.5 w-2.5 animate-ping rounded-full bg-primary/60" />
+          </span>
+          <span className="text-xs font-medium text-muted-foreground">ishconnect.rw</span>
         </div>
-
-        <div className="mt-5">
-          <p className="text-xs text-muted-foreground">Total impact</p>
-          <p className="font-display text-3xl font-semibold tracking-tight">1,284,920</p>
-          <p className="mt-1 text-xs text-primary">+24.6% this quarter</p>
-        </div>
-
-        {/* Chart */}
-        <svg viewBox="0 0 320 120" className="mt-4 w-full">
-          <defs>
-            <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#F97316" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#F97316" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <motion.path
-            d="M0 90 C 40 60, 80 100, 120 70 S 200 40, 240 55 S 320 30, 320 30 L 320 120 L 0 120 Z"
-            fill="url(#g)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-          />
-          <motion.path
-            d="M0 90 C 40 60, 80 100, 120 70 S 200 40, 240 55 S 320 30, 320 30"
-            fill="none"
-            stroke="#F97316"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.4, ease: "easeInOut", delay: 0.4 }}
-          />
-        </svg>
-
-        <div className="mt-3 grid grid-cols-3 gap-2">
-          {[
-            { l: "Engineers", v: "32" },
-            { l: "Programs", v: "10+" },
-            { l: "Countries", v: "7" },
-          ].map((s) => (
-            <div key={s.l} className="rounded-xl bg-muted px-3 py-2">
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{s.l}</p>
-              <p className="font-display text-base font-semibold">{s.v}</p>
-            </div>
-          ))}
+        <div className="flex gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-red-400" />
+          <span className="h-2 w-2 rounded-full bg-amber-400" />
+          <span className="h-2 w-2 rounded-full bg-emerald-400" />
         </div>
       </div>
 
-      {/* Floating chips */}
-      <motion.div
-        initial={{ y: 0 }}
-        whileInView={{ y: [0, -8, 0] }}
-        viewport={{ margin: "-100px" }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        style={{ willChange: "transform" }}
-        className="absolute -left-4 top-10 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-surface px-3 py-2 shadow-soft motion-reduce:animate-none"
-      >
-        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
-          <Activity className="h-3.5 w-3.5" />
-        </span>
-        <div>
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Uptime</p>
-          <p className="text-xs font-semibold">99.99%</p>
+      <div className="p-5">
+        {/* Active Impact hero metric */}
+        <div className="mb-5 flex items-center justify-between rounded-xl bg-gradient-to-r from-primary/5 to-orange-50 px-4 py-3.5">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Active Impact</p>
+            <p className="font-display text-3xl font-bold tracking-tight text-foreground">
+              <AnimatedCounter to={500} delay={0.3} />+
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm">
+            <TrendingUp className="h-3.5 w-3.5" />
+            <span>Growing</span>
+          </div>
         </div>
-      </motion.div>
 
-      <motion.div
-        initial={{ y: 0 }}
-        whileInView={{ y: [0, 10, 0] }}
-        viewport={{ margin: "-100px" }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        style={{ willChange: "transform" }}
-        className="absolute -right-4 top-40 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-surface px-3 py-2 shadow-soft motion-reduce:animate-none"
-      >
-        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-secondary/15 text-primary-hover">
-          <Zap className="h-3.5 w-3.5" />
-        </span>
-        <div>
-          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Deploys</p>
-          <p className="text-xs font-semibold">Edge · Global</p>
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 gap-2.5">
+          {TRUST_STATS.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 10 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.6 + i * 0.08 }}
+                className="flex items-center gap-3 rounded-xl bg-muted/60 px-3.5 py-3 hover:bg-muted/80 transition-colors"
+              >
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+                  <Icon className="h-4.5 w-4.5" />
+                </span>
+                <div>
+                  <p className="font-display text-base font-semibold leading-tight">
+                    <AnimatedCounter to={s.value} suffix={s.suffix} delay={0.8 + i * 0.1} />
+                  </p>
+                  <p className="text-[11px] leading-tight text-muted-foreground">{s.label}</p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-      </motion.div>
 
-      <motion.div
-        initial={{ y: 0 }}
-        whileInView={{ y: [0, -6, 0] }}
-        viewport={{ margin: "-100px" }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        style={{ willChange: "transform" }}
-        className="absolute -bottom-2 left-6 flex items-center gap-2 rounded-2xl border border-soft-border/70 bg-foreground px-3 py-2 text-background shadow-elevated motion-reduce:animate-none"
-      >
-        <Globe className="h-3.5 w-3.5 text-primary" />
-        <p className="text-xs font-medium">Made in Kigali · Shipped worldwide</p>
-      </motion.div>
-    </motion.div>
+        {/* Live status bar */}
+        <div className="mt-4 flex items-center gap-3 rounded-xl border border-soft-border/30 bg-gradient-to-r from-muted/30 to-muted/10 px-4 py-2.5">
+          <div className="flex items-center gap-1.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">Live</span>
+          </div>
+          <span className="h-3 w-px bg-soft-border/50" />
+          <span className="text-[11px] text-muted-foreground">
+            <span className="font-medium text-foreground">99.99%</span> uptime
+          </span>
+          <span className="ml-auto flex items-center gap-1.5 text-[11px] text-muted-foreground">
+            <Globe className="h-3.5 w-3.5" />
+            <span>Kigali, Rwanda</span>
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }

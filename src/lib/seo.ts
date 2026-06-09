@@ -8,18 +8,25 @@ export const SITE_ALTERNATE_NAMES = [
   "DevQueens",
   "Dev Queens",
   "ISHCONNLAB",
+  "IshConnect WebCare",
+  "IshConnect Community",
+  "IshConnect DevQueens",
 ];
 export const SITE_LEGAL_NAME = "ISHCONNLAB";
 export const SITE_URL = "https://www.ishconnect.rw";
 export const SITE_DOMAIN = "ishconnect.rw";
-export const DEFAULT_OG_IMAGE = "/og-image.png";
+export const DEFAULT_OG_IMAGE: ImageObject = {
+  url: "/og-image.png",
+  width: 1200,
+  height: 630,
+};
 export const DEFAULT_OG_IMAGE_ALT =
-  "IshConnect – Software Development & AI Solutions in Kigali, Rwanda";
+  "IshConnect – Software Development & AI Innovation Studio in Kigali, Rwanda";
 export const TWITTER_HANDLE = "@IshConnectRW";
 export const SITE_LOCALE = "en_US";
 export const SITE_LANG = "en";
 export const SITE_REGION = "RW";
-export const SITE_CREATED_YEAR = "2024";
+export const SITE_CREATED_YEAR = "2020";
 
 export interface ImageObject {
   url: string;
@@ -63,8 +70,10 @@ export function resolveOgImage(image?: string | ImageObject): {
 } {
   if (!image) {
     return {
-      url: resolveUrl(DEFAULT_OG_IMAGE),
+      url: resolveUrl(DEFAULT_OG_IMAGE.url),
       alt: DEFAULT_OG_IMAGE_ALT,
+      width: DEFAULT_OG_IMAGE.width,
+      height: DEFAULT_OG_IMAGE.height,
     };
   }
   if (typeof image === "string") {
@@ -106,12 +115,12 @@ export function buildMeta(props: SEOProps) {
 
 export const PAGE_SEO: Record<string, PageSEOConfig> = {
   home: {
-    title: "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
+    title: "IshConnect — Software Development & AI Innovation Studio in Rwanda",
     description:
-      "IshConnect is a top software development company in Rwanda and AI company in Kigali. We build web apps, mobile apps, AI systems, and offer coding bootcamps through IshConnect Academy. Trusted tech partner across Africa.",
-    ogTitle: "Software Development Company Rwanda | AI & Web Development Kigali | IshConnect",
+      "IshConnect is a software development and AI innovation studio based in Kigali, Rwanda. We build web apps, mobile apps, AI systems, and offer coding bootcamps through IshConnect Academy. Trusted tech partner across Africa.",
+    ogTitle: "IshConnect — Software Development & AI Innovation Studio in Rwanda",
     ogDescription:
-      "Top software development company Rwanda and AI company Kigali. IshConnect (ISHCONNLAB) delivers custom software, AI solutions, web development, and tech training across Africa.",
+      "IshConnect delivers custom software, AI solutions, web development, and tech training across Africa from Kigali, Rwanda.",
     canonical: SITE_URL,
     ogType: "website",
     keywords: [
@@ -119,7 +128,7 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
       "AI company Rwanda",
       "web development company Kigali",
       "IshConnect",
-      "ISHCONNLAB",
+      "IshConnect",
       "IT company Rwanda",
       "tech company Kigali Rwanda",
       "software development company Africa",
@@ -138,14 +147,14 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
   about: {
     title: "About IshConnect — Software Development & AI Company in Kigali, Rwanda",
     description:
-      "IshConnect (ISHCONNLAB) is a leading software development and AI company in Kigali, Rwanda. We build digital products, train developers, and empower women in tech through DevQueens. Founded 2024.",
+      "IshConnect is a leading software development and AI company in Kigali, Rwanda. We build digital products, train developers, and empower women in tech through DevQueens. Founded 2020.",
     canonical: `${SITE_URL}/about`,
     ogType: "website",
     keywords: [
       "about IshConnect",
       "software development company Rwanda",
       "AI company Kigali",
-      "Ishconnlab",
+      "IshConnect",
       "Kigali software company",
       "Rwanda tech startup",
       "African technology studio",
@@ -161,11 +170,53 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
       { name: "About", url: "/about" },
     ],
   },
+  founder: {
+    title: "Founder | IshConnect — Ishimwe J. Claude, CEO & Founder",
+    description:
+      "Meet Ishimwe J. Claude, founder and CEO of IshConnect, a Kigali-based software development and AI company. Learn about his vision for building Africa's digital future.",
+    canonical: `${SITE_URL}/founder`,
+    ogType: "profile",
+    keywords: [
+      "Ishimwe J. Claude",
+      "IshConnect founder",
+      "CEO IshConnect",
+      "founder IshConnect",
+      "Kigali entrepreneur",
+      "Rwanda tech founder",
+      "African tech entrepreneur",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "About", url: "/about" },
+      { name: "Founder", url: "/founder" },
+    ],
+  },
+  team: {
+    title: "Team | IshConnect — Engineering & Design Team in Kigali, Rwanda",
+    description:
+      "Meet the IshConnect team — engineers, designers, and educators building impactful digital experiences from Kigali, Rwanda across Africa.",
+    canonical: `${SITE_URL}/team`,
+    ogType: "website",
+    keywords: [
+      "IshConnect team",
+      "software engineers Rwanda",
+      "tech team Kigali",
+      "UI UX designers Rwanda",
+      "cloud architects Africa",
+      "IshConnect employees",
+      "Rwanda development team",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "About", url: "/about" },
+      { name: "Team", url: "/team" },
+    ],
+  },
   academy: {
     title:
-      "IshConnect Academy — Coding School & AI Training in Kigali, Rwanda | Programming Bootcamp",
+      "Academy | IshConnect — Coding Bootcamp & Tech Training Rwanda",
     description:
-      "Join IshConnect Academy for coding bootcamps, AI training, and software engineering programs in Kigali, Rwanda. Learn web development, cybersecurity, UI/UX design, and more at Rwanda's top tech school by Ishconnlab.",
+      "Join IshConnect Academy for coding bootcamps, AI training, and software engineering programs in Kigali, Rwanda. Learn web development, cybersecurity, UI/UX design, and more at Rwanda's top tech school by IshConnect.",
     canonical: `${SITE_URL}/academy`,
     ogType: "website",
     keywords: [
@@ -196,14 +247,14 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     ],
   },
   contact: {
-    title: "Contact IshConnect — Web Developers & Tech Studio in Kigali, Rwanda",
+    title: "Contact | IshConnect — Start a Project in Kigali, Rwanda",
     description:
-      "Get in touch with IshConnect (Ishconnlab) in Kigali, Rwanda. Start your web development, AI, or software project. Hire React developers and tech innovators in Rwanda. We respond within one business day.",
+      "Get in touch with IshConnect in Kigali, Rwanda. Start your web development, AI, or software project. Hire React developers and tech innovators in Rwanda. We respond within one business day.",
     canonical: `${SITE_URL}/contact`,
     ogType: "website",
     keywords: [
       "contact IshConnect",
-      "contact Ishconnlab",
+      "contact IshConnect",
       "hire developers Rwanda",
       "Kigali software agency",
       "software development quote",
@@ -226,9 +277,9 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     ],
   },
   solutions: {
-    title: "Software, AI & Web Development Services Kigali | IshConnect Rwanda",
+    title: "Services | IshConnect — Software Development & AI Solutions Rwanda",
     description:
-      "IshConnect (Ishconnlab) provides end-to-end technology services in Kigali, Rwanda: web and mobile development, AI solutions, cloud infrastructure, cybersecurity, and UI/UX design for African businesses.",
+      "IshConnect provides end-to-end technology services in Kigali, Rwanda: web and mobile development, AI solutions, cloud infrastructure, cybersecurity, and UI/UX design for African businesses.",
     canonical: `${SITE_URL}/solutions`,
     ogType: "website",
     keywords: [
@@ -260,15 +311,15 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     ],
   },
   privacy: {
-    title: "Privacy Policy — IshConnect & Ishconnlab | Data Protection Rwanda",
+    title: "Privacy Policy — IshConnect | Data Protection Rwanda",
     description:
-      "Your privacy matters to IshConnect (ISHCONNLAB). Learn how we collect, use, and protect your information in compliance with Rwandan data protection regulations. Privacy policy for Ishconnlab services.",
+      "Your privacy matters to IshConnect. Learn how we collect, use, and protect your information in compliance with Rwandan data protection regulations. Privacy policy for IshConnect services.",
     canonical: `${SITE_URL}/privacy`,
     ogType: "website",
     keywords: [
       "IshConnect privacy",
-      "Ishconnlab privacy",
-      "ISHCONNLAB",
+      "IshConnect privacy",
+      "IshConnect",
       "data protection Rwanda",
       "privacy policy Rwanda",
       "data privacy Rwanda",
@@ -285,14 +336,14 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     ],
   },
   work: {
-    title: "Our Work — Portfolio & Case Studies | IshConnect Rwanda",
+    title: "Work | IshConnect — Portfolio & Case Studies Rwanda",
     description:
-      "Explore IshConnect's portfolio of digital products — fintech, healthtech, agritech, AI, and consumer platforms built for the African market by the Ishconnlab team in Kigali, Rwanda.",
+      "Explore IshConnect's portfolio of digital products — fintech, healthtech, agritech, AI, and consumer platforms built for the African market by the IshConnect team in Kigali, Rwanda.",
     canonical: `${SITE_URL}/work`,
     ogType: "website",
     keywords: [
       "IshConnect portfolio",
-      "Ishconnlab projects",
+      "IshConnect projects",
       "fintech case study Africa",
       "healthtech Rwanda",
       "agritech projects Africa",
@@ -473,6 +524,64 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
       { name: "Home", url: "/" },
       { name: "Academy", url: "/academy" },
       { name: "Challenges", url: "/challenges" },
+    ],
+  },
+  webcare: {
+    title: "WebCare | IshConnect — Website Maintenance & Digital Support",
+    description:
+      "WebCare by IshConnect provides ongoing website maintenance, security updates, performance monitoring, and technical support for businesses in Rwanda and across Africa.",
+    canonical: `${SITE_URL}/webcare`,
+    ogType: "website",
+    keywords: [
+      "WebCare IshConnect",
+      "website maintenance Rwanda",
+      "website support Kigali",
+      "digital support services",
+      "website security updates",
+      "site monitoring Rwanda",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "WebCare", url: "/webcare" },
+    ],
+  },
+  community: {
+    title: "Community | IshConnect - Tech Ecosystem & Developer Network",
+    description:
+      "Join the IshConnect community - a network of developers, designers, and innovators building Africa's digital future. Connect on WhatsApp, events, and more.",
+    canonical: `${SITE_URL}/community`,
+    ogType: "website",
+    keywords: [
+      "IshConnect community",
+      "tech community Rwanda",
+      "developer network Kigali",
+      "African tech ecosystem",
+      "IshConnect WhatsApp",
+      "developer community Africa",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Community", url: "/community" },
+    ],
+  },
+  devqueens: {
+    title: "DevQueens | IshConnect - Women in Tech Initiative",
+    description:
+      "DevQueens is an IshConnect initiative empowering women and girls in African technology through mentorship, training, scholarships, and community support in Kigali, Rwanda.",
+    canonical: `${SITE_URL}/devqueens`,
+    ogType: "website",
+    keywords: [
+      "DevQueens",
+      "women in tech Rwanda",
+      "women in tech Africa",
+      "DevQueens Kigali",
+      "IshConnect DevQueens",
+      "female developers Rwanda",
+      "girls in tech Africa",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "DevQueens", url: "/devqueens" },
     ],
   },
 };

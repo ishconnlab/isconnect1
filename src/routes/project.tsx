@@ -2,7 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
-  ExternalLink,
   Github,
   CheckCircle2,
   Clock,
@@ -212,7 +211,7 @@ export function ProjectCaseStudy() {
                 {project.category}
               </span>
 
-              <h1 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+              <h1 className="mt-4 font-display text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
                 {project.title}
               </h1>
 
@@ -232,16 +231,6 @@ export function ProjectCaseStudy() {
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-all hover:opacity-90"
-                  >
-                    <ExternalLink className="h-3.5 w-3.5" /> Live Demo
-                  </a>
-                )}
                 {project.repoUrl && (
                   <a
                     href={project.repoUrl}

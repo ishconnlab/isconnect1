@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import { Section, SectionHeading } from "../Section";
+import { Reveal } from "../Reveal";
 
 const TIMELINE = [
   {
@@ -10,7 +10,7 @@ const TIMELINE = [
   {
     year: "2023",
     title: "First Production Project Shipped",
-    text: "Successfully delivered the first client-focused software solution, marking the beginning of IshConnect’s journey into professional digital product development.",
+    text: "Successfully delivered the first client-focused software solution, marking the beginning of IshConnect's journey into professional digital product development.",
   },
   {
     year: "2024",
@@ -36,7 +36,7 @@ export function AboutSection() {
         eyebrow="About"
         title={
           <>
-            Building Africa’s <span className="text-primary">digital future.</span>
+            Building Africa's <span className="text-primary">digital future.</span>
           </>
         }
         description="IshConnect is a technology studio focused on software engineering, innovation, and empowering African tech talent."
@@ -50,51 +50,41 @@ export function AboutSection() {
             Our growth tree — IshConnect timeline
           </h3>
           <p className="mt-3 max-w-2xl text-sm text-gray-600">
-            A structured evolution map showing how <strong>IshConnect (Ishconnlab)</strong> grew
+            A structured evolution map showing how <strong>IshConnect</strong> grew
             from a passion-driven technology initiative in Kigali, Rwanda into a leading software
-            development and AI innovation studio.
+            development and AI company.
           </p>
         </div>
 
         {/* TREE CONTAINER */}
         <div className="relative">
           {/* TRUNK */}
-          <div className="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-gray-200" />
+          <div className="absolute left-4 sm:left-1/2 top-0 h-full w-0.5 bg-gray-200 sm:-translate-x-px" />
 
           <div className="space-y-14">
-            {TIMELINE.map((t, i) => (
-              <motion.div
-                key={t.title}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="relative flex md:justify-between items-center"
-              >
-                {/* BRANCH DOT */}
-                <div className="absolute left-4 md:left-1/2 top-6 -translate-x-1/2">
-                  <div className="h-3.5 w-3.5 rounded-full bg-primary shadow-sm" />
-                </div>
+            {TIMELINE.map((t, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <Reveal
+                  key={t.title}
+                  variant="fade-up"
+                  delay={i * 50}
+                  duration={500}
+                >
+                  <div className="relative flex flex-col sm:flex-row sm:items-center">
+                    {/* BRANCH DOT */}
+                    <div className="absolute left-4 sm:left-1/2 top-6 -translate-x-1/2 z-10">
+                      <div className="h-3.5 w-3.5 rounded-full bg-primary shadow-sm" />
+                    </div>
 
-                {/* LEFT BRANCH (desktop alternating) */}
-                {i % 2 === 0 ? (
-                  <div className="ml-12 md:ml-0 md:w-[45%]">
-                    <CardContent t={t} />
+                    {/* Content - left side on desktop for even items */}
+                    <div className={`ml-12 sm:ml-0 sm:w-[45%] ${isLeft ? "sm:mr-auto sm:pr-8" : "sm:ml-auto sm:pl-8"}`}>
+                      <CardContent t={t} />
+                    </div>
                   </div>
-                ) : (
-                  <div className="hidden md:block md:w-[45%]" />
-                )}
-
-                {/* RIGHT BRANCH */}
-                {i % 2 !== 0 ? (
-                  <div className="ml-12 md:ml-0 md:w-[45%]">
-                    <CardContent t={t} />
-                  </div>
-                ) : (
-                  <div className="hidden md:block md:w-[45%]" />
-                )}
-              </motion.div>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -110,16 +100,11 @@ interface TimelineItem {
 
 function CardContent({ t }: { t: TimelineItem }) {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition relative">
-      {/* connector branch line */}
-      <div className="hidden md:block absolute top-6 w-6 h-0.5 bg-gray-200 -left-6" />
-
+    <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
       <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
         {t.year}
       </span>
-
       <h4 className="mt-3 text-lg font-semibold text-gray-900">{t.title}</h4>
-
       <p className="mt-2 text-sm leading-relaxed text-gray-600">{t.text}</p>
     </div>
   );

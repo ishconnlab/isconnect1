@@ -48,6 +48,8 @@ export default defineConfig({
             "@radix-ui/react-tabs",
             "@radix-ui/react-tooltip",
           ],
+          forms: ["react-hook-form", "@hookform/resolvers", "zod"],
+          icons: ["lucide-react"],
         },
       },
     },

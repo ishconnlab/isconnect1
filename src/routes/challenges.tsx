@@ -364,8 +364,8 @@ const FILTERS: { key: FilterKey; label: string }[] = [
 
 const STATS = [
   { value: 4, suffix: "+", label: "Active Challenges" },
-  { value: 1200, suffix: "+", label: "Students Participating" },
-  { value: 300, suffix: "+", label: "Projects Submitted" },
+  { value: 200, suffix: "+", label: "Students Participating" },
+  { value: 150, suffix: "+", label: "Projects Submitted" },
   { value: 68, suffix: "%", label: "Completion Rate" },
 ];
 
@@ -502,7 +502,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-          className="mt-6 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance sm:text-6xl md:text-7xl"
+          className="mt-6 font-display text-3xl font-semibold leading-[1.08] tracking-tight text-balance sm:text-4xl md:text-5xl"
         >
           Real-World Coding{" "}
           <span className="relative inline-block">
@@ -575,7 +575,7 @@ function StatsSection() {
             transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="text-center"
           >
-            <p className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">
+            <p className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
               <Counter to={s.value} suffix={s.suffix} delay={i * 0.12} />
             </p>
             <p className="mt-2 text-sm text-muted-foreground">{s.label}</p>

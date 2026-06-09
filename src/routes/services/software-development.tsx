@@ -17,6 +17,11 @@ export function SoftwareDevelopment() {
         "Legacy system modernization",
         "Cloud-native applications",
       ]}
+      faqs={[
+        { question: "What types of software does IshConnect develop?", answer: "We build web applications, enterprise platforms, SaaS products, RESTful APIs, and cloud-native applications using modern technologies like React, Node.js, Python, and Go." },
+        { question: "How long does custom software development take?", answer: "Timelines vary by complexity. A typical MVP takes 8-12 weeks, while larger enterprise platforms take 3-6 months. We deliver iteratively with weekly demos." },
+        { question: "Do you work with startups?", answer: "Yes, we specialize in working with startups and growing businesses across Africa. We offer flexible engagement models, including dedicated teams and project-based development." },
+      ]}
     />
   );
 }

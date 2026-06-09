@@ -67,7 +67,7 @@ export const intents: Intent[] = [
       about: ["background", "overview", "information", "details"],
     },
     responses: [
-      "IshConnect (also known as Ishconnlab) is a software company and digital innovation studio based in Kigali, Rwanda. We are a training academy and technology company focused on empowering African youth through digital skills, software development, and innovative technology solutions.",
+      "IshConnect is a software company based in Kigali, Rwanda. We specialize in software development, AI solutions, and tech training, empowering African youth through digital skills and innovative technology.",
       "IshConnect is a Kigali-based software company and digital innovation studio. We build world-class digital products, offer training programs, and empower African youth through technology education. Our mission is to bridge the digital skills gap and create opportunities for the next generation of tech leaders in Africa.",
     ],
     followUp: [

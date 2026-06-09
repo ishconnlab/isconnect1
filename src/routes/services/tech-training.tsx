@@ -17,6 +17,11 @@ export function TechTraining() {
         "Mobile app development",
         "UI/UX design bootcamp",
       ]}
+      faqs={[
+        { question: "Who can enroll in IshConnect Academy programs?", answer: "Our programs are open to beginners and experienced developers alike. We offer tracks for absolute beginners, intermediate learners, and advanced engineers looking to upskill." },
+        { question: "Are the bootcamps online or in-person?", answer: "We offer both options. Our bootcamps are available in-person at our Kigali facility and online with live instruction, recorded sessions, and hands-on projects." },
+        { question: "Do you provide certificates upon completion?", answer: "Yes, graduates receive a certificate of completion. Our programs also include portfolio-building projects that demonstrate your skills to employers." },
+      ]}
     />
   );
 }

@@ -42,7 +42,7 @@ export const useChatStore = create<ChatState>()(
           timestamp: Date.now(),
         };
         set((state) => ({
-          messages: [...state.messages, message],
+          messages: [...state.messages, message].slice(-50),
         }));
       },
 

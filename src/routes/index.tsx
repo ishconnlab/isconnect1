@@ -2,8 +2,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/JsonLd";
 import { PAGE_SEO } from "@/lib/seo";
 import { Hero } from "@/components/sections/Hero";
-import { TrustStats } from "@/components/sections/TrustStats";
-import { CEOSection } from "@/components/sections/CEOSection";
+import { PartnersSection } from "@/components/sections/PartnersSection";
 import { SolutionsSection } from "@/components/sections/SolutionsSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import { AcademySection } from "@/components/sections/AcademySection";
@@ -13,14 +12,14 @@ const config = PAGE_SEO.home;
 
 const faqQuestions = [
   {
-    question: "What is IshConnect (Ishconnlab)?",
+    question: "What is IshConnect?",
     answer:
-      "IshConnect, operated by ISHCONNLAB, is a Kigali-based technology studio specializing in software development, AI solutions, web development, and tech education in Rwanda. We also run DevQueens, a program empowering women in African tech.",
+      "IshConnect is a Kigali-based technology studio specializing in software development, AI solutions, and tech education in Rwanda. We also run DevQueens, a program empowering women in African tech, offer WebCare website maintenance, and host a thriving tech community.",
   },
   {
     question: "What services does IshConnect offer in Rwanda?",
     answer:
-      "IshConnect offers web and mobile app development, AI and machine learning solutions, cloud infrastructure, cybersecurity, UI/UX design, and technology training through IshConnect Academy in Kigali, Rwanda.",
+      "IshConnect offers web and mobile app development, AI and machine learning solutions, cloud infrastructure, cybersecurity, UI/UX design, WebCare website maintenance services, and technology training through IshConnect Academy in Kigali, Rwanda.",
   },
   {
     question: "Does IshConnect offer coding bootcamps in Kigali?",
@@ -37,6 +36,16 @@ const faqQuestions = [
     answer:
       "IshConnect is based in Kigali, Rwanda at KG 11 Ave, serving clients across Rwanda and the African continent with software development, AI, and digital transformation services.",
   },
+  {
+    question: "Who is the founder of IshConnect?",
+    answer:
+      "IshConnect was founded in 2020 by Ishimwe J. Claude, a software engineer and entrepreneur based in Kigali, Rwanda. Learn more about the founder.",
+  },
+  {
+    question: "How big is the IshConnect team?",
+    answer:
+      "IshConnect has a multidisciplinary team of engineers, designers, and educators including leadership, backend engineers, mobile engineers, cloud architects, product designers, and QA engineers based in Kigali, Rwanda. Meet the full team.",
+  },
 ];
 
 export function Home() {
@@ -46,8 +55,7 @@ export function Home() {
       <BreadcrumbJsonLd items={config.breadcrumbs} />
       <FaqJsonLd questions={faqQuestions} />
       <Hero />
-      <TrustStats />
-      <CEOSection />
+      <PartnersSection />
       <SolutionsSection />
       <WorkSection compact />
       <AcademySection />

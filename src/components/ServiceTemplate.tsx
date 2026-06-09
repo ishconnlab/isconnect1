@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
-import { BreadcrumbJsonLd, ServiceJsonLd } from "@/components/JsonLd";
+import { BreadcrumbJsonLd, ServiceJsonLd, FaqJsonLd } from "@/components/JsonLd";
 import { Section } from "@/components/Section";
 import type { PageSEOConfig } from "@/lib/seo";
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
 
 interface ServiceTemplateProps {
   config: PageSEOConfig;
@@ -13,6 +18,7 @@ interface ServiceTemplateProps {
   features: string[];
   ctaText?: string;
   ctaLink?: string;
+  faqs?: FaqItem[];
 }
 
 export function ServiceTemplate({
@@ -22,12 +28,14 @@ export function ServiceTemplate({
   features,
   ctaText = "Start a Project",
   ctaLink = "/contact",
+  faqs,
 }: ServiceTemplateProps) {
   return (
     <>
       <SEOHead {...config} />
       <BreadcrumbJsonLd items={config.breadcrumbs} />
       <ServiceJsonLd name={config.title} description={config.description} />
+      {faqs && faqs.length > 0 && <FaqJsonLd questions={faqs} />}
       <div className="pt-32 sm:pt-40">
         <Section>
           <motion.div
@@ -36,7 +44,7 @@ export function ServiceTemplate({
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl"
           >
-            <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
+            <h1 className="font-display text-3xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-4xl md:text-5xl">
               {title}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground text-pretty">

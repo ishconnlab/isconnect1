@@ -1,20 +1,20 @@
-import { motion, type HTMLMotionProps } from "framer-motion";
 import type { ReactNode } from "react";
+import { Reveal } from "./Reveal";
 
 export function Section({
   id,
   className = "",
   children,
   ...rest
-}: { id?: string; className?: string; children: ReactNode } & HTMLMotionProps<"section">) {
+}: { id?: string; className?: string; children: ReactNode } & React.HTMLAttributes<HTMLElement>) {
   return (
-    <motion.section
+    <section
       id={id}
-      className={`mx-auto w-full max-w-6xl px-6 py-20 sm:py-28 ${className}`}
+      className={`mx-auto w-full max-w-6xl px-6 py-16 sm:py-20 md:py-28 ${className}`}
       {...rest}
     >
       {children}
-    </motion.section>
+    </section>
   );
 }
 
@@ -41,37 +41,21 @@ export function SectionHeading({
   return (
     <div className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : ""}`}>
       {eyebrow && (
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5 }}
-          style={{ willChange: "transform" }}
-        >
+        <Reveal variant="fade-up" duration={500}>
           <Eyebrow>{eyebrow}</Eyebrow>
-        </motion.div>
+        </Reveal>
       )}
-      <motion.h2
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-        style={{ willChange: "transform" }}
-        className="mt-4 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl"
-      >
-        {title}
-      </motion.h2>
+      <Reveal variant="fade-up" delay={eyebrow ? 50 : 0} duration={600}>
+        <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-4xl md:text-5xl">
+          {title}
+        </h2>
+      </Reveal>
       {description && (
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
-          style={{ willChange: "transform" }}
-          className="mt-5 text-lg leading-relaxed text-muted-foreground text-pretty"
-        >
-          {description}
-        </motion.p>
+        <Reveal variant="fade-up" delay={eyebrow ? 120 : 70} duration={600}>
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
+            {description}
+          </p>
+        </Reveal>
       )}
     </div>
   );

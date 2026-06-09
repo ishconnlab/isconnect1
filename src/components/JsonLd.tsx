@@ -22,8 +22,8 @@ export function OrganizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}/og-image.png`,
     description:
-      "IshConnect (Ishconnlab) delivers world-class software solutions, AI training, technology education, and digital transformation services designed for the future of Africa. Home of DevQueens.",
-    foundingDate: "2024",
+      "IshConnect delivers world-class software solutions, AI training, and technology education designed for the future of Africa. Home of DevQueens.",
+    foundingDate: "2020",
     founders: [
       {
         "@type": "Person",
@@ -59,7 +59,7 @@ export function OrganizationJsonLd() {
       "https://x.com/IConnlab",
       "https://www.linkedin.com/in/ishconnlab",
       "https://github.com/ishconnlab",
-      "https://www.instagram.com/ishconnlab",
+      "https://www.instagram.com/ish.connect",
       "https://www.ishconnect.rw",
     ],
     knowsAbout: [
@@ -72,6 +72,71 @@ export function OrganizationJsonLd() {
       "UI/UX Design",
       "Technology Training",
       "Digital Transformation",
+      "Website Maintenance",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "IshConnect Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Software Development",
+            url: `${SITE_URL}/software-development-rwanda`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Web Development",
+            url: `${SITE_URL}/web-development-kigali`,
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "WebCare",
+            url: `${SITE_URL}/webcare`,
+          },
+        },
+      ],
+    },
+  };
+
+  return <SchemaScript schema={schema} />;
+}
+
+export function SiteNavigationElementJsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    "@id": `${SITE_URL}#sitenavigation`,
+    name: [
+      "Home",
+      "Services",
+      "Work",
+      "Academy",
+      "About",
+      "Contact",
+      "Founder",
+      "Team",
+      "WebCare",
+      "Community",
+    ],
+    url: [
+      `${SITE_URL}/`,
+      `${SITE_URL}/solutions`,
+      `${SITE_URL}/work`,
+      `${SITE_URL}/academy`,
+      `${SITE_URL}/about`,
+      `${SITE_URL}/contact`,
+      `${SITE_URL}/founder`,
+      `${SITE_URL}/team`,
+      `${SITE_URL}/webcare`,
+      `${SITE_URL}/community`,
     ],
   };
 
@@ -87,7 +152,7 @@ export function WebSiteJsonLd() {
     alternateName: SITE_ALTERNATE_NAMES,
     url: SITE_URL,
     description:
-      "Software solutions, AI training, technology education and digital transformation for the future of Africa by IshConnect (Ishconnlab).",
+      "Software solutions, AI training, and technology education for the future of Africa by IshConnect.",
     publisher: {
       "@id": `${SITE_URL}#organization`,
     },
@@ -297,8 +362,8 @@ export function CreativeWorkJsonLd({ project }: { project: Project }) {
     provider: {
       "@id": `${SITE_URL}#organization`,
     },
-    dateCreated: "2024",
-    datePublished: "2024",
+    dateCreated: "2020",
+    datePublished: "2020",
     educationalUse: "Case Study",
     teaches: project.tech.join(", "),
     about: {
@@ -316,7 +381,7 @@ export function ItemListJsonLd({ items }: { items: { name: string; url: string }
     "@type": "ItemList",
     "@id": `${SITE_URL}/work#itemlist`,
     name: "IshConnect Portfolio",
-    description: "Case studies and projects by IshConnect (Ishconnlab) in Kigali, Rwanda",
+    description: "Case studies and projects by IshConnect in Kigali, Rwanda",
     numberOfItems: items.length,
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",

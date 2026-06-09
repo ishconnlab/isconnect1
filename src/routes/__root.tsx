@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { ChatBot } from "@/components/chatbot/ChatBot";
 import { InstallBanner } from "@/components/InstallBanner";
+
+const ChatBot = lazy(() =>
+  import("@/components/chatbot/ChatBot").then((m) => ({ default: m.ChatBot })),
+);
 export function RootLayout() {
   const { pathname } = useLocation();
 
@@ -26,7 +29,7 @@ export function RootLayout() {
       </main>
       <Footer />
       <Toaster richColors position="top-right" />
-      <ChatBot />
+      <Suspense fallback={null}><ChatBot /></Suspense>
       <InstallBanner />
     </div>
   );
