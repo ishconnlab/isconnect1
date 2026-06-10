@@ -1,9 +1,9 @@
 import emailjs from "@emailjs/browser";
 
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? "I3579akFPAYK4y_LS";
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? "service_emew7q6";
-const TEMPLATE_CONTACT = import.meta.env.VITE_EMAILJS_TEMPLATE_CONTACT ?? "template_flzt17z";
-const TEMPLATE_DEFAULT = import.meta.env.VITE_EMAILJS_TEMPLATE_DEFAULT ?? "template_gumqgv8";
+const EMAILJS_PUBLIC_KEY = "I3579akFPAYK4y_LS";
+const EMAILJS_SERVICE_ID = "service_emew7q6";
+const TEMPLATE_CONTACT = "template_flzt17z";
+const TEMPLATE_DEFAULT = "template_gumqgv8";
 
 export type CourseSlug =
   | "full-stack"

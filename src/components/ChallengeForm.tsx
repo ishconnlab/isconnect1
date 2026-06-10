@@ -27,10 +27,10 @@ export function ChallengeForm({ defaultChallenge = "" }: { defaultChallenge?: st
 
     try {
       await emailjs.sendForm(
-        import.meta.env.VITE_CHALLENGE_SERVICE_ID ?? "service_jwu75oc",
-        import.meta.env.VITE_CHALLENGE_TEMPLATE_ID ?? "template_n0866mq",
+        "service_jwu75oc",
+        "template_n0866mq",
         form.current,
-        import.meta.env.VITE_CHALLENGE_PUBLIC_KEY ?? "z5e8SQcYysgocvAsl",
+        "z5e8SQcYysgocvAsl",
       );
       setSent(true);
       form.current.reset();
