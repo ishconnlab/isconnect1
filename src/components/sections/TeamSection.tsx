@@ -21,13 +21,13 @@ const LEADS = [
 
 const TEAM = [
   { name: "Tumaine N.", role: "Backend Engineer" },
-  { name: "Derick", role: "Mobile Engineer" },
+  { name: "Sandrine.I ", role: "Mobile Engineer" },
   { name: "Ange U.", role: "Cloud Architect" },
   { name: "Trinita U.", role: "Product Designer" },
   { name: "Alifu S.", role: "Software Engineer" },
   { name: "Cynthia I.", role: "Program Lead" },
   { name: "Dady R.N.", role: "Frontend Engineer" },
-  { name: "Divine B.", role: "QA Engineer" },
+  { name: "Yvonne Y.", role: "QA Engineer" },
 ];
 
 export function TeamSection() {
