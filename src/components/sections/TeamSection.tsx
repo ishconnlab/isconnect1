@@ -16,13 +16,13 @@ const LEADS = [
     name: "Kevin Ishimwe",
     role: "Lead Developer",
     image: kevinImg,
-    linkedin: "https://www.linkedin.com/in/kevin-ishimwe",
+    linkedin: "https://www.linkedin.com/in/kevin-ishimwe-551815368/",
   },
   {
     name: "Sandra Niyigena",
     role: "Creative Director",
     image: sandraImg,
-    linkedin: "https://www.linkedin.com/in/sandra-niyigena",
+    linkedin: "https://www.linkedin.com/in/sandra-niyigena-ba7766403/",
   },
 ];
 
