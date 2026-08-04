@@ -1,21 +1,24 @@
 import { Section, SectionHeading } from "../Section";
 import { Reveal } from "../Reveal";
+import ceoImg from "@/assets/team/ceo.jpeg";
+import kevinImg from "@/assets/team/kevin.jpeg";
+import sandraImg from "@/assets/team/sandra.jpg";
 
 const LEADS = [
   {
     name: "Ishimwe J. Claude",
     role: "CEO & Founder",
-    initials: "IJ",
+    image: ceoImg,
   },
   {
-    name: "Kevin I.",
+    name: "Kevin Ishimwe",
     role: "Lead Developer",
-    initials: "KI",
+    image: kevinImg,
   },
   {
-    name: "Sandra N.",
+    name: "Sandra Niyigena",
     role: "Creative Director",
-    initials: "SN",
+    image: sandraImg,
   },
 ];
 
@@ -53,10 +56,14 @@ export function TeamSection() {
                 <div className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#F97316] shadow-sm">
                   Leadership
                 </div>
-                <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#F97316] to-[#FB923C] shadow-xl">
-                  <span className="font-display text-3xl font-bold tracking-tight text-white">
-                    {member.initials}
-                  </span>
+                <div className="relative h-28 w-28 overflow-hidden rounded-full ring-4 ring-white/90 shadow-xl">
+                  <img
+                    src={member.image}
+                    alt={`${member.name} — ${member.role}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 border-t border-orange-100 bg-white/90 p-5 backdrop-blur">
                   <h3 className="font-display text-xl font-semibold text-foreground">
