@@ -1,5 +1,6 @@
 import { Section, SectionHeading } from "../Section";
 import { Reveal } from "../Reveal";
+import { Linkedin } from "lucide-react";
 import ceoImg from "@/assets/team/ceo.jpeg";
 import kevinImg from "@/assets/team/kevin.jpeg";
 import sandraImg from "@/assets/team/sandra.jpg";
@@ -9,16 +10,19 @@ const LEADS = [
     name: "Ishimwe J. Claude",
     role: "CEO & Founder",
     image: ceoImg,
+    linkedin: "https://www.linkedin.com/in/ish-claude/",
   },
   {
     name: "Kevin Ishimwe",
     role: "Lead Developer",
     image: kevinImg,
+    linkedin: "https://www.linkedin.com/in/kevin-ishimwe",
   },
   {
     name: "Sandra Niyigena",
     role: "Creative Director",
     image: sandraImg,
+    linkedin: "https://www.linkedin.com/in/sandra-niyigena",
   },
 ];
 
@@ -56,6 +60,15 @@ export function TeamSection() {
                 <div className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#F97316] shadow-sm">
                   Leadership
                 </div>
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} on LinkedIn`}
+                  className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0A66C2] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0A66C2] hover:text-white"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
                 <div className="relative h-28 w-28 overflow-hidden rounded-full ring-4 ring-white/90 shadow-xl">
                   <img
                     src={member.image}
