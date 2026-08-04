@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { App } from "./App";
 
 import "./styles.css";
+import "react-day-picker/style.css";
 
 window.addEventListener("unhandledrejection", (event) => {
   if (

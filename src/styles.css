@@ -52,6 +52,33 @@
   }
 }
 
+/* Flowing connection lines for initiative constellation */
+@keyframes conn-dash {
+  to { stroke-dashoffset: -22; }
+}
+.conn-line {
+  stroke-dasharray: 3 6;
+  animation: conn-dash 2.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .conn-line {
+    animation: none;
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .float-slow {
+    animation: none;
+  }
+}
+
 /* IshConnect Design System
  * Premium light UI · African future-tech identity
  * Inspired by Apple · Linear · Stripe

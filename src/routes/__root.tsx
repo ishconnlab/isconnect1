@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { InstallBanner } from "@/components/InstallBanner";
+import { PageLoader } from "@/components/PageLoader";
 
 const ChatBot = lazy(() =>
   import("@/components/chatbot/ChatBot").then((m) => ({ default: m.ChatBot })),
@@ -25,7 +26,9 @@ export function RootLayout() {
       </a>
       <Navbar />
       <main id="main-content" className="flex-1">
-        <Outlet />
+        <Suspense fallback={<PageLoader />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
       <Toaster richColors position="top-right" />

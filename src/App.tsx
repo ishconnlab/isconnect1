@@ -5,10 +5,10 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageTracking } from "@/hooks/usePageTracking";
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd, SiteNavigationElementJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
 import { SEOHead } from "@/components/SEOHead";
+import { PageLoader } from "@/components/PageLoader";
 import { PAGE_SEO } from "@/lib/seo";
 import { RootLayout } from "@/routes/__root";
 import { NotFound } from "@/routes/not-found";
-import { Loader2 } from "lucide-react";
 
 const Home = lazy(() => import("@/routes/index").then((m) => ({ default: m.Home })));
 const About = lazy(() => import("@/routes/about").then((m) => ({ default: m.About })));
@@ -48,13 +48,12 @@ const TechTraining = lazy(() =>
 const Challenges = lazy(() =>
   import("@/routes/challenges").then((m) => ({ default: m.Challenges })),
 );
+const Testimonials = lazy(() =>
+  import("@/routes/testimonials").then((m) => ({ default: m.Testimonials })),
+);
 
 function LoadingFallback() {
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-    </div>
-  );
+  return <PageLoader />;
 }
 
 const pageTransition = {
@@ -101,6 +100,7 @@ function AnimatedRoutes() {
           <Route path="webcare" element={<RoutePage><WebCarePage /></RoutePage>} />
           <Route path="community" element={<RoutePage><CommunityPage /></RoutePage>} />
           <Route path="devqueens" element={<RoutePage><DevQueensPage /></RoutePage>} />
+          <Route path="testimonials" element={<RoutePage><Testimonials /></RoutePage>} />
           <Route path="*" element={<RoutePage><NotFound /></RoutePage>} />
         </Route>
       </Routes>
@@ -151,6 +151,15 @@ function DevQueensPage() {
 }
 
 export function App() {
+  useEffect(() => {
+    const loader = document.getElementById("app-loader");
+    if (!loader || loader.classList.contains("app-loader--hidden")) return;
+    loader.classList.add("app-loader--hidden");
+    const remove = () => loader.remove();
+    loader.addEventListener("transitionend", remove, { once: true });
+    window.setTimeout(remove, 500);
+  }, []);
+
   return (
     <ErrorBoundary>
       <OrganizationJsonLd />

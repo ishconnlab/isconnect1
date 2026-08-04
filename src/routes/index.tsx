@@ -6,7 +6,10 @@ import { PartnersSection } from "@/components/sections/PartnersSection";
 import { SolutionsSection } from "@/components/sections/SolutionsSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import { AcademySection } from "@/components/sections/AcademySection";
-import { DevQueensSection } from "@/components/sections/DevQueensSection";
+import { InitiativesSection } from "@/components/sections/InitiativesSection";
+import { EventsSection } from "@/components/sections/EventsSection";
+import { EventsEditor } from "@/components/events/EventsEditor";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 
 const config = PAGE_SEO.home;
 
@@ -59,7 +62,10 @@ export function Home() {
       <SolutionsSection />
       <WorkSection compact />
       <AcademySection />
-      <DevQueensSection />
+      <InitiativesSection />
+      <TestimonialsSection compact />
+      <EventsSection />
+      <EventsEditor />
     </>
   );
 }

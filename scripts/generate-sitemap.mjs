@@ -16,6 +16,7 @@ const STATIC_ROUTES = [
   { loc: "/community", priority: 0.7, changefreq: "monthly" },
   { loc: "/devqueens", priority: 0.7, changefreq: "monthly" },
   { loc: "/challenges", priority: 0.7, changefreq: "monthly" },
+  { loc: "/testimonials", priority: 0.7, changefreq: "monthly" },
   { loc: "/privacy", priority: 0.3, changefreq: "yearly" },
   { loc: "/software-development-rwanda", priority: 0.8, changefreq: "monthly" },
   { loc: "/web-development-kigali", priority: 0.8, changefreq: "monthly" },

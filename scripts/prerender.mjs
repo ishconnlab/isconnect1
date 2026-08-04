@@ -32,6 +32,7 @@ function buildRoutes() {
     "/work",
     "/challenges",
     "/privacy",
+    "/testimonials",
     "/software-development-rwanda",
     "/web-development-kigali",
     "/mobile-app-development-rwanda",

@@ -19,6 +19,7 @@ const SECONDARY_NAV = [
   { to: "/founder", label: "Founder" },
   { to: "/team", label: "Team" },
   { to: "/challenges", label: "Challenges" },
+  { to: "/testimonials", label: "Testimonials" },
 ] as const;
 
 const EXTERNAL_NAV = [

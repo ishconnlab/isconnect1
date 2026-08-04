@@ -152,6 +152,12 @@ export const Footer = memo(function Footer() {
           <p className="text-muted-foreground/40">
             Kigali, Rwanda &middot; Global Reach
           </p>
+          <button
+            type="button"
+            aria-label="Open events editor"
+            className="inline-flex h-2 w-2 cursor-pointer items-center justify-center rounded-full bg-foreground/10 text-transparent transition-colors hover:bg-foreground/30"
+            onClick={() => void import("@/lib/events").then(({ useEventsStore }) => useEventsStore.getState().openEditor())}
+          />
         </div>
       </div>
     </footer>

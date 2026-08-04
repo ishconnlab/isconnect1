@@ -107,7 +107,7 @@ export function buildMeta(props: SEOProps) {
     nofollow: props.nofollow || false,
     publishedTime: props.publishedTime,
     modifiedTime: props.modifiedTime,
-    themeColor: props.themeColor || "#0a0a0a",
+    themeColor: props.themeColor || "#FFF7ED",
     locale: props.locale || SITE_LOCALE,
     keywords: props.keywords,
   };
@@ -562,6 +562,31 @@ export const PAGE_SEO: Record<string, PageSEOConfig> = {
     breadcrumbs: [
       { name: "Home", url: "/" },
       { name: "Community", url: "/community" },
+    ],
+  },
+  testimonials: {
+    title: "Testimonials | IshConnect — Founder, Teacher & Student Reviews in Rwanda",
+    description:
+      "Read testimonials from founders, teachers, and students who have worked with IshConnect. Hear from Velamin AI, DropIn, EdTech Solutions, Rwanda Coding Academy, Kiyumba TSS, and KASS about our software, AI, and training.",
+    canonical: `${SITE_URL}/testimonials`,
+    ogType: "website",
+    keywords: [
+      "IshConnect testimonials",
+      "IshConnect reviews",
+      "software company reviews Rwanda",
+      "coding academy reviews Kigali",
+      "Velamin AI",
+      "DropIn Rwanda",
+      "EdTech Solutions Rwanda",
+      "Rwanda Coding Academy",
+      "Kiyumba TSS",
+      "IshConnect community feedback",
+      "tech training reviews Rwanda",
+      "IshConnect clients",
+    ],
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Testimonials", url: "/testimonials" },
     ],
   },
   devqueens: {
