@@ -14,7 +14,7 @@ export interface LabEvent {
 }
 
 export const EVENT_PASSCODE_HASH =
-  "7f13e93026489600935880f58bf3c3d00ce66a862165dd60a765731aca639bda";
+  "2c8d4b0f8f12579076c5a7cd22abcc986aec792d77eea48bd919304468a3b1de";
 
 const STORAGE_KEY = "ishconnect.events.v1";
 

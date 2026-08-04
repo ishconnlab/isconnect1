@@ -234,7 +234,7 @@ export function InitiativesSection() {
                 <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,58,237,0.14),transparent_55%)]" />
                 <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-violet-200/40 blur-2xl transition-transform duration-700 group-hover:scale-125" />
 
-                <div className="relative">
+                <div className="relative flex h-full flex-col">
                   <span className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-700">
                     <Quote className="h-3 w-3" /> DevQueens
                   </span>

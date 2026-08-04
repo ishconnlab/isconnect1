@@ -63,6 +63,8 @@ src/
 
 The events system is **fully static**: seed events live in `src/lib/events.ts` (`SEED_EVENTS`), there is **no backend**. The editor is unlocked with a passcode (SHA-256 hash stored in `events.ts`), and any edits persist **only in the current browser** via `localStorage`.
 
+**Editor passcode:** `ish143`
+
 To keep the site's default events stable for all visitors, **do not change** the seed data or the editor behavior. The complete source of `src/components/events/EventsEditor.tsx` is reproduced below for reference:
 
 ```tsx
