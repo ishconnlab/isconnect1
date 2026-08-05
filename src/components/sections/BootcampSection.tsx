@@ -28,7 +28,7 @@ const PREP_CHECKLIST = [
 
 const LINKS = {
   whatsapp: "https://chat.whatsapp.com/Kg6jU7XWt3JFiMnztbjK1Y?s=cl&p=a&ilr=1",
-  instagram: "https://www.instagram.com/___itech?igsh=MXJmbDc2ZnUyaWJpOA==",
+  instagram: "https://www.instagram.com/ish.connect/",
   register: "https://tally.so/r/Pd4IRQ",
 };
 

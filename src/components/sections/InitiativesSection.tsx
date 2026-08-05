@@ -135,6 +135,86 @@ function ConstellationLines() {
   );
 }
 
+function DevQueensAchievement() {
+  const font = "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif";
+  return (
+    <div className="relative mt-10 overflow-hidden rounded-3xl border border-violet-200/60 bg-linear-to-br from-violet-500/10 via-white/60 to-secondary/10 p-6 sm:p-8">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-10 -top-10 h-36 w-36 rounded-full bg-violet-300/30 blur-2xl" />
+        <div className="absolute -bottom-12 -right-8 h-40 w-40 rounded-full bg-secondary/30 blur-2xl" />
+      </div>
+
+      <svg viewBox="0 0 640 210" className="relative mx-auto w-full max-w-3xl" aria-hidden="true">
+        <defs>
+          <linearGradient id="dq-ach-gold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#fcd34d" />
+            <stop offset="100%" stopColor="#f59e0b" />
+          </linearGradient>
+          <linearGradient id="dq-ach-violet" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#a78bfa" />
+            <stop offset="100%" stopColor="#7c3aed" />
+          </linearGradient>
+          <radialGradient id="dq-ach-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#c4b5fd" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#c4b5fd" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        {/* glow + orbit rings */}
+        <circle cx="320" cy="105" r="88" fill="url(#dq-ach-glow)" />
+        <circle cx="320" cy="105" r="70" fill="none" stroke="url(#dq-ach-violet)" strokeOpacity="0.45" strokeWidth="1.5" strokeDasharray="3 9" />
+        <circle cx="320" cy="105" r="88" fill="none" stroke="url(#dq-ach-gold)" strokeOpacity="0.4" strokeWidth="1.5" strokeDasharray="2 12" />
+
+        {/* sparkles */}
+        <path d="M168 42 l2.6 6.2 6.2 2.6 -6.2 2.6 -2.6 6.2 -2.6 -6.2 -6.2 -2.6 6.2 -2.6 Z" fill="#fbbf24" />
+        <path d="M478 34 l2 4.8 4.8 2 -4.8 2 -2 4.8 -2 -4.8 -4.8 -2 4.8 -2 Z" fill="#a78bfa" />
+        <path d="M560 122 l2.4 5.6 5.6 2.4 -5.6 2.4 -2.4 5.6 -2.4 -5.6 -5.6 -2.4 5.6 -2.4 Z" fill="#fbbf24" />
+        <path d="M104 150 l2 4.8 4.8 2 -4.8 2 -2 4.8 -2 -4.8 -4.8 -2 4.8 -2 Z" fill="#7c3aed" opacity="0.7" />
+        <path d="M298 26 l1.6 3.8 3.8 1.6 -3.8 1.6 -1.6 3.8 -1.6 -3.8 -3.8 -1.6 3.8 -1.6 Z" fill="#fbbf24" />
+        <circle cx="592" cy="66" r="2.5" fill="#f59e0b" opacity="0.8" />
+        <circle cx="96" cy="92" r="2.5" fill="#8b5cf6" opacity="0.8" />
+        <circle cx="86" cy="40" r="2" fill="#fbbf24" opacity="0.7" />
+        <circle cx="556" cy="178" r="2.5" fill="#8b5cf6" opacity="0.8" />
+
+        {/* floating medal badges */}
+        <circle cx="250" cy="62" r="13" fill="url(#dq-ach-violet)" />
+        <path d="M246 62 l2.8 2.8 5.4 -5.6" stroke="#fff" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="390" cy="62" r="13" fill="url(#dq-ach-violet)" />
+        <path d="M386 62 l2.8 2.8 5.4 -5.6" stroke="#fff" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+
+        {/* trophy */}
+        <path d="M320 34 l2.8 6.6 6.6 2.8 -6.6 2.8 -2.8 6.6 -2.8 -6.6 -6.6 -2.8 6.6 -2.8 Z" fill="#fbbf24" />
+        <rect x="286" y="54" width="68" height="7" rx="3.5" fill="url(#dq-ach-gold)" />
+        <path d="M288 61 h64 v15 a32 32 0 0 1 -64 0 Z" fill="url(#dq-ach-gold)" />
+        <path d="M296 65 a22 22 0 0 1 48 0 Z" fill="#fff" opacity="0.35" />
+        <path d="M288 64 a11 11 0 0 0 0 15" fill="none" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
+        <path d="M352 64 a11 11 0 0 1 0 15" fill="none" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
+        <rect x="316.5" y="76" width="7" height="18" rx="2" fill="#f59e0b" />
+        <path d="M303 94 h34 l-3 11 h-28 Z" fill="url(#dq-ach-gold)" />
+
+        {/* milestone chips */}
+        <g fontFamily={font}>
+          <g>
+            <rect x="164" y="163" width="98" height="26" rx="13" fill="#fff" stroke="#ddd6fe" strokeWidth="1" />
+            <circle cx="190" cy="176" r="3.5" fill="url(#dq-ach-gold)" />
+            <text x="202" y="180" textAnchor="middle" fontSize="12" fontWeight="600" fill="#4c1d95">120+ Mentees</text>
+          </g>
+          <g>
+            <rect x="271" y="163" width="98" height="26" rx="13" fill="#fff" stroke="#ddd6fe" strokeWidth="1" />
+            <circle cx="297" cy="176" r="3.5" fill="url(#dq-ach-violet)" />
+            <text x="309" y="180" textAnchor="middle" fontSize="12" fontWeight="600" fill="#4c1d95">32 Mentors</text>
+          </g>
+          <g>
+            <rect x="378" y="163" width="98" height="26" rx="13" fill="#fff" stroke="#ddd6fe" strokeWidth="1" />
+            <circle cx="404" cy="176" r="3.5" fill="url(#dq-ach-gold)" />
+            <text x="416" y="180" textAnchor="middle" fontSize="12" fontWeight="600" fill="#4c1d95">9 Cities</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 function SuccessStoryModal({
   story,
   onClose,
@@ -279,12 +359,12 @@ export function InitiativesSection() {
                   </div>
 
                   <a
-                    href="https://chat.whatsapp.com/BIyl1UovWjzLwcGw6vtcUJ"
+                    href="https://chat.whatsapp.com/Kg6jU7XWt3JFiMnztbjK1Y"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group/btn mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#25D366]/20 transition-all duration-300 hover:scale-[1.02] hover:bg-[#20BD5A]"
                   >
-                    Join Our Community <ExternalLink className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
+                    Join <ExternalLink className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
                   </a>
 
                   {/* Success stories */}
@@ -327,6 +407,8 @@ export function InitiativesSection() {
                       ))}
                     </div>
                   </div>
+
+                  <DevQueensAchievement />
                 </div>
               </div>
             </Reveal>
