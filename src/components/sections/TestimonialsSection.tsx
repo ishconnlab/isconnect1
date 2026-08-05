@@ -247,7 +247,7 @@ export function TestimonialsSection({ compact = false }: { compact?: boolean }) 
   );
 
   return (
-    <Section id="testimonials" className="relative">
+    <Section id="testimonials" className="relative overflow-hidden">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -right-32 top-24 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute -left-32 bottom-24 h-96 w-96 rounded-full bg-secondary/10 blur-3xl" />

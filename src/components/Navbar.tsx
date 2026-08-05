@@ -68,8 +68,8 @@ export const Navbar = memo(function Navbar() {
       >
         <Logo />
 
-        {/* Desktop + tablet nav */}
-        <ul className="hidden items-center gap-1 sm:flex" role="list">
+        {/* Desktop nav */}
+        <ul className="hidden items-center gap-1 lg:flex" role="list">
           {PRIMARY_NAV.map((item) => {
             const active = pathname === item.to;
             return (
@@ -156,7 +156,7 @@ export const Navbar = memo(function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             to="/contact"
-            className="hidden items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background magnetic-btn sm:inline-flex"
+            className="hidden items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background magnetic-btn lg:inline-flex"
           >
             Start a Project
             <ArrowUpRight className="h-3.5 w-3.5" />
@@ -164,7 +164,7 @@ export const Navbar = memo(function Navbar() {
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-soft-border/60 bg-surface sm:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-soft-border/60 bg-surface lg:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -179,7 +179,7 @@ export const Navbar = memo(function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-x-3 top-[68px] rounded-3xl border border-soft-border/60 bg-surface p-4 shadow-elevated sm:hidden"
+            className="absolute inset-x-3 top-[68px] rounded-3xl border border-soft-border/60 bg-surface p-4 shadow-elevated lg:hidden"
           >
             <ul className="flex flex-col">
               {PRIMARY_NAV.map((item) => (

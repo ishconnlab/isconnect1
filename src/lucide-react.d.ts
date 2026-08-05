@@ -37,6 +37,7 @@ declare module "lucide-react" {
   export const Layers: Icon;
   export const LayoutDashboard: Icon;
   export const Lightbulb: Icon;
+  export const Laptop: Icon;
   export const Linkedin: Icon;
   export const Loader2: Icon;
   export const Mail: Icon;
@@ -44,6 +45,7 @@ declare module "lucide-react" {
   export const Menu: Icon;
   export const MessageCircle: Icon;
   export const Minus: Icon;
+  export const MonitorPlay: Icon;
   export const MoreHorizontal: Icon;
   export const Palette: Icon;
   export const PanelLeft: Icon;
@@ -63,6 +65,8 @@ declare module "lucide-react" {
   export const Trophy: Icon;
   export const Twitter: Icon;
   export const Users: Icon;
+  export const Video: Icon;
+  export const Wifi: Icon;
   export const X: Icon;
   export const Zap: Icon;
 }

@@ -227,7 +227,7 @@ export function InitiativesSection() {
         <div className="relative mt-16">
           <ConstellationLines />
 
-          <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
             {/* ---------------- DEVQUEENS ---------------- */}
             <Reveal variant="fade-right" duration={700} className="lg:col-span-2">
               <div className="group relative h-full overflow-hidden rounded-[32px] border border-violet-200/70 bg-gradient-to-br from-violet-50 via-surface to-surface p-8 shadow-elevated transition-all duration-500 hover:-translate-y-1 sm:p-10">

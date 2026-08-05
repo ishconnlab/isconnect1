@@ -7,8 +7,8 @@ import { SolutionsSection } from "@/components/sections/SolutionsSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import { AcademySection } from "@/components/sections/AcademySection";
 import { InitiativesSection } from "@/components/sections/InitiativesSection";
-import { EventsSection } from "@/components/sections/EventsSection";
 import { EventsEditor } from "@/components/events/EventsEditor";
+import { BootcampSection } from "@/components/sections/BootcampSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 
 const config = PAGE_SEO.home;
@@ -64,7 +64,7 @@ export function Home() {
       <AcademySection />
       <InitiativesSection />
       <TestimonialsSection compact />
-      <EventsSection />
+      <BootcampSection />
       <EventsEditor />
     </>
   );
