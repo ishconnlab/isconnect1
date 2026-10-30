@@ -40,6 +40,8 @@ declare module "lucide-react" {
   export const Laptop: Icon;
   export const Linkedin: Icon;
   export const Loader2: Icon;
+  export const LogIn: Icon;
+  export const LogOut: Icon;
   export const Mail: Icon;
   export const MapPin: Icon;
   export const Menu: Icon;
