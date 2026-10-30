@@ -1,7 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ShieldCheck, Trash2, Check, Clock } from "lucide-react";
-import { useEventsStore, verifyPasscode, uid, type LabEvent, type EventType } from "@/lib/events";
+import { X, ShieldCheck, Trash2, Check, Clock, LogOut } from "lucide-react";
+import { useEventsStore, type LabEvent, type EventType } from "@/lib/events";
+import { adminLogin, adminLogout, deleteAdminEvent, getAdminEvents, saveAdminEvent } from "@/lib/adminApi";
 
 const EVENT_TYPES: EventType[] = ["bootcamp", "meetup", "workshop", "hackathon"];
 
@@ -69,65 +70,88 @@ export function EventsEditor() {
 }
 
 function PasscodeGate({ onUnlock }: { onUnlock: (value: boolean) => void }) {
-  const [passcode, setPasscode] = useState("");
-  const [error, setError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setBusy(true);
-    setError(false);
-    const ok = await verifyPasscode(passcode);
-    setBusy(false);
-    if (ok) {
+    setError("");
+    try {
+      await adminLogin(email, password);
       onUnlock(true);
-    } else {
-      setError(true);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Unable to sign in.");
+    } finally {
+      setBusy(false);
     }
   };
 
   return (
     <form onSubmit={submit} className="mt-6 space-y-4">
       <p className="text-sm text-muted-foreground">
-        Enter your editor passcode to add, edit, or remove events.
+        Sign in with your admin account to manage events.
       </p>
       <label className="block">
         <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Passcode
+          Email
         </span>
         <input
-          type="password"
-          value={passcode}
-          onChange={(e) => {
-            setPasscode(e.target.value);
-            setError(false);
-          }}
+          type="email"
+          required
+          autoComplete="username"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value); setError(""); }}
           autoFocus
           className="w-full rounded-xl border border-soft-border bg-background px-3.5 py-2.5 text-sm outline-none transition-colors focus:border-primary"
         />
       </label>
-      {error && <p className="text-xs font-medium text-red-600">Incorrect passcode.</p>}
+      <label className="block">
+        <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          Password
+        </span>
+        <input
+          type="password"
+          required
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => { setPassword(e.target.value); setError(""); }}
+          className="w-full rounded-xl border border-soft-border bg-background px-3.5 py-2.5 text-sm outline-none transition-colors focus:border-primary"
+        />
+      </label>
+      {error && <p role="alert" className="text-xs font-medium text-red-600">{error}</p>}
       <button
         type="submit"
-        disabled={busy || !passcode.trim()}
+        disabled={busy || !email.trim() || !password}
         className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity disabled:opacity-40"
       >
         <ShieldCheck className="h-4 w-4" />
-        Unlock editor
+        {busy ? "Signing in…" : "Sign in"}
       </button>
     </form>
   );
 }
 
 function EventFormPanel() {
-  const events = useEventsStore((s) => s.events);
-  const addEvent = useEventsStore((s) => s.addEvent);
-  const updateEvent = useEventsStore((s) => s.updateEvent);
-  const removeEvent = useEventsStore((s) => s.removeEvent);
-
+  const setUnlocked = useEventsStore((s) => s.setUnlocked);
+  const [events, setEvents] = useState<LabEvent[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState({ ...emptyForm });
   const [savedFlash, setSavedFlash] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const refreshEvents = async () => {
+    setEvents(await getAdminEvents());
+  };
+
+  useEffect(() => {
+    void refreshEvents()
+      .catch((cause) => setError(cause instanceof Error ? cause.message : "Could not load events."))
+      .finally(() => setLoading(false));
+  }, []);
 
   const startAdd = () => {
     setEditingId(null);
@@ -147,10 +171,10 @@ function EventFormPanel() {
     });
   };
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     const payload: LabEvent = {
-      id: editingId ?? uid(),
+      id: editingId ?? "",
       type: form.type,
       title: form.title.trim(),
       date: form.date,
@@ -159,12 +183,17 @@ function EventFormPanel() {
       summary: form.summary.trim(),
       link: form.link.trim() || undefined,
     };
-    if (editingId) updateEvent(payload);
-    else addEvent(payload);
-    setEditingId(null);
-    setForm({ ...emptyForm });
-    setSavedFlash(true);
-    window.setTimeout(() => setSavedFlash(false), 1600);
+    setError("");
+    try {
+      await saveAdminEvent(payload, !editingId);
+      await refreshEvents();
+      setEditingId(null);
+      setForm({ ...emptyForm });
+      setSavedFlash(true);
+      window.setTimeout(() => setSavedFlash(false), 1600);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not save this event.");
+    }
   };
 
   return (
@@ -179,7 +208,17 @@ function EventFormPanel() {
         <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-2 text-xs text-foreground/70">
           <Clock className="h-3.5 w-3.5" /> {events.length} events
         </span>
+        <button
+          type="button"
+          onClick={() => { adminLogout(); setUnlocked(false); }}
+          className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-soft-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
+        >
+          <LogOut className="h-3.5 w-3.5" /> Sign out
+        </button>
       </div>
+
+      {error && <p role="alert" className="text-xs font-medium text-red-600">{error}</p>}
+      {loading && <p className="text-xs text-muted-foreground">Loading events…</p>}
 
       <div className="space-y-2">
         {events.map((event) => (
@@ -203,7 +242,9 @@ function EventFormPanel() {
               </button>
               <button
                 onClick={() => {
-                  if (window.confirm("Delete this event?")) removeEvent(event.id);
+                  if (window.confirm("Delete this event?")) {
+                    void deleteAdminEvent(event.id).then(refreshEvents).catch((cause) => setError(cause instanceof Error ? cause.message : "Could not delete this event."));
+                  }
                 }}
                 aria-label="Delete"
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:text-red-600"

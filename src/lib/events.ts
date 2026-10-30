@@ -13,9 +13,6 @@ export interface LabEvent {
   link?: string;
 }
 
-export const EVENT_PASSCODE_HASH =
-  "2c8d4b0f8f12579076c5a7cd22abcc986aec792d77eea48bd919304468a3b1de";
-
 const STORAGE_KEY = "ishconnect.events.v1";
 
 export const SEED_EVENTS: LabEvent[] = [
@@ -115,19 +112,6 @@ export function persistEvents(events: LabEvent[]): void {
   } catch {
     /* storage unavailable — ignore */
   }
-}
-
-export async function hashText(text: string): Promise<string> {
-  const data = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(digest))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-export async function verifyPasscode(passcode: string): Promise<boolean> {
-  const hash = await hashText(passcode.trim());
-  return hash === EVENT_PASSCODE_HASH;
 }
 
 export function normalizeDate(date: string): string {

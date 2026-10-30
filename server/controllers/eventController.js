@@ -1,6 +1,9 @@
 import { Event } from "../models/Event.js";
 
-export async function listEvents(_req, res) { return res.json({ items: await Event.find().sort({ date: 1 }).lean() }); }
+export async function listEvents(_req, res) {
+  const items = await Event.find().sort({ date: 1 }).lean();
+  return res.json({ items: items.map(({ _id, ...item }) => ({ ...item, id: _id.toString() })) });
+}
 export async function listPublicEvents(_req, res) {
   const items = await Event.find().sort({ date: 1 }).lean();
   return res.json({ items: items.map(item => ({ ...item, id: item._id.toString() })) });
