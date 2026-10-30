@@ -12,8 +12,9 @@ function signAdmin(admin) {
 }
 
 export async function seedAdminFromEnvironment() {
-  const existing = await Admin.findOne().select("_id").lean();
-  if (existing) return;
+  const bootstrap = Admin.db.collection("admin_bootstrap");
+  const markerId = "initial-admin-credentials-v1";
+  if (await bootstrap.findOne({ _id: markerId })) return;
   const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
   const passwordHash = process.env.ADMIN_PASSWORD_HASH?.trim();
   if (!email || !validPasswordHash(passwordHash)) {
@@ -21,8 +22,18 @@ export async function seedAdminFromEnvironment() {
     return;
   }
   try {
-    await Admin.create({ email, passwordHash });
-    console.log("Initial admin account seeded in MongoDB");
+    const now = new Date();
+    await Admin.updateOne(
+      { email },
+      { $set: { passwordHash, updatedAt: now }, $setOnInsert: { email, createdAt: now } },
+      { upsert: true },
+    );
+    await bootstrap.updateOne(
+      { _id: markerId },
+      { $setOnInsert: { seededAt: now, email } },
+      { upsert: true },
+    );
+    console.log("Initial admin credentials seeded in MongoDB");
   } catch (error) {
     if (error?.code !== 11000) throw error;
   }
