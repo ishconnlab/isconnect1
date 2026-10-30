@@ -5,12 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "node --env-file-if-exists=.env server/index.js",
     "build": "tsc -b && vite build && node scripts/generate-sitemap.mjs && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.1",
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",

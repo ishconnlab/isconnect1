@@ -1,0 +1,30 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import authRoutes from "./routes/authRoutes.js";
+import submissionRoutes from "./routes/submissionRoutes.js";
+import eventRoutes from "./routes/eventRoutes.js";
+import widgetRoutes from "./routes/widgetRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import { requireAdmin } from "./middleware/requireAdmin.js";
+
+const app = express();
+app.disable("x-powered-by");
+app.use(cors({ origin: process.env.ADMIN_ORIGIN?.split(",") || true }));
+app.use(express.json({ limit: "32kb" }));
+app.get("/api/health", (_req, res) => res.json({ status: "ok", database: mongoose.connection.readyState === 1 ? "connected" : "disconnected" }));
+app.use("/api/public", publicRoutes);
+app.use("/api/admin", authRoutes);
+app.use("/api/admin", requireAdmin);
+app.use("/api/admin/events", eventRoutes);
+app.use("/api/admin/widgets", widgetRoutes);
+app.use("/api/admin/uploads", uploadRoutes);
+app.use("/api/admin", submissionRoutes);
+app.use((error, _req, res, _next) => {
+  console.error(error);
+  if (error instanceof mongoose.Error.ValidationError) return res.status(400).json({ error: "Please check the submitted details." });
+  res.status(500).json({ error: "Something went wrong." });
+});
+export default app;
