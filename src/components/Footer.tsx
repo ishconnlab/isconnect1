@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Twitter, Instagram, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Twitter, Instagram, ArrowUpRight, LogIn } from "lucide-react";
 
 import { Logo } from "./Logo";
 
@@ -154,10 +154,12 @@ export const Footer = memo(function Footer() {
           </p>
           <button
             type="button"
-            aria-label="Open events editor"
-            className="inline-flex h-2 w-2 cursor-pointer items-center justify-center rounded-full bg-foreground/10 text-transparent transition-colors hover:bg-foreground/30"
+            className="inline-flex min-h-[40px] items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-primary"
             onClick={() => void import("@/lib/events").then(({ useEventsStore }) => useEventsStore.getState().openEditor())}
-          />
+          >
+            <LogIn className="h-3.5 w-3.5" />
+            Admin Login
+          </button>
         </div>
       </div>
     </footer>

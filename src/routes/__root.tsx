@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { InstallBanner } from "@/components/InstallBanner";
 import { PageLoader } from "@/components/PageLoader";
+import { EventsEditor } from "@/components/events/EventsEditor";
 
 const ChatBot = lazy(() =>
   import("@/components/chatbot/ChatBot").then((m) => ({ default: m.ChatBot })),
@@ -31,6 +32,7 @@ export function RootLayout() {
         </Suspense>
       </main>
       <Footer />
+      <EventsEditor />
       <Toaster richColors position="top-right" />
       <Suspense fallback={null}><ChatBot /></Suspense>
       <InstallBanner />

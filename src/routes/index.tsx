@@ -7,7 +7,6 @@ import { SolutionsSection } from "@/components/sections/SolutionsSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import { AcademySection } from "@/components/sections/AcademySection";
 import { InitiativesSection } from "@/components/sections/InitiativesSection";
-import { EventsEditor } from "@/components/events/EventsEditor";
 import { BootcampSection } from "@/components/sections/BootcampSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 
@@ -65,7 +64,6 @@ export function Home() {
       <InitiativesSection />
       <TestimonialsSection compact />
       <BootcampSection />
-      <EventsEditor />
     </>
   );
 }
