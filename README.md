@@ -67,6 +67,6 @@ If the service is configured directly in the Render Dashboard, leave **Root Dire
 
 ## Vercel deployment
 
-`vercel.json` configures the frontend as a static Vite deployment. The API must run separately. Set `VITE_ADMIN_API_URL` to the API origin at Vercel build time and set `ADMIN_ORIGIN` on the API to the Vercel site origin. The Vercel Content Security Policy allows Render API origins; update `connect-src` if you use a different API host. Rebuild after changing Vite environment variables.
+`vercel.json` configures the frontend as a static Vite deployment. The API runs at `https://ishconnlab.onrender.com`, configured in `.env.production`. The API allows the production website origins in `ADMIN_ORIGIN`. Rebuild after changing Vite environment variables or the API host.
 
 For EmailJS forms, configure the `VITE_EMAILJS_*` variables listed in [`.env.example`](.env.example). These values are public client configuration, not secrets.
