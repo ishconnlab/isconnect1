@@ -2,6 +2,7 @@ services:
   - type: web
     name: ishconnect-production
     runtime: node
+    rootDir: .
     plan: free
     buildCommand: npm ci && npm run build
     startCommand: npm start
@@ -17,6 +18,8 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      - key: ADMIN_ORIGIN
+        value: https://ishconnect.rw,https://www.ishconnect.rw
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
       - key: CLOUDINARY_API_KEY

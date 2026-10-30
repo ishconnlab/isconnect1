@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShieldCheck, Trash2, Check, Clock, LogOut } from "lucide-react";
 import { useEventsStore, type LabEvent, type EventType } from "@/lib/events";
@@ -62,14 +62,14 @@ export function EventsEditor() {
             </button>
           </div>
 
-          {unlocked ? <EventFormPanel /> : <PasscodeGate onUnlock={setUnlocked} />}
+          {unlocked ? <EventFormPanel /> : <AdminLoginForm onUnlock={setUnlocked} />}
         </motion.div>
       </motion.div>
     </AnimatePresence>
   );
 }
 
-function PasscodeGate({ onUnlock }: { onUnlock: (value: boolean) => void }) {
+function AdminLoginForm({ onUnlock }: { onUnlock: (value: boolean) => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -143,15 +143,15 @@ function EventFormPanel() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const refreshEvents = async () => {
+  const refreshEvents = useCallback(async () => {
     setEvents(await getAdminEvents());
-  };
+  }, []);
 
   useEffect(() => {
     void refreshEvents()
       .catch((cause) => setError(cause instanceof Error ? cause.message : "Could not load events."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [refreshEvents]);
 
   const startAdd = () => {
     setEditingId(null);

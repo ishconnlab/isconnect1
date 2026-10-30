@@ -14,10 +14,14 @@ import { requireAdmin } from "./middleware/requireAdmin.js";
 
 const app = express();
 const frontendDist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../dist");
+const adminOrigins = process.env.ADMIN_ORIGIN?.split(",").map((origin) => origin.trim()).filter(Boolean);
 app.disable("x-powered-by");
-app.use(cors({ origin: process.env.ADMIN_ORIGIN?.split(",") || true }));
+app.use(cors({ origin: adminOrigins?.length ? adminOrigins : false }));
 app.use(express.json({ limit: "32kb" }));
-app.get("/api/health", (_req, res) => res.json({ status: "ok", database: mongoose.connection.readyState === 1 ? "connected" : "disconnected" }));
+app.get("/api/health", (_req, res) => {
+  const connected = mongoose.connection.readyState === 1;
+  return res.status(connected ? 200 : 503).json({ status: connected ? "ok" : "unavailable", database: connected ? "connected" : "disconnected" });
+});
 app.use("/api/public", publicRoutes);
 app.use("/api/admin", authRoutes);
 app.use("/api/admin", requireAdmin);
@@ -25,6 +29,7 @@ app.use("/api/admin/events", eventRoutes);
 app.use("/api/admin/widgets", widgetRoutes);
 app.use("/api/admin/uploads", uploadRoutes);
 app.use("/api/admin", submissionRoutes);
+app.use("/api", (_req, res) => res.status(404).json({ error: "API route not found." }));
 app.use(express.static(frontendDist));
 app.get(/.*/, (_req, res) => res.sendFile(path.join(frontendDist, "index.html")));
 app.use((error, _req, res, _next) => {

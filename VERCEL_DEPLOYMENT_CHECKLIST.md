@@ -18,8 +18,13 @@ Add **ALL** of the following (one by one):
 | `VITE_EMAILJS_TEMPLATE_CLOUD`         | Template ID for cloud/devops enrollment                  |
 | `VITE_EMAILJS_TEMPLATE_UIUX`          | Template ID for UI/UX enrollment                         |
 | `VITE_EMAILJS_TEMPLATE_DEFAULT`       | Fallback template (used for any missing course template) |
+| `VITE_ADMIN_API_URL`                  | `https://ishconnlab.onrender.com` |
+
+The Render API must also have `MONGODB_URI`, `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, `JWT_SECRET`, and `ADMIN_ORIGIN` set. Set `ADMIN_ORIGIN` to the exact Vercel site origin (scheme and host, without a trailing slash). The backend is not deployed by Vercel's static site build.
 
 **Important:** Vercel env vars must use `VITE_` prefix. Vite only exposes `VITE_*` vars to the client bundle. Without this prefix, the vars will be `undefined` at runtime.
+
+The repository's Content Security Policy allows Render API origins. If the API uses another host, add its origin to `connect-src` in `vercel.json` before deploying.
 
 ## 2. Redeploy
 
