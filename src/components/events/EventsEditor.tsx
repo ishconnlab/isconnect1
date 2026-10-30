@@ -41,7 +41,7 @@ export function EventsEditor() {
         onClick={closeEditor}
         role="dialog"
         aria-modal="true"
-        aria-label="Events editor"
+        aria-label={unlocked ? "Events editor" : "Admin Login"}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -52,7 +52,7 @@ export function EventsEditor() {
           className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-soft-border/60 bg-surface p-6 shadow-elevated"
         >
           <div className="flex items-center justify-between">
-            <h3 className="font-display text-lg font-semibold tracking-tight">Events editor</h3>
+            <h3 className="font-display text-lg font-semibold tracking-tight">{unlocked ? "Events editor" : "Admin Login"}</h3>
             <button
               onClick={closeEditor}
               aria-label="Close"
@@ -91,9 +91,6 @@ function AdminLoginForm({ onUnlock }: { onUnlock: (value: boolean) => void }) {
 
   return (
     <form onSubmit={submit} className="mt-6 space-y-4">
-      <p className="text-sm text-muted-foreground">
-        Sign in with your admin account to manage events.
-      </p>
       <label className="block">
         <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
           Email
