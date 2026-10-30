@@ -5,6 +5,7 @@ export function requireAdmin(req, res, next) {
   try {
     const payload = jwt.verify(token || "", process.env.JWT_SECRET);
     if (payload.role !== "admin") throw new Error("Invalid role");
+    req.adminId = payload.sub;
     next();
   } catch {
     res.status(401).json({ error: "Please sign in to continue." });

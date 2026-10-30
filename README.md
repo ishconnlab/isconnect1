@@ -43,7 +43,7 @@ Keep `.env` and generated secrets private. `VITE_*` values are compiled into the
 
 ## Admin and API
 
-The **Admin Login** link in the footer opens the events editor. It authenticates through `POST /api/admin/login`; event list/create/update/delete operations use the authenticated `/api/admin/events` endpoints and MongoDB. The access token is held in `sessionStorage` and expires after eight hours.
+The **Admin Login** link in the footer opens the events editor. On first startup, the API seeds an admin document in MongoDB from `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` if the admin collection is empty. Login and subsequent credential changes use that MongoDB account. After signing in, use **Change login** in the editor to change the email and password. The access token is held in `sessionStorage` and expires after eight hours.
 
 Required server environment variables:
 
@@ -63,7 +63,7 @@ Optional variables:
 
 The repository includes [`render.yaml`](render.yaml) for a Node web service rooted at the repository root. Deploy it as a Render Blueprint, then provide the values for its `sync: false` variables. The service builds with `npm ci && npm run build`, starts with `npm start`, and uses `/api/health` for health checks.
 
-If the service is configured directly in the Render Dashboard, leave **Root Directory** empty (repository root), set Build Command to `npm ci && npm run build`, and set Start Command to `npm start`. The API requires MongoDB to be configured before it will start.
+If the service is configured directly in the Render Dashboard, leave **Root Directory** empty (repository root), set Build Command to `npm ci && npm run build`, and set Start Command to `npm start`. The API requires MongoDB to be configured before it will start. Set `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` in Render before the first deploy so the initial MongoDB admin can be seeded; changing those environment values later does not overwrite an existing admin account.
 
 ## Vercel deployment
 

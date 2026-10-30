@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShieldCheck, Trash2, Check, Clock, LogOut } from "lucide-react";
 import { useEventsStore, type LabEvent, type EventType } from "@/lib/events";
-import { adminLogin, adminLogout, deleteAdminEvent, getAdminEvents, saveAdminEvent } from "@/lib/adminApi";
+import { adminLogin, adminLogout, changeAdminCredentials, deleteAdminEvent, getAdminEvents, saveAdminEvent } from "@/lib/adminApi";
 
 const EVENT_TYPES: EventType[] = ["bootcamp", "meetup", "workshop", "hackathon"];
 
@@ -142,6 +142,7 @@ function EventFormPanel() {
   const [savedFlash, setSavedFlash] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showCredentials, setShowCredentials] = useState(false);
 
   const refreshEvents = useCallback(async () => {
     setEvents(await getAdminEvents());
@@ -210,12 +211,21 @@ function EventFormPanel() {
         </span>
         <button
           type="button"
+          onClick={() => setShowCredentials((show) => !show)}
+          className="inline-flex items-center gap-1.5 rounded-full border border-soft-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
+        >
+          {showCredentials ? "Cancel credential change" : "Change login"}
+        </button>
+        <button
+          type="button"
           onClick={() => { adminLogout(); setUnlocked(false); }}
           className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-soft-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
         >
           <LogOut className="h-3.5 w-3.5" /> Sign out
         </button>
       </div>
+
+      {showCredentials && <CredentialsForm onSaved={() => setShowCredentials(false)} />}
 
       {error && <p role="alert" className="text-xs font-medium text-red-600">{error}</p>}
       {loading && <p className="text-xs text-muted-foreground">Loading events…</p>}
@@ -346,5 +356,56 @@ function EventFormPanel() {
         </div>
       </form>
     </div>
+  );
+}
+
+function CredentialsForm({ onSaved }: { onSaved: () => void }) {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSaved(false);
+    if (newPassword !== confirmPassword) return setError("New passwords do not match.");
+    setBusy(true);
+    try {
+      await changeAdminCredentials(currentPassword, email, newPassword);
+      setSaved(true);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      window.setTimeout(onSaved, 1000);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not update admin credentials.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <form onSubmit={submit} className="space-y-3 rounded-2xl border border-soft-border/60 bg-background p-4">
+      <p className="text-sm font-medium">Update admin login</p>
+      <label className="block text-xs text-muted-foreground">Current password
+        <input required type="password" autoComplete="current-password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} className="mt-1 w-full rounded-lg border border-soft-border bg-surface px-3 py-2 text-sm text-foreground" />
+      </label>
+      <label className="block text-xs text-muted-foreground">New email
+        <input required type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 w-full rounded-lg border border-soft-border bg-surface px-3 py-2 text-sm text-foreground" />
+      </label>
+      <label className="block text-xs text-muted-foreground">New password (at least 10 characters)
+        <input required minLength={10} type="password" autoComplete="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="mt-1 w-full rounded-lg border border-soft-border bg-surface px-3 py-2 text-sm text-foreground" />
+      </label>
+      <label className="block text-xs text-muted-foreground">Confirm new password
+        <input required minLength={10} type="password" autoComplete="new-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="mt-1 w-full rounded-lg border border-soft-border bg-surface px-3 py-2 text-sm text-foreground" />
+      </label>
+      {error && <p role="alert" className="text-xs font-medium text-red-600">{error}</p>}
+      {saved && <p role="status" className="text-xs font-medium text-emerald-600">Admin credentials updated.</p>}
+      <button type="submit" disabled={busy || !currentPassword || !email.trim() || newPassword.length < 10 || !confirmPassword} className="rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background disabled:opacity-40">
+        {busy ? "Updating…" : "Save new login"}
+      </button>
+    </form>
   );
 }

@@ -31,6 +31,14 @@ export async function adminLogin(email: string, password: string): Promise<void>
   sessionStorage.setItem(TOKEN_KEY, result.token);
 }
 
+export async function changeAdminCredentials(currentPassword: string, email: string, newPassword: string): Promise<void> {
+  const result = await request<{ token: string }>("/admin/credentials", {
+    method: "PUT",
+    body: JSON.stringify({ currentPassword, email, newPassword }),
+  }, true);
+  sessionStorage.setItem(TOKEN_KEY, result.token);
+}
+
 export async function getAdminEvents(): Promise<LabEvent[]> {
   const result = await request<{ items: Array<LabEvent & { _id?: string }> }>("/admin/events", {}, true);
   return result.items.map(({ _id, ...event }) => ({ ...event, id: event.id || _id || "" }));
