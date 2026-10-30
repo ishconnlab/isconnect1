@@ -132,6 +132,14 @@ export const Footer = memo(function Footer() {
             Start a Project
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
+          <button
+            type="button"
+            className="mt-3 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-soft-border/60 px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:border-primary hover:text-primary"
+            onClick={() => void import("@/lib/events").then(({ useEventsStore }) => useEventsStore.getState().openEditor())}
+          >
+            <LogIn className="h-4 w-4" />
+            Admin Login
+          </button>
         </div>
       </div>
 
@@ -152,14 +160,6 @@ export const Footer = memo(function Footer() {
           <p className="text-muted-foreground/40">
             Kigali, Rwanda &middot; Global Reach
           </p>
-          <button
-            type="button"
-            className="inline-flex min-h-[40px] items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-primary"
-            onClick={() => void import("@/lib/events").then(({ useEventsStore }) => useEventsStore.getState().openEditor())}
-          >
-            <LogIn className="h-3.5 w-3.5" />
-            Admin Login
-          </button>
         </div>
       </div>
     </footer>
