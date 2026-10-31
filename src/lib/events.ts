@@ -21,9 +21,12 @@ interface EventsEditorState {
   setUnlocked: (value: boolean) => void;
 }
 
+const hasAdminToken =
+  typeof sessionStorage !== "undefined" && Boolean(sessionStorage.getItem("ishconnect.admin.token"));
+
 export const useEventsStore = create<EventsEditorState>((set) => ({
   editorOpen: false,
-  unlocked: false,
+  unlocked: hasAdminToken,
   openEditor: () => set({ editorOpen: true }),
   closeEditor: () => set({ editorOpen: false }),
   setUnlocked: (value) => set({ unlocked: value }),
