@@ -143,11 +143,12 @@ export const Footer = memo(function Footer() {
           </p>
           <button
             type="button"
-            className="inline-flex min-h-[36px] items-center gap-1.5 text-muted-foreground transition-colors hover:text-primary"
+            aria-label="Admin login"
+            title="Admin login"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
             onClick={() => void import("@/lib/events").then(({ useEventsStore }) => useEventsStore.getState().openEditor())}
           >
-            <LogIn className="h-3.5 w-3.5" />
-            Admin Login
+            <LogIn aria-hidden="true" className="h-4 w-4" />
           </button>
           <p className="text-muted-foreground/60">
             <Link to="/solutions" className="hover:text-primary transition-colors">Software Development</Link> &middot;
