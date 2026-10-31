@@ -91,7 +91,7 @@ function AdminLoginForm({ onUnlock }: { onUnlock: (value: boolean) => void }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-  const [registrationEnabled, setRegistrationEnabled] = useState(false);
+  const [registrationEnabled, setRegistrationEnabled] = useState(true);
   const [registering, setRegistering] = useState(false);
 
   useEffect(() => {

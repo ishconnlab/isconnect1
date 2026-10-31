@@ -51,7 +51,7 @@ Keep `.env` and generated secrets private. `VITE_*` values are compiled into the
 
 ## Admin and API
 
-The **Admin Login** link in the footer and `/admin` open the admin editor. If no admin exists, the registration form allows the first admin account to be created; registration closes automatically afterward. A signed-in admin can reopen or close registration from the editor. The API syncs configured `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` into MongoDB when that configuration changes, then records a fingerprint so ordinary restarts do not overwrite credentials changed through the editor. After signing in, use **Change login** in the editor to update them. The access token is held in `sessionStorage` and expires after eight hours.
+The **Admin Login** link in the footer and `/admin` open the admin editor. Public admin registration is enabled by default and remains open until a signed-in admin disables it from the editor. A signed-in admin can re-enable registration there at any time. The API syncs configured `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` into MongoDB when that configuration changes, then records a fingerprint so ordinary restarts do not overwrite credentials changed through the editor. After signing in, use **Change login** in the editor to update them. The access token is held in `sessionStorage` and expires after eight hours.
 
 Required server environment variables:
 

@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import { createHash, createHmac, randomUUID } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import { Admin } from "../models/Admin.js";
 
 const REGISTRATION_SETTINGS_ID = "admin-registration-v1";
@@ -14,14 +14,18 @@ async function getRegistrationSettings() {
   const settings = Admin.db.collection("admin_settings");
   let registration = await settings.findOne({ _id: REGISTRATION_SETTINGS_ID });
   if (!registration) {
-    const firstRegistrationAvailable = !(await Admin.exists({}));
     await settings.updateOne(
       { _id: REGISTRATION_SETTINGS_ID },
-      { $setOnInsert: { enabled: firstRegistrationAvailable, firstRegistrationAvailable } },
+      { $setOnInsert: { enabled: true, configuredByAdmin: false } },
       { upsert: true },
     );
-    registration = await settings.findOne({ _id: REGISTRATION_SETTINGS_ID });
+  } else if (typeof registration.configuredByAdmin !== "boolean") {
+    await settings.updateOne(
+      { _id: REGISTRATION_SETTINGS_ID, configuredByAdmin: { $exists: false } },
+      { $set: { enabled: true, configuredByAdmin: false } },
+    );
   }
+  registration = await settings.findOne({ _id: REGISTRATION_SETTINGS_ID });
   return registration;
 }
 
@@ -55,55 +59,13 @@ export async function registerAdmin(req, res) {
     return res.status(403).json({ error: "Admin registration is currently disabled." });
   }
 
-  const settings = Admin.db.collection("admin_settings");
-  let bootstrapClaimId;
-  if (registration.firstRegistrationAvailable === true) {
-    bootstrapClaimId = randomUUID();
-    const claim = await settings.updateOne(
-      { _id: REGISTRATION_SETTINGS_ID, enabled: true, firstRegistrationAvailable: true },
-      {
-        $set: {
-          enabled: false,
-          firstRegistrationAvailable: false,
-          bootstrapClaimId,
-        },
-      },
-    );
-    if (claim.modifiedCount !== 1) {
-      return res.status(403).json({ error: "Admin registration is currently disabled." });
-    }
-  }
-
   try {
     const admin = await Admin.create({
       email: normalizedEmail,
       passwordHash: await bcrypt.hash(password, 12),
     });
-    if (bootstrapClaimId) {
-      await settings.updateOne(
-        { _id: REGISTRATION_SETTINGS_ID, bootstrapClaimId },
-        { $unset: { bootstrapClaimId: "" } },
-      );
-    }
     return res.status(201).json({ token: signAdmin(admin), email: admin.email });
   } catch (error) {
-    if (bootstrapClaimId) {
-      const hasAdmins = await Admin.exists({});
-      if (hasAdmins) {
-        await settings.updateOne(
-          { _id: REGISTRATION_SETTINGS_ID, bootstrapClaimId },
-          { $unset: { bootstrapClaimId: "" } },
-        );
-      } else {
-        await settings.updateOne(
-          { _id: REGISTRATION_SETTINGS_ID, bootstrapClaimId },
-          {
-            $set: { enabled: true, firstRegistrationAvailable: true },
-            $unset: { bootstrapClaimId: "" },
-          },
-        );
-      }
-    }
     if (error?.code === 11000) return res.status(409).json({ error: "An admin account with that email already exists." });
     throw error;
   }
@@ -116,7 +78,7 @@ export async function setAdminRegistrationStatus(req, res) {
   }
   await Admin.db.collection("admin_settings").updateOne(
     { _id: REGISTRATION_SETTINGS_ID },
-    { $set: { enabled, firstRegistrationAvailable: false, updatedAt: new Date() } },
+    { $set: { enabled, configuredByAdmin: true, updatedAt: new Date() } },
     { upsert: true },
   );
   return res.json({ enabled });
