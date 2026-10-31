@@ -16,11 +16,19 @@ npm ci
 npm run dev
 ```
 
-To use the admin editor locally, set `VITE_ADMIN_API_URL=http://localhost:4000` and `ADMIN_ORIGIN=http://localhost:5173` in `.env`, configure `MONGODB_URI`, `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, and `JWT_SECRET`, then start the API in another terminal:
+To use the admin editor locally, set `VITE_ADMIN_API_URL=http://localhost:4000` and `ADMIN_ORIGIN=http://localhost:5173` in `.env`, configure `MONGODB_URI`, `ADMIN_EMAIL`, either `ADMIN_PASSWORD` or `ADMIN_PASSWORD_HASH`, and `JWT_SECRET`, then start the API in another terminal:
 
 ```powershell
 npm run server
 ```
+
+To seed only the admin record in the database configured by `MONGODB_URI`, run:
+
+```powershell
+npm run seed:admin
+```
+
+The seed command requires `ADMIN_EMAIL` and either `ADMIN_PASSWORD` or a valid bcrypt `ADMIN_PASSWORD_HASH`. When using `ADMIN_PASSWORD`, the API hashes it with bcrypt before storing it; the plaintext is never written to MongoDB.
 
 Generate the admin password hash with:
 
@@ -43,13 +51,13 @@ Keep `.env` and generated secrets private. `VITE_*` values are compiled into the
 
 ## Admin and API
 
-The **Admin Login** link in the footer opens the events editor. On first startup with these changes, the API upserts the configured `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` into MongoDB once, then records a bootstrap marker so later restarts do not overwrite credentials changed through the editor. After signing in, use **Change login** in the editor to update them. The access token is held in `sessionStorage` and expires after eight hours.
+The **Admin Login** link in the footer and `/admin` open the admin editor. If no admin exists, the registration form allows the first admin account to be created; registration closes automatically afterward. A signed-in admin can reopen or close registration from the editor. The API syncs configured `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH` into MongoDB when that configuration changes, then records a fingerprint so ordinary restarts do not overwrite credentials changed through the editor. After signing in, use **Change login** in the editor to update them. The access token is held in `sessionStorage` and expires after eight hours.
 
 Required server environment variables:
 
 - `MONGODB_URI`
 - `ADMIN_EMAIL`
-- `ADMIN_PASSWORD_HASH` (bcrypt hash)
+- `ADMIN_PASSWORD` (plaintext secret, bcrypt-hashed by the API) or `ADMIN_PASSWORD_HASH` (bcrypt hash)
 - `JWT_SECRET` (use a long, random value)
 
 Optional variables:
@@ -63,7 +71,7 @@ Optional variables:
 
 The repository includes [`render.yaml`](render.yaml) for a Node web service rooted at the repository root. Deploy it as a Render Blueprint, then provide the values for its `sync: false` variables. The service builds with `npm ci && npm run build`, starts with `npm start`, and uses `/api/health` for health checks.
 
-If the service is configured directly in the Render Dashboard, leave **Root Directory** empty (repository root), set Build Command to `npm ci && npm run build`, and set Start Command to `npm start`. The API requires MongoDB to be configured before it will start. Set `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, and `JWT_SECRET` in Render before deployment. The first startup after this bootstrap change applies the configured admin credentials once; later restarts do not overwrite credential changes made through the editor.
+If the service is configured directly in the Render Dashboard, leave **Root Directory** empty (repository root), set Build Command to `npm ci && npm run build`, and set Start Command to `npm start`. The API requires MongoDB to be configured before it will start. Set `ADMIN_EMAIL`, either `ADMIN_PASSWORD` or `ADMIN_PASSWORD_HASH`, and `JWT_SECRET` in Render before deployment. When you intentionally change the configured email or password, the next startup syncs that change once; later restarts do not overwrite credential changes made through the editor.
 
 ## Vercel deployment
 

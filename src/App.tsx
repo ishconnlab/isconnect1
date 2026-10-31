@@ -11,6 +11,7 @@ import { RootLayout } from "@/routes/__root";
 import { NotFound } from "@/routes/not-found";
 
 const Home = lazy(() => import("@/routes/index").then((m) => ({ default: m.Home })));
+const Admin = lazy(() => import("@/routes/admin").then((m) => ({ default: m.Admin })));
 const About = lazy(() => import("@/routes/about").then((m) => ({ default: m.About })));
 const Founder = lazy(() => import("@/routes/founder").then((m) => ({ default: m.Founder })));
 const Team = lazy(() => import("@/routes/team").then((m) => ({ default: m.Team })));
@@ -80,6 +81,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route element={<RootLayout />}>
           <Route index element={<RoutePage><Home /></RoutePage>} />
+          <Route path="admin" element={<RoutePage><Admin /></RoutePage>} />
           <Route path="about" element={<RoutePage><About /></RoutePage>} />
           <Route path="founder" element={<RoutePage><Founder /></RoutePage>} />
           <Route path="team" element={<RoutePage><Team /></RoutePage>} />

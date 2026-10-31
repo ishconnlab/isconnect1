@@ -1,8 +1,19 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ShieldCheck, Trash2, Check, Clock, LogOut } from "lucide-react";
+import { X, ShieldCheck, Trash2, Check, Clock, LogOut, UserPlus } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEventsStore, type LabEvent, type EventType } from "@/lib/events";
-import { adminLogin, adminLogout, changeAdminCredentials, deleteAdminEvent, getAdminEvents, saveAdminEvent } from "@/lib/adminApi";
+import {
+  adminLogin,
+  adminLogout,
+  adminRegister,
+  changeAdminCredentials,
+  deleteAdminEvent,
+  getAdminEvents,
+  getAdminRegistrationStatus,
+  saveAdminEvent,
+  setAdminRegistrationStatus,
+} from "@/lib/adminApi";
 
 const EVENT_TYPES: EventType[] = ["bootcamp", "meetup", "workshop", "hackathon"];
 
@@ -24,10 +35,16 @@ const emptyForm = {
 };
 
 export function EventsEditor() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const editorOpen = useEventsStore((s) => s.editorOpen);
   const closeEditor = useEventsStore((s) => s.closeEditor);
   const unlocked = useEventsStore((s) => s.unlocked);
   const setUnlocked = useEventsStore((s) => s.setUnlocked);
+  const handleClose = () => {
+    closeEditor();
+    if (location.pathname === "/admin") navigate("/", { replace: true });
+  };
 
   if (!editorOpen) return null;
 
@@ -38,7 +55,7 @@ export function EventsEditor() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[70] flex items-center justify-center bg-background/70 p-4 backdrop-blur-sm"
-        onClick={closeEditor}
+        onClick={handleClose}
         role="dialog"
         aria-modal="true"
         aria-label={unlocked ? "Events editor" : "Admin Login"}
@@ -54,7 +71,7 @@ export function EventsEditor() {
           <div className="flex items-center justify-between">
             <h3 className="font-display text-lg font-semibold tracking-tight">{unlocked ? "Events editor" : "Admin Login"}</h3>
             <button
-              onClick={closeEditor}
+              onClick={handleClose}
               aria-label="Close"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-soft-border/60 text-foreground/70 transition-colors hover:text-foreground"
             >
@@ -74,13 +91,22 @@ function AdminLoginForm({ onUnlock }: { onUnlock: (value: boolean) => void }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [registrationEnabled, setRegistrationEnabled] = useState(false);
+  const [registering, setRegistering] = useState(false);
+
+  useEffect(() => {
+    void getAdminRegistrationStatus()
+      .then(setRegistrationEnabled)
+      .catch((cause) => setError(cause instanceof Error ? cause.message : "Could not check registration status."));
+  }, []);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setBusy(true);
     setError("");
     try {
-      await adminLogin(email, password);
+      if (registering) await adminRegister(email, password);
+      else await adminLogin(email, password);
       onUnlock(true);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to sign in.");
@@ -107,12 +133,13 @@ function AdminLoginForm({ onUnlock }: { onUnlock: (value: boolean) => void }) {
       </label>
       <label className="block">
         <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Password
+          {registering ? "New password" : "Password"}
         </span>
         <input
           type="password"
           required
-          autoComplete="current-password"
+          minLength={registering ? 10 : undefined}
+          autoComplete={registering ? "new-password" : "current-password"}
           value={password}
           onChange={(e) => { setPassword(e.target.value); setError(""); }}
           className="w-full rounded-xl border border-soft-border bg-background px-3.5 py-2.5 text-sm outline-none transition-colors focus:border-primary"
@@ -125,8 +152,17 @@ function AdminLoginForm({ onUnlock }: { onUnlock: (value: boolean) => void }) {
         className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity disabled:opacity-40"
       >
         <ShieldCheck className="h-4 w-4" />
-        {busy ? "Signing in…" : "Sign in"}
+        {busy ? (registering ? "Creating account…" : "Signing in…") : registering ? "Create admin account" : "Sign in"}
       </button>
+      {registrationEnabled && (
+        <button
+          type="button"
+          onClick={() => { setRegistering((value) => !value); setError(""); }}
+          className="w-full text-center text-xs font-medium text-muted-foreground hover:text-primary"
+        >
+          {registering ? "Already registered? Sign in" : "Create an admin account"}
+        </button>
+      )}
     </form>
   );
 }
@@ -140,6 +176,9 @@ function EventFormPanel() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showCredentials, setShowCredentials] = useState(false);
+  const [registrationEnabled, setRegistrationEnabled] = useState<boolean | null>(null);
+  const [registrationError, setRegistrationError] = useState("");
+  const [updatingRegistration, setUpdatingRegistration] = useState(false);
 
   const refreshEvents = useCallback(async () => {
     setEvents(await getAdminEvents());
@@ -150,6 +189,25 @@ function EventFormPanel() {
       .catch((cause) => setError(cause instanceof Error ? cause.message : "Could not load events."))
       .finally(() => setLoading(false));
   }, [refreshEvents]);
+
+  useEffect(() => {
+    void getAdminRegistrationStatus()
+      .then(setRegistrationEnabled)
+      .catch((cause) => setRegistrationError(cause instanceof Error ? cause.message : "Could not check registration status."));
+  }, []);
+
+  const toggleRegistration = async () => {
+    if (registrationEnabled === null) return;
+    setUpdatingRegistration(true);
+    setRegistrationError("");
+    try {
+      setRegistrationEnabled(await setAdminRegistrationStatus(!registrationEnabled));
+    } catch (cause) {
+      setRegistrationError(cause instanceof Error ? cause.message : "Could not update registration status.");
+    } finally {
+      setUpdatingRegistration(false);
+    }
+  };
 
   const startAdd = () => {
     setEditingId(null);
@@ -215,6 +273,15 @@ function EventFormPanel() {
         </button>
         <button
           type="button"
+          onClick={() => void toggleRegistration()}
+          disabled={registrationEnabled === null || updatingRegistration}
+          className="inline-flex items-center gap-1.5 rounded-full border border-soft-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground disabled:opacity-50"
+        >
+          <UserPlus className="h-3.5 w-3.5" />
+          {registrationEnabled === null ? "Checking registration…" : registrationEnabled ? "Disable registration" : "Enable registration"}
+        </button>
+        <button
+          type="button"
           onClick={() => { adminLogout(); setUnlocked(false); }}
           className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-soft-border/60 px-3 py-2 text-xs text-muted-foreground hover:text-foreground"
         >
@@ -224,6 +291,7 @@ function EventFormPanel() {
 
       {showCredentials && <CredentialsForm onSaved={() => setShowCredentials(false)} />}
 
+      {registrationError && <p role="alert" className="text-xs font-medium text-red-600">{registrationError}</p>}
       {error && <p role="alert" className="text-xs font-medium text-red-600">{error}</p>}
       {loading && <p className="text-xs text-muted-foreground">Loading events…</p>}
 

@@ -1,26 +1,152 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { createHash, createHmac, randomUUID } from "node:crypto";
 import { Admin } from "../models/Admin.js";
+
+const REGISTRATION_SETTINGS_ID = "admin-registration-v1";
 
 function validPasswordHash(hash) {
   return /^\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}$/.test(hash || "");
+}
+
+async function getRegistrationSettings() {
+  const settings = Admin.db.collection("admin_settings");
+  let registration = await settings.findOne({ _id: REGISTRATION_SETTINGS_ID });
+  if (!registration) {
+    const firstRegistrationAvailable = !(await Admin.exists({}));
+    await settings.updateOne(
+      { _id: REGISTRATION_SETTINGS_ID },
+      { $setOnInsert: { enabled: firstRegistrationAvailable, firstRegistrationAvailable } },
+      { upsert: true },
+    );
+    registration = await settings.findOne({ _id: REGISTRATION_SETTINGS_ID });
+  }
+  return registration;
 }
 
 function signAdmin(admin) {
   return jwt.sign({ role: "admin" }, process.env.JWT_SECRET, { subject: admin._id.toString(), expiresIn: "8h" });
 }
 
+export async function getAdminRegistrationStatus(_req, res) {
+  const settings = await getRegistrationSettings();
+  return res.json({ enabled: settings.enabled === true });
+}
+
+export async function registerAdmin(req, res) {
+  const { email, password } = req.body || {};
+  const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254) {
+    return res.status(400).json({ error: "Enter a valid email address." });
+  }
+  if (typeof password !== "string" || password.length < 10) {
+    return res.status(400).json({ error: "Choose a password with at least 10 characters." });
+  }
+  if (Buffer.byteLength(password, "utf8") > 72) {
+    return res.status(400).json({ error: "Password must not exceed 72 UTF-8 bytes." });
+  }
+  if (!process.env.JWT_SECRET) {
+    return res.status(503).json({ error: "Admin authentication is not configured correctly on the server." });
+  }
+
+  const registration = await getRegistrationSettings();
+  if (registration.enabled !== true) {
+    return res.status(403).json({ error: "Admin registration is currently disabled." });
+  }
+
+  const settings = Admin.db.collection("admin_settings");
+  let bootstrapClaimId;
+  if (registration.firstRegistrationAvailable === true) {
+    bootstrapClaimId = randomUUID();
+    const claim = await settings.updateOne(
+      { _id: REGISTRATION_SETTINGS_ID, enabled: true, firstRegistrationAvailable: true },
+      {
+        $set: {
+          enabled: false,
+          firstRegistrationAvailable: false,
+          bootstrapClaimId,
+        },
+      },
+    );
+    if (claim.modifiedCount !== 1) {
+      return res.status(403).json({ error: "Admin registration is currently disabled." });
+    }
+  }
+
+  try {
+    const admin = await Admin.create({
+      email: normalizedEmail,
+      passwordHash: await bcrypt.hash(password, 12),
+    });
+    if (bootstrapClaimId) {
+      await settings.updateOne(
+        { _id: REGISTRATION_SETTINGS_ID, bootstrapClaimId },
+        { $unset: { bootstrapClaimId: "" } },
+      );
+    }
+    return res.status(201).json({ token: signAdmin(admin), email: admin.email });
+  } catch (error) {
+    if (bootstrapClaimId) {
+      const hasAdmins = await Admin.exists({});
+      if (hasAdmins) {
+        await settings.updateOne(
+          { _id: REGISTRATION_SETTINGS_ID, bootstrapClaimId },
+          { $unset: { bootstrapClaimId: "" } },
+        );
+      } else {
+        await settings.updateOne(
+          { _id: REGISTRATION_SETTINGS_ID, bootstrapClaimId },
+          {
+            $set: { enabled: true, firstRegistrationAvailable: true },
+            $unset: { bootstrapClaimId: "" },
+          },
+        );
+      }
+    }
+    if (error?.code === 11000) return res.status(409).json({ error: "An admin account with that email already exists." });
+    throw error;
+  }
+}
+
+export async function setAdminRegistrationStatus(req, res) {
+  const { enabled } = req.body || {};
+  if (typeof enabled !== "boolean") {
+    return res.status(400).json({ error: "Registration status must be enabled or disabled." });
+  }
+  await Admin.db.collection("admin_settings").updateOne(
+    { _id: REGISTRATION_SETTINGS_ID },
+    { $set: { enabled, firstRegistrationAvailable: false, updatedAt: new Date() } },
+    { upsert: true },
+  );
+  return res.json({ enabled });
+}
+
 export async function seedAdminFromEnvironment() {
   const bootstrap = Admin.db.collection("admin_bootstrap");
   const markerId = "initial-admin-credentials-v1";
-  if (await bootstrap.findOne({ _id: markerId })) return;
   const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
-  const passwordHash = process.env.ADMIN_PASSWORD_HASH?.trim();
-  if (!email || !validPasswordHash(passwordHash)) {
-    console.warn("No admin exists in MongoDB and valid ADMIN_EMAIL / ADMIN_PASSWORD_HASH are not configured; admin login is disabled until configured.");
+  const plainPassword = process.env.ADMIN_PASSWORD;
+  const configuredPasswordHash = process.env.ADMIN_PASSWORD_HASH?.trim();
+  const usePlainPassword = typeof plainPassword === "string" && plainPassword.trim().length > 0;
+  if (!email || (!usePlainPassword && !validPasswordHash(configuredPasswordHash))) {
+    console.warn("Admin credential seeding skipped: configure ADMIN_EMAIL and either ADMIN_PASSWORD or a valid bcrypt ADMIN_PASSWORD_HASH.");
     return;
   }
+  if (usePlainPassword && Buffer.byteLength(plainPassword, "utf8") > 72) {
+    throw new Error("ADMIN_PASSWORD cannot exceed 72 UTF-8 bytes when bcrypt is used.");
+  }
+  if (usePlainPassword && !process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET must be configured when ADMIN_PASSWORD is used.");
+  }
+  const credentialFingerprint = usePlainPassword
+    ? createHmac("sha256", process.env.JWT_SECRET).update(`${email}:${plainPassword}`).digest("hex")
+    : createHash("sha256").update(`${email}:${configuredPasswordHash}`).digest("hex");
+  const marker = await bootstrap.findOne({ _id: markerId });
+  if (marker?.credentialFingerprint === credentialFingerprint) return;
+  const passwordHash = usePlainPassword
+    ? await bcrypt.hash(plainPassword, 12)
+    : configuredPasswordHash;
   try {
     const now = new Date();
     await Admin.updateOne(
@@ -30,7 +156,7 @@ export async function seedAdminFromEnvironment() {
     );
     await bootstrap.updateOne(
       { _id: markerId },
-      { $setOnInsert: { seededAt: now, email } },
+      { $set: { seededAt: now, email, credentialFingerprint } },
       { upsert: true },
     );
     console.log("Initial admin credentials seeded in MongoDB");

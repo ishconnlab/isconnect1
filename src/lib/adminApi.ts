@@ -31,6 +31,27 @@ export async function adminLogin(email: string, password: string): Promise<void>
   sessionStorage.setItem(TOKEN_KEY, result.token);
 }
 
+export async function adminRegister(email: string, password: string): Promise<void> {
+  const result = await request<{ token: string }>("/admin/register", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+  sessionStorage.setItem(TOKEN_KEY, result.token);
+}
+
+export async function getAdminRegistrationStatus(): Promise<boolean> {
+  const result = await request<{ enabled: boolean }>("/admin/registration");
+  return result.enabled;
+}
+
+export async function setAdminRegistrationStatus(enabled: boolean): Promise<boolean> {
+  const result = await request<{ enabled: boolean }>("/admin/registration", {
+    method: "PUT",
+    body: JSON.stringify({ enabled }),
+  }, true);
+  return result.enabled;
+}
+
 export async function changeAdminCredentials(currentPassword: string, email: string, newPassword: string): Promise<void> {
   const result = await request<{ token: string }>("/admin/credentials", {
     method: "PUT",
